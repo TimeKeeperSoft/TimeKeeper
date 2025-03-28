@@ -1,0 +1,20 @@
+[package]
+name = "time_keeper"
+version = "0.1.0"
+edition = "2024"
+description = "Программа для учёта времени работы за ПК"
+
+[profile.release]
+lto = true
+strip = true
+debug = false
+panic = "abort"
+opt-level = "s"
+
+[dependencies]
+anyhow = "1.0.97"
+iced = { version = "0.13.1", default-features = false, features = ["tiny-skia", "image", "tokio"] }
+iced_aw = { version = "0.12.2", default-features = false, features = ["number_input"] }
+serde = { version = "1.0.219", features = ["derive"] }
+tokio = { version = "1.44.1", features = ["full"] }
+toml = "0.8.20"
