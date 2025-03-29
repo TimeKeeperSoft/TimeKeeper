@@ -11,6 +11,7 @@ pub const PROG_DEVS: &str = "\
 \n\
 Тестирование, code review:\n\
 Максим Марушин";
+pub const PROG_LOGO: &[u8] = include_bytes!("../assets/logo1.png");
 
 // Only for Windows
 #[cfg(target_family = "windows")]

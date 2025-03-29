@@ -22,7 +22,7 @@ use iced::{
 
 use crate::{
     conf::Config,
-    consts::{PROG_DEVS, PROG_NAME, PROG_VER},
+    consts::{PROG_DEVS, PROG_LOGO, PROG_NAME, PROG_VER},
     time::Time,
     traits::Toml,
 };
@@ -30,7 +30,7 @@ use crate::{
 pub fn ui() -> iced::Result {
     let icon = iced::window::icon::from_file_data(
         // Да, иконка у нас захардкожена. Что поделаешь ради портативности...
-        include_bytes!("../assets/logo1.png"),
+        PROG_LOGO,
         Some(ImageFormat::Png),
     );
 
@@ -326,7 +326,9 @@ impl TimeKeeper {
     }
 
     fn about_page(&self) -> Element<Message> {
-        let img = image("assets/logo1.png").width(64).height(64);
+        let img = image(image::Handle::from_bytes(PROG_LOGO))
+            .width(64)
+            .height(64);
         let header = column![text(PROG_NAME).size(20), text(PROG_VER).size(15)].spacing(5);
         let about_devs = text(PROG_DEVS).size(15);
 
