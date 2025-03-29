@@ -92,7 +92,7 @@ impl Default for TimeKeeper {
             elapsed_time: 0,
             wtime: Time::try_from_secs(conf.work_time).unwrap_or_default(),
             ftime: Time::try_from_secs(conf.free_time).unwrap_or_default(),
-            page: Page::Settings,
+            page: Page::default(),
             conf,
         }
     }
