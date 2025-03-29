@@ -61,6 +61,11 @@ pub trait Toml {
                 pth.as_ref().display()
             )
         })?;
+
+        if !pth.as_ref().exists() {
+            create_pth_dir(&pth)?;
+        }
+
         fs::write(&pth, content).map_err(|err| {
             anyhow!(
                 "Ошибка записи в '{}'! Проверьте наличие файла и права доступа к нему.\n\n\
@@ -71,4 +76,21 @@ pub trait Toml {
 
         Ok(())
     }
+}
+
+fn create_pth_dir<P: AsRef<Path>>(pth: P) -> Result<()> {
+    let pth = pth.as_ref();
+    let parent = pth.parent();
+
+    match parent {
+        Some(p) => fs::create_dir_all(p)?,
+        None => {
+            return Err(anyhow!(
+                "Ошибка получения пути до '{}'! Этот путь корректен?",
+                pth.display()
+            ));
+        }
+    }
+
+    Ok(())
 }

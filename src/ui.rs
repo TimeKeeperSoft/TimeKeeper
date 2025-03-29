@@ -74,11 +74,13 @@ struct TimeKeeper {
 
 impl Default for TimeKeeper {
     fn default() -> Self {
+        let mut is_err_create_conf = false;
         let conf = {
             let conf = Config::parse("./assets/TimeKeeper.toml");
             match conf {
                 Ok(conf) => conf,
                 Err(why) => {
+                    is_err_create_conf = true;
                     eprintln!("Failed to parse config:\n{why}");
                     eprintln!("Using the default values...");
                     Config::default()
@@ -92,7 +94,11 @@ impl Default for TimeKeeper {
             elapsed_time: 0,
             wtime: Time::try_from_secs(conf.work_time).unwrap_or_default(),
             ftime: Time::try_from_secs(conf.free_time).unwrap_or_default(),
-            page: Page::default(),
+            page: if is_err_create_conf {
+                Page::Settings
+            } else {
+                Page::default()
+            },
             conf,
         }
     }
