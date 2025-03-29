@@ -22,6 +22,13 @@ pub struct Time {
     pub secs: u8,
 }
 
+#[derive(Debug, Clone, Copy)]
+pub enum TimeType {
+    Hours,
+    Mins,
+    Secs,
+}
+
 impl Default for Time {
     fn default() -> Self {
         Self {
@@ -61,6 +68,66 @@ impl Time {
         })
     }
 
+    /// Creates a new instance of `Time` from some value
+    pub fn from_value(val: u8, val_type: TimeType) -> Self {
+        let mut time = Time::default();
+        match val_type {
+            TimeType::Hours => time.hours += val,
+            TimeType::Mins => {
+                if val >= 60 && val < 120 {
+                    time.hours += 1;
+                    time.mins = val - 60;
+                } else if val >= 120 {
+                    time.hours += 2;
+                    time.mins = val - 120;
+                } else {
+                    time.mins = val;
+                }
+            }
+            TimeType::Secs => {
+                if val >= 60 && val < 120 {
+                    time.mins += 1;
+                    time.secs = val - 60;
+                } else if val >= 120 {
+                    time.mins += 2;
+                    time.secs = val - 120;
+                } else {
+                    time.secs = val;
+                }
+            }
+        }
+        time
+    }
+
+    pub fn change_value(&mut self, val: u8, val_type: TimeType) {
+        match val_type {
+            TimeType::Hours => self.hours = val,
+            TimeType::Mins => {
+                if val >= 60 && val < 120 {
+                    self.hours += 1;
+                    self.mins = val - 60;
+                } else if val >= 120 {
+                    self.hours += 2;
+                    self.mins = val - 120;
+                } else {
+                    self.mins = val;
+                }
+            }
+            TimeType::Secs => {
+                if val >= 60 && val < 120 {
+                    self.mins += 1;
+                    self.secs = val - 60;
+                } else if val >= 120 {
+                    self.mins += 2;
+                    self.secs = val - 120;
+                } else {
+                    self.secs = val;
+                }
+            }
+        }
+    }
+
+    /// Creates a new instance of `Time` from seconds
     pub fn from_secs(s: u16) -> Self {
         // WARN: SHIT CODE
         let hours: u8 = (s / 3600) as u8;
