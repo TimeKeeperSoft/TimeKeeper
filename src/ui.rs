@@ -7,6 +7,8 @@
 //! ui().unwrap();
 //! ```
 
+mod widget;
+
 use std::time::Duration;
 
 use iced::{
@@ -14,10 +16,7 @@ use iced::{
     Element, Event, Length, Subscription, Task, Theme,
     advanced::graphics::image::image_rs::ImageFormat,
     event, time,
-    widget::{
-        button, center, column, container, horizontal_rule, horizontal_space, image, row,
-        scrollable, text, text_input, vertical_space,
-    },
+    widget::{button, center, column, container, image, row, scrollable, text, vertical_space},
     window::Settings,
 };
 
@@ -204,66 +203,6 @@ impl TimeKeeper {
         }
     }
 
-    fn _set_mins_secs(&mut self, is_free: bool, is_secs: bool, time: u8) {
-        let mut time = time;
-        if is_free {
-            if time >= 60 && time < 120 {
-                if is_secs {
-                    self.ftime.minutes += 1;
-                } else {
-                    self.ftime.hours += 1;
-                }
-                time -= 60;
-            } else if time >= 120 {
-                if is_secs {
-                    self.ftime.minutes += 2;
-                } else {
-                    self.ftime.hours += 2;
-                }
-                time -= 120;
-            }
-            if is_secs {
-                self.ftime.secs = time;
-            } else {
-                self.ftime.minutes = time;
-            }
-        } else {
-            if time >= 60 && time < 120 {
-                if is_secs {
-                    self.wtime.minutes += 1;
-                } else {
-                    self.wtime.hours += 1;
-                }
-                time -= 60;
-            } else if time >= 120 {
-                if is_secs {
-                    self.wtime.minutes += 2;
-                } else {
-                    self.wtime.hours += 2;
-                }
-                time -= 120;
-            }
-            if is_secs {
-                self.wtime.secs = time;
-            } else {
-                self.wtime.minutes = time;
-            }
-        }
-    }
-
-    fn set_mins_secs(&mut self, is_free: bool, is_secs: bool, time: &str) {
-        if time.is_empty() {
-            self._set_mins_secs(is_free, is_secs, 0);
-            return;
-        }
-
-        let time = time.parse::<u8>();
-        match time {
-            Ok(time) => self._set_mins_secs(is_free, is_secs, time),
-            Err(_) => self._set_mins_secs(is_free, is_secs, 0),
-        }
-    }
-
     fn update(&mut self, message: Message) -> Task<Message> {
         match message {
             Message::TickTime => {
@@ -295,60 +234,28 @@ impl TimeKeeper {
 
                 Task::none()
             }
-            Message::WTimeHChanged(wtime) => {
-                let time = wtime.parse::<u8>();
-                if self.wtime.hours > 3 {
-                    return Task::none();
-                }
-                if let Ok(time) = time {
-                    self.wtime.hours = time;
-                } else if wtime.is_empty() {
-                    self.wtime.hours = 0;
-                } else {
-                    eprintln!("Ошибка: пользователь ввёл некорректные данные");
-                    eprintln!("Данные в поле не изменены.");
-                }
+            Message::WTimeHChanged(ref wtime) => {
+                self.set_time(widget::TimeType::Work, &message, wtime);
                 Task::none()
             }
-            Message::WTimeMChanged(wtime) => {
-                self.set_mins_secs(false, false, &wtime);
+            Message::WTimeMChanged(ref wtime) => {
+                self.set_time(widget::TimeType::Work, &message, wtime);
                 Task::none()
             }
-            Message::WTimeSChanged(wtime) => {
-                let wtime = wtime.parse::<u8>();
-                if let Ok(wtime) = wtime {
-                    self.wtime.secs = wtime;
-                } else {
-                    eprintln!("Ошибка: пользователь ввёл некорректные данные");
-                    eprintln!("Данные в поле не изменены.");
-                }
+            Message::WTimeSChanged(ref wtime) => {
+                self.set_time(widget::TimeType::Work, &message, wtime);
                 Task::none()
             }
-            Message::FTimeHChanged(ftime) => {
-                let ftime = ftime.parse::<u8>();
-                if self.ftime.hours > 3 {
-                    return Task::none();
-                }
-                if let Ok(ftime) = ftime {
-                    self.ftime.hours = ftime;
-                } else {
-                    eprintln!("Ошибка: пользователь ввёл некорректные данные");
-                    eprintln!("Данные в поле не изменены.");
-                }
+            Message::FTimeHChanged(ref ftime) => {
+                self.set_time(widget::TimeType::Free, &message, ftime);
                 Task::none()
             }
-            Message::FTimeMChanged(ftime) => {
-                self.set_mins_secs(true, false, &ftime);
+            Message::FTimeMChanged(ref ftime) => {
+                self.set_time(widget::TimeType::Free, &message, ftime);
                 Task::none()
             }
-            Message::FTimeSChanged(ftime) => {
-                let ftime = ftime.parse::<u8>();
-                if let Ok(ftime) = ftime {
-                    self.ftime.secs = ftime;
-                } else {
-                    eprintln!("Ошибка: пользователь ввёл некорректные данные");
-                    eprintln!("Данные в поле не изменены.");
-                }
+            Message::FTimeSChanged(ref ftime) => {
+                self.set_time(widget::TimeType::Free, &message, ftime);
                 Task::none()
             }
             Message::Event(event) => self.handle_events(event),
@@ -425,53 +332,6 @@ impl TimeKeeper {
         .spacing(5);
 
         container(layout).padding(10).into()
-    }
-
-    fn time_edit_box(&self) -> Element<Message> {
-        let wheaders = row![
-            text("Час").size(10),
-            horizontal_space(),
-            text("Мин").size(10),
-            horizontal_space(),
-            text("Сек").size(10),
-        ]
-        .spacing(5);
-        let fheaders = row![
-            text("Час").size(10),
-            horizontal_space(),
-            text("Мин").size(10),
-            horizontal_space(),
-            text("Сек").size(10),
-        ]
-        .spacing(5);
-
-        let winputs = row![
-            text_input("Час", &self.wtime.hours.to_string()).on_input(Message::WTimeHChanged),
-            text_input("Мин", &self.wtime.minutes.to_string()).on_input(Message::WTimeMChanged),
-            text_input("Сек", &self.wtime.secs.to_string()).on_input(Message::WTimeSChanged),
-        ]
-        .spacing(5);
-        let finputs = row![
-            text_input("Час", &self.ftime.hours.to_string()).on_input(Message::FTimeHChanged),
-            text_input("Мин", &self.ftime.minutes.to_string()).on_input(Message::FTimeMChanged),
-            text_input("Сек", &self.ftime.secs.to_string()).on_input(Message::FTimeSChanged),
-        ]
-        .spacing(5);
-
-        column![
-            row![text("Работа"), horizontal_rule(0)]
-                .spacing(5)
-                .align_y(Center),
-            wheaders,
-            winputs,
-            row![text("Перерыв"), horizontal_rule(0)]
-                .spacing(5)
-                .align_y(Center),
-            fheaders,
-            finputs,
-        ]
-        .spacing(5)
-        .into()
     }
 
     fn settings_page(&self) -> Element<Message> {
