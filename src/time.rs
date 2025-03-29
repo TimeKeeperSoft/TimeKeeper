@@ -18,7 +18,7 @@ use anyhow::{Result, anyhow};
 #[derive(Debug, Clone, Copy)]
 pub struct Time {
     pub hours: u8,
-    pub minutes: u8,
+    pub mins: u8,
     pub secs: u8,
 }
 
@@ -26,7 +26,7 @@ impl Default for Time {
     fn default() -> Self {
         Self {
             hours: 0,
-            minutes: 1,
+            mins: 1,
             secs: 0,
         }
     }
@@ -41,7 +41,7 @@ impl Time {
         } else {
             Self {
                 hours: h,
-                minutes: m,
+                mins: m,
                 secs: s,
             }
         }
@@ -56,7 +56,7 @@ impl Time {
 
         Ok(Self {
             hours: h,
-            minutes: m,
+            mins: m,
             secs: s,
         })
     }
@@ -83,7 +83,7 @@ impl Time {
     pub fn to_secs(&self) -> u16 {
         // WARN: ONE MORE SHITCODE
         let mut s: u16 = 3600 * self.hours as u16; // hours to seconds
-        s += 60 * self.minutes as u16; // minutes to seconds
+        s += 60 * self.mins as u16; // minutes to seconds
         s += self.secs as u16;
 
         s
@@ -96,8 +96,8 @@ impl Display for Time {
             f,
             "{}:{}{}:{}{}",
             self.hours,
-            if self.minutes < 10 { "0" } else { "" },
-            self.minutes,
+            if self.mins < 10 { "0" } else { "" },
+            self.mins,
             if self.secs < 10 { "0" } else { "" },
             self.secs
         )
