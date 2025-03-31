@@ -41,7 +41,7 @@ impl Default for Time {
 
 impl Time {
     pub fn new(h: u8, m: u8, s: u8) -> Self {
-        if h > 3 {
+        if h > 3 && m > 0 && s > 0 {
             // https://www.aoa.org/healthy-eyes/eye-and-vision-conditions/computer-vision-syndrome?sso=y
             panic!("Value `h` is out of range (max: 3, given: {h})")
         } else if m >= 60 {
@@ -58,7 +58,7 @@ impl Time {
     }
 
     pub fn try_new(h: u8, m: u8, s: u8) -> Result<Self> {
-        if h > 3 {
+        if h > 3 && m > 0 && s > 0 {
             return Err(anyhow!("Value `h` is out of range (max: 3, given: {h})"));
         } else if m >= 60 {
             return Err(anyhow!("Value `m` is out of range (max: 59, given: {m})"));
@@ -78,8 +78,10 @@ impl Time {
         let mut time = Time::default();
         match val_type {
             TimeType::Hours => {
-                if val > 3 {
+                if val >= 3 {
                     time.hours = 3;
+                    time.mins = 0;
+                    time.secs = 0;
                 } else {
                     time.hours += val;
                 }
@@ -113,8 +115,13 @@ impl Time {
     pub fn change_value(&mut self, val: u8, val_type: TimeType) {
         match val_type {
             TimeType::Hours => {
-                if val > 3 {
+                if val >= 3 {
+                    // Не допускается устанавливать более 3 часов времени.
+                    // Если пользователь ввёл 3 или более часа, то минуты
+                    // и секунды обнуляем.
                     self.hours = 3;
+                    self.mins = 0;
+                    self.secs = 0;
                 } else {
                     self.hours = val;
                 }
