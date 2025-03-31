@@ -7,12 +7,12 @@ use anyhow::{Result, anyhow};
 /// Time representation in `TimeKeeper`
 ///
 /// ## Value ranges
-/// - Hours: [0; 255]
+/// - Hours: [0; 3]
 /// - Minutes: [0; 59]
 /// - Seconds: [0; 59]
 ///
 /// ## Max values
-/// - Hours: 255
+/// - Hours: 3
 /// - Minutes: 60 (panics if >= 60)
 /// - Seconds: 60 (panics if >= 60)
 #[derive(Debug, Clone, Copy)]
@@ -33,7 +33,7 @@ impl Default for Time {
     fn default() -> Self {
         Self {
             hours: 0,
-            mins: 1,
+            mins: 0,
             secs: 0,
         }
     }
@@ -41,7 +41,10 @@ impl Default for Time {
 
 impl Time {
     pub fn new(h: u8, m: u8, s: u8) -> Self {
-        if m >= 60 {
+        if h > 3 {
+            // https://www.aoa.org/healthy-eyes/eye-and-vision-conditions/computer-vision-syndrome?sso=y
+            panic!("Value `h` is out of range (max: 3, given: {h})")
+        } else if m >= 60 {
             panic!("Value `m` is out of range (max: 59, given: {m})")
         } else if s >= 60 {
             panic!("Value `s` is out of range (max: 59, given: {s})")
@@ -55,7 +58,9 @@ impl Time {
     }
 
     pub fn try_new(h: u8, m: u8, s: u8) -> Result<Self> {
-        if m >= 60 {
+        if h > 3 {
+            return Err(anyhow!("Value `h` is out of range (max: 3, given: {h})"));
+        } else if m >= 60 {
             return Err(anyhow!("Value `m` is out of range (max: 59, given: {m})"));
         } else if s >= 60 {
             return Err(anyhow!("Value `s` is out of range (max: 59, given: {s}"));
@@ -72,7 +77,13 @@ impl Time {
     pub fn from_value(val: u8, val_type: TimeType) -> Self {
         let mut time = Time::default();
         match val_type {
-            TimeType::Hours => time.hours += val,
+            TimeType::Hours => {
+                if val > 3 {
+                    time.hours = 3;
+                } else {
+                    time.hours += val;
+                }
+            }
             TimeType::Mins => {
                 if val >= 60 && val < 120 {
                     time.hours += 1;
@@ -101,7 +112,13 @@ impl Time {
 
     pub fn change_value(&mut self, val: u8, val_type: TimeType) {
         match val_type {
-            TimeType::Hours => self.hours = val,
+            TimeType::Hours => {
+                if val > 3 {
+                    self.hours = 3;
+                } else {
+                    self.hours = val;
+                }
+            }
             TimeType::Mins => {
                 if val >= 60 && val < 120 {
                     self.hours += 1;
