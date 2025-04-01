@@ -41,6 +41,22 @@
 - **Windows:** MSVC;
 - **Linux:** `binutils`, `gcc`, Xorg/Wayland
 
+**Сборка под Windows:**
+
+```ps
+cargo build --release
+.\target\release\time_keeper
+```
+
+**Сборка под Linux:**
+
+```bash
+sudo apt install build-essential -y
+
+cargo build --release
+./target/release/time_keeper
+```
+
 ## Стек технологий
 
 - **ОС:** Windows, Linux
