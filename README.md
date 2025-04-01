@@ -1,10 +1,19 @@
 <div align="center">
-    <h1>⏳ TimeKeeper</h1>
     <img src="assets/logo.png" width="200">
-    <p>Управляйте своим рабочим временем за ПК эффективно!</p>
+    <h1>⏳ TimeKeeper</h1>
+    <p><b>Управляйте своим рабочим временем за ПК эффективно!</b></p>
+    <h4>
+        <a href="assets/gallery.md">Скриншоты</a>
+        <span> | </span>
+        <a href="https://github.com/mskrasnov/TimeKeeper/releases">Релизы</a>
+    </h4>
 </div>
 
-[![](assets/main_win.png)](assets/gallery.md)
+## Что такое TimeKeeper?
+
+TimeKeeper - простейшая кроссплатформенная программа для учёта рабочего времени за ПК. Она нужна для того, чтобы периодически напоминать пользователю о необходимости выполнения перерывов за работой на ПК.
+
+![](assets/main_win1.png) | ![](assets/main_win2.png)
 
 ## Идея
 
