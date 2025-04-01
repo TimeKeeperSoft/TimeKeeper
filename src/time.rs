@@ -73,52 +73,10 @@ impl Time {
         })
     }
 
-    /// Creates a new instance of `Time` from some value
-    pub fn from_value(val: u8, val_type: TimeType) -> Self {
-        let mut time = Time::default();
-        match val_type {
-            TimeType::Hours => {
-                if val >= 3 {
-                    time.hours = 3;
-                    time.mins = 0;
-                    time.secs = 0;
-                } else {
-                    time.hours += val;
-                }
-            }
-            TimeType::Mins => {
-                if val >= 60 && val < 120 {
-                    time.hours += 1;
-                    time.mins = val - 60;
-                } else if val >= 120 {
-                    time.hours += 2;
-                    time.mins = val - 120;
-                } else {
-                    time.mins = val;
-                }
-            }
-            TimeType::Secs => {
-                if val >= 60 && val < 120 {
-                    time.mins += 1;
-                    time.secs = val - 60;
-                } else if val >= 120 {
-                    time.mins += 2;
-                    time.secs = val - 120;
-                } else {
-                    time.secs = val;
-                }
-            }
-        }
-        time
-    }
-
     pub fn change_value(&mut self, val: u8, val_type: TimeType) {
         match val_type {
             TimeType::Hours => {
-                if val >= 3 {
-                    // Не допускается устанавливать более 3 часов времени.
-                    // Если пользователь ввёл 3 или более часа, то минуты
-                    // и секунды обнуляем.
+                if val == 3 {
                     self.hours = 3;
                     self.mins = 0;
                     self.secs = 0;
@@ -153,7 +111,6 @@ impl Time {
 
     /// Creates a new instance of `Time` from seconds
     pub fn from_secs(s: u16) -> Self {
-        // WARN: SHIT CODE
         let hours: u8 = (s / 3600) as u8;
         let minutes: u8 = ((s as u16 - 3600 * hours as u16) / 60) as u8;
         let s: u8 = (s as u16 - (3600 * hours as u16) - 60 * minutes as u16) as u8;
@@ -162,7 +119,6 @@ impl Time {
     }
 
     pub fn try_from_secs(s: u16) -> Result<Self> {
-        // WARN: SHIT CODE
         let hours: u8 = (s / 3600) as u8;
         let minutes: u8 = ((s as u16 - 3600 * hours as u16) / 60) as u8;
         let s: u8 = (s as u16 - (3600 * hours as u16) - 60 * minutes as u16) as u8;
@@ -172,7 +128,6 @@ impl Time {
 
     /// Convert [`Time`] to seconds
     pub fn to_secs(&self) -> u16 {
-        // WARN: ONE MORE SHITCODE
         let mut s: u16 = 3600 * self.hours as u16; // hours to seconds
         s += 60 * self.mins as u16; // minutes to seconds
         s += self.secs as u16;
