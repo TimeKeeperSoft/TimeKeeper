@@ -117,9 +117,7 @@ impl TimeKeeper {
     }
 
     pub fn header<'a>(&self, txt: &'a str) -> Text<'a> {
-        let hdr_color = self.theme().palette().danger;
         let hdr_size = 25;
-
-        text(txt).color(hdr_color).size(hdr_size)
+        text(txt).size(hdr_size)
     }
 }
