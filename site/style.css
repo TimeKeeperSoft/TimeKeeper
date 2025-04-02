@@ -23,10 +23,17 @@ body {
   }
 }
 
-h1,
-h2 {
+h1 {
   color: #fb4934;
   /* Gruvbox Dark red */
+}
+
+h2 {
+  color: #d65d0e;
+}
+
+h3 {
+  color: #fe8019;
 }
 
 h2.download {
@@ -207,8 +214,10 @@ figcaption {
   transition: background-color 0.3s ease;
   margin-right: 10px;
   text-decoration: none;
-  width: 250px; /*  Устанавливаем фиксированную ширину */
-  text-align: center; /* Центрируем текст внутри кнопки */
+  width: 250px;
+  /*  Устанавливаем фиксированную ширину */
+  text-align: center;
+  /* Центрируем текст внутри кнопки */
 }
 
 .download-button:hover {
