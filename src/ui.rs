@@ -331,11 +331,11 @@ impl TimeKeeper {
         let values = column![
             text(entry.date),
             text(if entry.is_wtime {
-                "Работа    " // пробелы - костыль, но что поделаешь
+                "Работа" // пробелы - костыль, но что поделаешь
             // пробелы здесь нужны, чтобы скроллбар не закрывал
             // часть этого текста.
             } else {
-                "Перерыв    "
+                "Перерыв"
             }),
             text(Time::from_secs(entry.time).to_string()),
         ]
@@ -358,7 +358,7 @@ impl TimeKeeper {
             }
         }
 
-        scrollable(elements).into()
+        scrollable(elements).height(150).into()
     }
 
     fn main_page(&self) -> Element<Message> {
@@ -380,40 +380,25 @@ impl TimeKeeper {
         };
 
         let layout = column![
+            center(
+                column![
+                    text(format!(
+                        "{} {}",
+                        if self.is_work {
+                            "Работа"
+                        } else {
+                            "Перерыв"
+                        },
+                        Time::from_secs(self.elapsed_time)
+                    )),
+                    buttons
+                ]
+                .align_x(Center)
+                .spacing(10),
+            ),
             match self.show_stats {
-                false => center(
-                    column![
-                        text(format!(
-                            "{} {}",
-                            if self.is_work {
-                                "Работа"
-                            } else {
-                                "Перерыв"
-                            },
-                            Time::from_secs(self.elapsed_time)
-                        )),
-                        buttons
-                    ]
-                    .align_x(Center)
-                    .spacing(10),
-                ),
-                true => center(
-                    column![
-                        text(format!(
-                            "{} {}",
-                            if self.is_work {
-                                "Работа"
-                            } else {
-                                "Перерыв"
-                            },
-                            Time::from_secs(self.elapsed_time)
-                        )),
-                        buttons,
-                        self.stats_subpage(),
-                    ]
-                    .align_x(Center)
-                    .spacing(10),
-                ),
+                true => self.stats_subpage(),
+                false => row![].into(), // SHITCODE!
             },
             row![
                 button(text("Настройки").size(10))
