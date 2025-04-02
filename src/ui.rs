@@ -333,7 +333,13 @@ impl TimeKeeper {
         let img = image(image::Handle::from_bytes(PROG_LOGO))
             .width(64)
             .height(64);
-        let header = column![text(PROG_NAME).size(20), text(PROG_VER).size(15)].spacing(5);
+
+        let mut version_str = String::with_capacity(10);
+        version_str.push_str("Версия ");
+        version_str.push_str(PROG_VER);
+
+        let header =
+            column![self.header(PROG_NAME).size(20), text(version_str).size(15),].spacing(5);
         let about_devs = text(PROG_DEVS).size(15);
 
         let layout = column![
@@ -347,7 +353,7 @@ impl TimeKeeper {
     }
 
     fn settings_page(&self) -> Element<Message> {
-        let header = text("Настройки").size(25);
+        let header = self.header("Настройки")/*.size(25)*/;
 
         let layout = column![
             header,
