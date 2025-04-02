@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TimeKeeper - Главная</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <nav>
+    <div class="logo">
+      <img src="../assets/logo.png" alt="TimeKeeper Logo" width="50"> <!-- Adjust width as needed -->
+      <h1>TimeKeeper</h1>
+    </div>
+    <ul>
+      <li><a href="screenshots.html">Скриншоты</a></li>
+      <li><a href="download.html">Скачать</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h2>Что такое TimeKeeper?</h2>
+
+    <p>TimeKeeper - простейшая кроссплатформенная программа для учёта рабочего времени за ПК. Она нужна для того, чтобы
+      периодически напоминать пользователю о необходимости выполнения перерывов за работой на ПК.</p>
+
+    <div align="center">
+      <figure>
+        <img src="../assets/main_win.png" class="screenshot" width="300">
+        <figcaption>Больше скриншотов <a href="./screenshots.html">здесь</a>.</figcaption>
+      </figure>
+    </div>
+
+    <p>Многие люди не делают перерывы в работе за ПК. Как итог - снижение эффективности такой работы ввиду усталости,
+      проблемы с опорно-двигательным аппаратом из-за сидячего образа жизни и всевозможные нарушения зрения.
+      Следовательно, пользователям нужна какая-либо простейшая программа, которая, подстроившись под их ритм работы,
+      смогла бы напоминать им о необходимости сделать перерыв в работе.</p>
+    <p>Программа предназначена для использования людьми, подверженными высоким зрительным нагрузкам и/или ведущим
+      высокий образ жизни.</p>
+
+    <p>Основным понятием в программе является цикл <i>работа/перерыв</i>. По умолчанию время работы составляет 1 час 10
+      минут, время отдыха - 10 минут, однако пользователь может указывать и своё время, в том числе с точностью до
+      секунд. TimeKeeper умеет вести статистику таких циклов, чтобы пользователь имел представление о своей
+      производительности на протяжении рабочего дня.</p>
+
+    <h2>Преимущества</h2>
+
+    <ul>
+      <li><b>Offline.</b> TimeKeeper не требует для своей работы браузера и доступа в интернет.</li>
+      <li><b>Кроссплатформенность.</b> Наша программа корректно работает в операционных системах Windows и Linux и не
+        зависит от крупных внешних библиотек вроде GTK, Qt, KDE Frameworks и способна работать даже на слабых ПК.</li>
+      <li><b>Минималистичность.</b> TimeKeeper занимает не более 20 Мб на диске и способна работать даже на слабых ПК.
+      </li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>Copyright (C) 2025 Fimoz Dev.</p>
+    <p>
+      <a href="https://t.me/cov_id111">Telegram</a> |
+      <a href="https://github.com/mskrasnov">GitHub</a> |
+      <a href="https://crates.io/TimeKeeper">crates.io</a> |
+      <a href="https://flathub.org/">flathub.org</a>
+    </p>
+  </footer>
+
+  <script>
+    const screenshots = document.querySelectorAll('.screenshot');
+    screenshots.forEach(screenshot => {
+      let isEnlarged = false; // Флаг для отслеживания состояния
+      screenshot.addEventListener('click', () => {
+        isEnlarged = !isEnlarged; // Меняем состояние флага
+        screenshot.classList.toggle('enlarged');
+      });
+    });
+  </script>
+</body>
+
+</html>

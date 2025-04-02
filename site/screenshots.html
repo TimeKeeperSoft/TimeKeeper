@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TimeKeeper - Скриншоты</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <nav>
+    <div class="logo">
+      <img src="../assets/logo.png" alt="TimeKeeper Logo" width="50" id="logo-img">
+      <!-- Adjust width as needed -->
+      <h1>TimeKeeper</h1>
+    </div>
+    <ul>
+      <li><a href="screenshots.html">Скриншоты</a></li>
+      <li><a href="download.html">Скачать</a></li>
+    </ul>
+  </nav>
+
+  <div class="img_container">
+    <figure>
+      <img src="../assets/main_win.png" alt="Скриншот 1" class="screenshot">
+      <figcaption>Главная страница программы: время работы</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/main_win2.png" alt="Скриншот 2" class="screenshot">
+      <figcaption>Главная страница программы: перерыв</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/settings.png" alt="Настройки программы" class="screenshot">
+      <figcaption>Настройки программы</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/time_keeper_linux.png" alt="TimeKeeper на Linux" class="screenshot">
+      <figcaption>Работа программы в Linux Mint</figcaption>
+    </figure>
+  </div>
+
+  <script>
+    const logoImg = document.getElementById('logo-img');
+    logoImg.addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    const screenshots = document.querySelectorAll('.screenshot');
+    screenshots.forEach(screenshot => {
+      let isEnlarged = false; // Флаг для отслеживания состояния
+      screenshot.addEventListener('click', () => {
+        isEnlarged = !isEnlarged; // Меняем состояние флага
+        screenshot.classList.toggle('enlarged');
+      });
+    });
+  </script>
+
+  <footer>
+    <p>Copyright (C) 2025 Michail Krasnov</p>
+    <p>
+      <a href="https://t.me/cov_id111">Telegram</a> |
+      <a href="https://github.com/mskrasnov">GitHub</a> |
+      <a href="https://crates.io/TimeKeeper">crates.io</a> |
+      <a href="https://flathub.org/">flathub.org</a>
+    </p>
+  </footer>
+</body>
+
+</html>
