@@ -3,7 +3,7 @@
     <h1>⏳ TimeKeeper</h1>
     <p><b>Управляйте своим рабочим временем за ПК эффективно!</b></p>
     <h4>
-        <a href="assets/gallery.md">Скриншоты</a>
+        <a href="https://mskrasnov.github.io/TimeKeeper/screenshots.html">Скриншоты</a>
         <span> | </span>
         <a href="https://github.com/mskrasnov/TimeKeeper/releases">Релизы</a>
     </h4>
