@@ -16,13 +16,17 @@ use iced::{
     Element, Event, Length, Subscription, Task, Theme,
     advanced::graphics::image::image_rs::ImageFormat,
     event, time,
-    widget::{button, center, column, container, image, row, scrollable, text, vertical_space},
+    widget::{
+        button, center, column, container, horizontal_space, image, row, scrollable, text,
+        vertical_space,
+    },
     window::Settings,
 };
 
 use crate::{
     conf::Config,
     consts::{PROG_DEVS, PROG_LOGO, PROG_NAME, PROG_VER},
+    stats::Stats,
     time::Time,
     traits::Toml,
 };
@@ -59,8 +63,12 @@ struct TimeKeeper {
     /// Flag indicating whether to increase elapsed_time
     is_pause: bool,
 
+    show_stats: bool,
+
     /// Elapsed time (in seconds)
     elapsed_time: u16,
+
+    stats: Stats,
 
     wtime: Time,
     ftime: Time,
@@ -88,9 +96,22 @@ impl Default for TimeKeeper {
             }
         };
 
+        let stats = {
+            let stats = Stats::parse("./assets/TimeStats.toml");
+            match stats {
+                Ok(stats) => stats,
+                Err(why) => {
+                    eprintln!("Failed to parse statistics file:\n{why}");
+                    eprintln!("Using the empty value...");
+                    Stats::default()
+                }
+            }
+        };
+
         Self {
             is_work: true,
             is_pause: false,
+            show_stats: false,
             elapsed_time: 0,
             wtime: Time::try_from_secs(conf.work_time).unwrap_or_default(),
             ftime: Time::try_from_secs(conf.free_time).unwrap_or_default(),
@@ -100,6 +121,7 @@ impl Default for TimeKeeper {
                 Page::default()
             },
             conf,
+            stats,
         }
     }
 }
@@ -137,6 +159,7 @@ enum Message {
     AboutButtonPressed,
     SettingsButtonPressed,
     SaveSettingsButtonPressed,
+    ShowStatsButtonPressed,
 
     WTimeHChanged(String),
     WTimeMChanged(String),
@@ -244,6 +267,10 @@ impl TimeKeeper {
 
                 Task::none()
             }
+            Message::ShowStatsButtonPressed => {
+                self.show_stats = !self.show_stats;
+                Task::none()
+            }
             Message::WTimeHChanged(ref wtime) => {
                 self.set_time(widget::TimeType::Work, &message, wtime);
                 Task::none()
@@ -284,6 +311,10 @@ impl TimeKeeper {
         }
     }
 
+    fn stats_subpage(&self) -> Element<Message> {
+        scrollable(text(format!("{:#?}", &self.stats))).into()
+    }
+
     fn main_page(&self) -> Element<Message> {
         let buttons = row![
             button(if self.is_pause {
@@ -297,29 +328,52 @@ impl TimeKeeper {
         .spacing(5);
 
         let layout = column![
-            center(
-                column![
-                    text(format!(
-                        "{} {}",
-                        if self.is_work {
-                            "Работа"
-                        } else {
-                            "Перерыв"
-                        },
-                        Time::from_secs(self.elapsed_time)
-                    )),
-                    buttons
-                ]
-                .align_x(Center)
-                .spacing(10),
-            ),
+            match self.show_stats {
+                false => center(
+                    column![
+                        text(format!(
+                            "{} {}",
+                            if self.is_work {
+                                "Работа"
+                            } else {
+                                "Перерыв"
+                            },
+                            Time::from_secs(self.elapsed_time)
+                        )),
+                        buttons
+                    ]
+                    .align_x(Center)
+                    .spacing(10),
+                ),
+                true => center(
+                    column![
+                        text(format!(
+                            "{} {}",
+                            if self.is_work {
+                                "Работа"
+                            } else {
+                                "Перерыв"
+                            },
+                            Time::from_secs(self.elapsed_time)
+                        )),
+                        buttons,
+                        self.stats_subpage(),
+                    ]
+                    .align_x(Center)
+                    .spacing(10),
+                ),
+            },
             row![
                 button(text("Настройки").size(10))
                     .style(button::text)
                     .on_press(Message::SettingsButtonPressed),
                 button(text("О программе").size(10))
                     .style(button::text)
-                    .on_press(Message::AboutButtonPressed)
+                    .on_press(Message::AboutButtonPressed),
+                horizontal_space(),
+                button(text("Показать статистику").size(10))
+                    .style(button::text)
+                    .on_press(Message::ShowStatsButtonPressed),
             ],
         ]
         .spacing(5);

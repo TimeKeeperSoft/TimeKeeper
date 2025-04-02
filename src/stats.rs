@@ -36,3 +36,9 @@ impl Stats {
         Ok(())
     }
 }
+
+impl Default for Stats {
+    fn default() -> Self {
+        Self { stats: Vec::new() }
+    }
+}
