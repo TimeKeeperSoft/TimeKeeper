@@ -209,11 +209,11 @@ impl TimeKeeper {
             false => self.conf.free_time,
         };
 
-        if self.elapsed_time >= timer {
+        if self.elapsed_time > timer {
             self.stats.push(StatisticEntry {
                 date: 0,
                 is_wtime: self.is_work,
-                time: self.elapsed_time,
+                time: self.elapsed_time - 1,
             });
 
             self.is_work = !self.is_work;
@@ -306,7 +306,7 @@ impl TimeKeeper {
         }
     }
 
-    fn change_container_style(&self, style: &Theme) -> container::Style {
+    fn get_container_style(&self, style: &Theme) -> container::Style {
         let palette = style.palette();
         let backgound = palette.background;
         container::Style {
@@ -416,7 +416,7 @@ impl TimeKeeper {
         .spacing(5);
 
         container(layout)
-            .style(move |style: &Theme| self.change_container_style(style))
+            .style(move |style: &Theme| self.get_container_style(style))
             .into()
     }
 
