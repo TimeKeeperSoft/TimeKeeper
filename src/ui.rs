@@ -15,10 +15,11 @@ use iced::{
     Alignment::Center,
     Element, Event, Length, Subscription, Task, Theme,
     advanced::graphics::image::image_rs::ImageFormat,
+    alignment::Horizontal,
     event, time,
     widget::{
-        button, center, column, container, horizontal_space, image, row, scrollable, text,
-        vertical_space,
+        button, center, column, container, horizontal_rule, horizontal_space, image, row,
+        scrollable, text, vertical_space,
     },
     window::Settings,
 };
@@ -26,7 +27,7 @@ use iced::{
 use crate::{
     conf::Config,
     consts::{PROG_DEVS, PROG_LOGO, PROG_NAME, PROG_VER},
-    stats::Stats,
+    stats::{StatisticEntry, Stats},
     time::Time,
     traits::Toml,
 };
@@ -208,7 +209,13 @@ impl TimeKeeper {
             false => self.conf.free_time,
         };
 
-        if self.elapsed_time > timer {
+        if self.elapsed_time >= timer {
+            self.stats.push(StatisticEntry {
+                date: 0,
+                is_wtime: self.is_work,
+                time: self.elapsed_time,
+            });
+
             self.is_work = !self.is_work;
             self.reset_etime();
         }
@@ -311,8 +318,47 @@ impl TimeKeeper {
         }
     }
 
+    fn stats_info(&self, entry: StatisticEntry) -> Element<Message> {
+        let hcolor = self.theme().palette().text.scale_alpha(0.5);
+        let headers = column![
+            text("Дата:").color(hcolor),
+            text("Тип:").color(hcolor),
+            text("Длит.:").color(hcolor),
+        ]
+        .spacing(5)
+        .align_x(Horizontal::Right);
+
+        let values = column![
+            text(entry.date),
+            text(if entry.is_wtime {
+                "Работа    " // пробелы - костыль, но что поделаешь
+            // пробелы здесь нужны, чтобы скроллбар не закрывал
+            // часть этого текста.
+            } else {
+                "Перерыв    "
+            }),
+            text(Time::from_secs(entry.time).to_string()),
+        ]
+        .spacing(5);
+
+        row![headers, values].spacing(5).into()
+    }
+
     fn stats_subpage(&self) -> Element<Message> {
-        scrollable(text(format!("{:#?}", &self.stats))).into()
+        let mut elements = column![].spacing(5).align_x(Center);
+
+        if self.stats.stats.is_empty() {
+            elements = elements.push(text("Статистика пуста..."));
+        } else {
+            let mut len = self.stats.stats.len();
+            while len > 0 {
+                elements = elements.push(self.stats_info(self.stats.stats[len - 1]));
+                elements = elements.push(horizontal_rule(0));
+                len -= 1;
+            }
+        }
+
+        scrollable(elements).into()
     }
 
     fn main_page(&self) -> Element<Message> {
@@ -326,6 +372,12 @@ impl TimeKeeper {
             button("Стоп").on_press(Message::StopButtonPressed),
         ]
         .spacing(5);
+
+        let stats_btn_txt = if self.show_stats {
+            "Скрыть статистику"
+        } else {
+            "Показать статистику"
+        };
 
         let layout = column![
             match self.show_stats {
@@ -371,7 +423,7 @@ impl TimeKeeper {
                     .style(button::text)
                     .on_press(Message::AboutButtonPressed),
                 horizontal_space(),
-                button(text("Показать статистику").size(10))
+                button(text(stats_btn_txt).size(10))
                     .style(button::text)
                     .on_press(Message::ShowStatsButtonPressed),
             ],
