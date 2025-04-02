@@ -1,6 +1,6 @@
 //! Custom widgets for TimeKeeper
 
-use iced::widget::{column, horizontal_rule, horizontal_space, row, text, text_input};
+use iced::widget::{column, horizontal_rule, horizontal_space, row, text, text_input, Text};
 use iced::{Alignment::Center, Element};
 
 use super::{Message, TimeKeeper};
@@ -114,5 +114,12 @@ impl TimeKeeper {
         ]
         .spacing(10)
         .into()
+    }
+
+    pub fn header<'a>(&self, txt: &'a str) -> Text<'a> {
+        let hdr_color = self.theme().palette().danger;
+        let hdr_size = 25;
+
+        text(txt).color(hdr_color).size(hdr_size)
     }
 }
