@@ -1,7 +1,9 @@
 //! Statistics collection
 
 use crate::traits::Toml;
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
+use std::path::Path;
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Stats {
@@ -21,3 +23,16 @@ pub struct StatisticEntry {
 }
 
 impl Toml for Stats {}
+
+impl Stats {
+    pub fn push(&mut self, entry: StatisticEntry) {
+        self.stats.push(entry);
+    }
+
+    pub fn push_write<P: AsRef<Path>>(&mut self, entry: StatisticEntry, pth: P) -> Result<()> {
+        self.push(entry);
+        self.write(pth)?;
+
+        Ok(())
+    }
+}
