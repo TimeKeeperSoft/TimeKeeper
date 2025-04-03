@@ -216,6 +216,18 @@ impl TimeKeeper {
                 time: self.elapsed_time - 1,
             });
 
+            let mut len = self.stats.len();
+            if len > 10 {
+                while len > 10 {
+                    // Это может быть слишком медленным для больших векторов,
+                    // однако мы постараемся не допускать разрастания вектора
+                    // больше 10 элементов. Может быть, вместо этого лучше
+                    // использовать массив из 10 элементов Option<...>?
+                    self.stats.remove(0);
+                    len -= 1;
+                }
+            }
+
             self.is_work = !self.is_work;
             self.reset_etime();
         }
@@ -347,15 +359,21 @@ impl TimeKeeper {
     fn stats_subpage(&self) -> Element<Message> {
         let mut elements = column![].spacing(5).align_x(Center);
 
-        if self.stats.stats.is_empty() {
+        if self.stats.is_empty() {
             elements = elements.push(text("Статистика пуста..."));
         } else {
-            let mut len = self.stats.stats.len();
-            while len > 0 {
+            let mut len = self.stats.len();
+            let mut count = 10;
+
+            while len > 0 && count > 0 {
                 elements = elements.push(self.stats_info(self.stats.stats[len - 1]));
                 elements = elements.push(horizontal_rule(0));
+
                 len -= 1;
+                count -= 1;
             }
+
+            elements = elements.push(text("Показываются последние 10 циклов").size(10));
         }
 
         scrollable(elements).height(150).into()
@@ -389,9 +407,9 @@ impl TimeKeeper {
                         } else {
                             "Перерыв"
                         },
-                        Time::from_secs(self.elapsed_time)
+                        Time::from_secs(self.elapsed_time),
                     )),
-                    buttons
+                    buttons,
                 ]
                 .align_x(Center)
                 .spacing(10),

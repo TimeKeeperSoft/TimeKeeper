@@ -26,6 +26,18 @@ impl Stats {
     pub fn push(&mut self, entry: StatisticEntry) {
         self.stats.push(entry);
     }
+
+    pub fn len(&self) -> usize {
+        self.stats.len()
+    }
+
+    pub fn remove(&mut self, idx: usize) -> StatisticEntry {
+        self.stats.remove(idx)
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.stats.is_empty()
+    }
 }
 
 impl Default for Stats {
