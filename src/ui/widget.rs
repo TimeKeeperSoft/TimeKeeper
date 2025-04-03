@@ -1,6 +1,6 @@
 //! Custom widgets for TimeKeeper
 
-use iced::widget::{column, horizontal_rule, horizontal_space, row, text, text_input, Text};
+use iced::widget::{Text, column, horizontal_rule, horizontal_space, row, text, text_input};
 use iced::{Alignment::Center, Element};
 
 use super::{Message, TimeKeeper};
