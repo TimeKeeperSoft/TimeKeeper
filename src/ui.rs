@@ -20,7 +20,7 @@ use iced::{
     event, time,
     widget::{
         button, center, column, container, horizontal_rule, horizontal_space, image, row,
-        scrollable, text, vertical_space,
+        scrollable, text, tooltip, vertical_space,
     },
     window::Settings,
 };
@@ -439,16 +439,30 @@ impl TimeKeeper {
     }
 
     fn about_page(&self) -> Element<Message> {
-        let img = image(image::Handle::from_bytes(PROG_LOGO))
-            .width(64)
-            .height(64);
+        let img = widget::tooltip(
+            image(image::Handle::from_bytes(PROG_LOGO))
+                .width(64)
+                .height(64),
+            text(
+                "Это пока ещё тестовая версия. Вы можете помочь\n\
+                 нам, поделившись отзывом о работе программы:\n\
+                 https://github.com/mskrasnov/TimeKeeper/issues\n\n\
+                 Или отправив донат на карту основного\n\
+                 разработчика:       2202 2062 5233 5406 (Сбер)",
+            )
+            .size(12),
+            tooltip::Position::Bottom,
+        );
 
         let mut version_str = String::with_capacity(10);
         version_str.push_str("Версия ");
         version_str.push_str(PROG_VER);
 
-        let header =
-            column![self.header(PROG_NAME).size(20), text(version_str).size(15),].spacing(5);
+        let header = column![
+            widget::header(PROG_NAME).size(20),
+            text(version_str).size(15),
+        ]
+        .spacing(5);
         let about_devs = text(PROG_DEVS).size(15);
 
         let layout = column![
@@ -462,7 +476,7 @@ impl TimeKeeper {
     }
 
     fn settings_page(&self) -> Element<Message> {
-        let header = self.header("Настройки")/*.size(25)*/;
+        let header = widget::header("Настройки")/*.size(25)*/;
 
         let layout = column![
             header,

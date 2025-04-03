@@ -1,6 +1,11 @@
 //! Custom widgets for TimeKeeper
 
-use iced::widget::{Text, column, horizontal_rule, horizontal_space, row, text, text_input};
+use iced::Color;
+use iced::border::Radius;
+use iced::widget::tooltip::Position;
+use iced::widget::{
+    Text, Tooltip, column, container, horizontal_rule, horizontal_space, row, text, text_input,
+};
 use iced::{Alignment::Center, Element};
 
 use super::{Message, TimeKeeper};
@@ -115,9 +120,34 @@ impl TimeKeeper {
         .spacing(10)
         .into()
     }
+}
 
-    pub fn header<'a>(&self, txt: &'a str) -> Text<'a> {
-        let hdr_size = 25;
-        text(txt).size(hdr_size)
-    }
+pub fn header<'a>(txt: &'a str) -> Text<'a> {
+    let hdr_size = 25;
+    text(txt).size(hdr_size)
+}
+
+pub fn tooltip<'a, Message, C, T>(
+    content: C,
+    tooltip: T,
+    position: Position,
+) -> Tooltip<'a, Message>
+where
+    C: Into<Element<'a, Message>>,
+    T: Into<Element<'a, Message>>,
+    Message: 'a + Clone,
+{
+    iced::widget::tooltip(
+        content,
+        container(tooltip)
+            .style(|style| {
+                let mut style = container::transparent(style);
+                style.background = Some(iced::Background::Color(Color::BLACK.scale_alpha(0.8)));
+                style.border.radius = Radius::from(5);
+
+                style
+            })
+            .padding(3),
+        position,
+    )
 }
