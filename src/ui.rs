@@ -480,7 +480,7 @@ impl TimeKeeper {
 
         let layout = column![
             header,
-            scrollable(self.time_edit_box()),
+            self.time_edit_box(),
             vertical_space().height(Length::Fill),
             row![
                 button("Сохранить")
