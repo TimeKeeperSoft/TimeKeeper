@@ -354,6 +354,48 @@ impl TimeKeeper {
             "Показать статистику"
         };
 
+        // NOTE: раскомментировать при необходимости
+        /*let mut lay_items: Vec<Element<Message>> = Vec::with_capacity(3);
+        lay_items.push(
+            center(
+                column![
+                    text(format!(
+                        "{} {}",
+                        if self.is_work {
+                            "Работа"
+                        } else {
+                            "Перерыв"
+                        },
+                        Time::from_secs(self.elapsed_time),
+                    )),
+                    buttons,
+                ]
+                .align_x(Center)
+                .spacing(10),
+            )
+            .into(),
+        );
+
+        if self.show_stats {
+            lay_items.push(self.stats_subpage().into());
+        }
+
+        lay_items.push(
+            row![
+                button(text("Настройки").size(10))
+                    .style(button::text)
+                    .on_press(Message::SettingsButtonPressed),
+                button(text("О программе").size(10))
+                    .style(button::text)
+                    .on_press(Message::AboutButtonPressed),
+                horizontal_space(),
+                button(text(stats_btn_txt).size(10))
+                    .style(button::text)
+                    .on_press(Message::ShowStatsButtonPressed),
+            ]
+            .into(),
+        );*/
+
         let layout = column![
             center(
                 column![
@@ -391,6 +433,7 @@ impl TimeKeeper {
         .spacing(5);
 
         container(layout)
+            //container(Column::with_children(lay_items))
             .style(move |style: &Theme| utils::get_container_style(style, self.is_work))
             .into()
     }
