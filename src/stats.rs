@@ -11,7 +11,7 @@ pub struct Stats {
 #[derive(Debug, Deserialize, Serialize, Clone, Copy)]
 pub struct StatisticEntry {
     /// Date&time in UNIX Timestamp format
-    pub date: i64,
+    pub date: u64,
 
     /// Work or freetime?
     pub is_wtime: bool,
