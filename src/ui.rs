@@ -7,16 +7,17 @@
 //! ui().unwrap();
 //! ```
 
+mod utils;
 mod widget;
 
-use std::time::{Duration, SystemTime};
+use std::time::Duration;
 
 use iced::{
     Alignment::Center,
     Element, Event, Length, Subscription, Task, Theme,
     advanced::graphics::image::image_rs::ImageFormat,
     alignment::Horizontal,
-    color, event, time,
+    event, time,
     widget::{
         button, center, column, container, horizontal_rule, horizontal_space, image, row,
         scrollable, text, vertical_space,
@@ -83,31 +84,8 @@ struct TimeKeeper {
 
 impl Default for TimeKeeper {
     fn default() -> Self {
-        let mut is_err_create_conf = false;
-        let conf = {
-            let conf = Config::parse("./assets/TimeKeeper.toml");
-            match conf {
-                Ok(conf) => conf,
-                Err(why) => {
-                    is_err_create_conf = true;
-                    eprintln!("Failed to parse config:\n{why}");
-                    eprintln!("Using the default values...");
-                    Config::default()
-                }
-            }
-        };
-
-        let stats = {
-            let stats = Stats::parse("./assets/TimeStats.toml");
-            match stats {
-                Ok(stats) => stats,
-                Err(why) => {
-                    eprintln!("Failed to parse statistics file:\n{why}");
-                    eprintln!("Using the empty value...");
-                    Stats::default()
-                }
-            }
-        };
+        let (conf, is_err_create_conf) = utils::get_config_from_file("./assets/TimeKeeper.toml");
+        let stats = utils::get_stats_from_file("./assets/TimeStats.toml");
 
         Self {
             is_work: true,
@@ -211,27 +189,11 @@ impl TimeKeeper {
 
         if self.elapsed_time > timer {
             self.stats.push(StatisticEntry {
-                date: {
-                    let sys_time = SystemTime::now()
-                        .duration_since(SystemTime::UNIX_EPOCH)
-                        .unwrap_or(Duration::from_secs(0));
-                    sys_time.as_secs()
-                },
+                date: utils::get_current_date(),
                 is_wtime: self.is_work,
                 time: self.elapsed_time - 1,
             });
-
-            let mut len = self.stats.len();
-            if len > 10 {
-                while len > 10 {
-                    // Это может быть слишком медленным для больших векторов,
-                    // однако мы постараемся не допускать разрастания вектора
-                    // больше 10 элементов. Может быть, вместо этого лучше
-                    // использовать массив из 10 элементов Option<...>?
-                    self.stats.remove(0);
-                    len -= 1;
-                }
-            }
+            self.stats.remove_unneeded();
 
             self.is_work = !self.is_work;
             self.reset_etime();
@@ -286,6 +248,8 @@ impl TimeKeeper {
                 if self.page == Page::Settings {
                     self.conf.work_time = self.wtime.to_secs();
                     self.conf.free_time = self.ftime.to_secs();
+
+                    // TODO: replace this .unwrap()!
                     self.conf.write("./assets/TimeKeeper.toml").unwrap();
                 }
 
@@ -323,29 +287,8 @@ impl TimeKeeper {
         }
     }
 
-    fn get_container_style(&self, style: &Theme) -> container::Style {
-        let palette = style.palette();
-        let backgound = palette.background;
-        container::Style {
-            background: Some(iced::Background::Color(match self.is_work {
-                true => backgound,
-                false => color!(0xd79921),
-            })),
-            ..Default::default()
-        }
-    }
-
-    fn fmt_date(&self, s: u64) -> String {
-        let days = s / 86400;
-        let hours = ((s - days * 86400) / 3600) % 24;
-        let mins = (((s - days * 86400) / 3600 * hours) / 60) % 60;
-        let secs = (((s - days * 86400) - 3600 * hours) - 60 * mins) % 60;
-
-        format!("{days} {hours}:{mins}:{secs}")
-    }
-
     fn stats_info(&self, entry: StatisticEntry) -> Element<Message> {
-        let hcolor = self.theme().palette().text.scale_alpha(0.5);
+        let hcolor = utils::get_dimmed_text_color(&self.theme());
         let headers = column![
             text("Дата:").color(hcolor),
             text("Тип:").color(hcolor),
@@ -355,7 +298,7 @@ impl TimeKeeper {
         .align_x(Horizontal::Right);
 
         let values = column![
-            text(self.fmt_date(entry.date)),
+            text(utils::fmt_date(entry.date)),
             text(if entry.is_wtime {
                 "Работа" // пробелы - костыль, но что поделаешь
             // пробелы здесь нужны, чтобы скроллбар не закрывал
@@ -448,7 +391,7 @@ impl TimeKeeper {
         .spacing(5);
 
         container(layout)
-            .style(move |style: &Theme| self.get_container_style(style))
+            .style(move |style: &Theme| utils::get_container_style(style, self.is_work))
             .into()
     }
 

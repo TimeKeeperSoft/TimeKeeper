@@ -38,6 +38,20 @@ impl Stats {
     pub fn is_empty(&self) -> bool {
         self.stats.is_empty()
     }
+
+    pub fn remove_unneeded(&mut self) {
+        let mut len = self.len();
+        if len > 10 {
+            while len > 10 {
+                // Это может быть слишком медленным для больших векторов,
+                // однако мы постараемся не допускать разрастания вектора
+                // больше 10 элементов. Может быть, вместо этого лучше
+                // использовать массив из 10 элементов Option<...>?
+                self.stats.remove(0);
+                len -= 1;
+            }
+        }
+    }
 }
 
 impl Default for Stats {
