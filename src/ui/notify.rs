@@ -13,7 +13,9 @@ use winrt_notification::{Duration, Sound, Toast};
 #[cfg(unix)]
 use notify_rust::Notification;
 
-pub struct Notify {
+use crate::consts::PROG_NAME;
+
+struct Notify {
     title: String,
     text: String,
 }
@@ -34,7 +36,7 @@ impl Notify {
     pub fn show(&self) -> Result<()> {
         use winrt_notification::IconCrop;
 
-        Toast::new(Toast::POWERSHELL_APP_ID) // TODO:
+        Toast::new(Toast::POWERSHELL_APP_ID) // TODO: replace this in the future
             .title(&self.title)
             .text1(&self.text)
             .sound(Some(Sound::SMS))
@@ -59,4 +61,12 @@ impl Notify {
             .show()?;
         Ok(())
     }
+}
+
+pub fn notify_send(is_work: bool) {
+    let n_text = match is_work {
+        false => "Ура! Мне сново надо работать!",
+        true => "Пришла пора немного передохнУть. Или передОхнуть.",
+    };
+    let _ = Notify::new(PROG_NAME, n_text).show();
 }

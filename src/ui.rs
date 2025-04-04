@@ -7,9 +7,9 @@
 //! ui().unwrap();
 //! ```
 
+mod notify;
 mod utils;
 mod widget;
-mod notify;
 
 use std::time::Duration;
 
@@ -187,14 +187,6 @@ impl TimeKeeper {
         self.stats.remove_unneeded();
     }
 
-    fn notify_send(&self) {
-        let n_text = match self.is_work {
-            false => "Ура! Мне сново надо работать!",
-            true => "Пришла пора немного передохнУть. Или передОхнуть.",
-        };
-        let _ = notify::Notify::new(PROG_NAME, n_text).show();
-    }
-
     fn tick_time(&mut self) {
         self.elapsed_time += 1;
 
@@ -207,7 +199,7 @@ impl TimeKeeper {
 
         if self.elapsed_time > timer {
             self.stats_push();
-            self.notify_send();
+            notify::notify_send(self.is_work);
 
             self.is_work = !self.is_work;
             self.reset_etime();
