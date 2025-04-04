@@ -25,6 +25,7 @@ use iced::{
     },
     window::Settings,
 };
+use widget::{text_small, txt_tooltip};
 
 use crate::{
     conf::Config,
@@ -315,7 +316,7 @@ impl TimeKeeper {
                 count -= 1;
             }
 
-            elements = elements.push(text("Показываются последние 10 циклов").size(10));
+            elements = elements.push(text_small("Показываются последние 10 циклов"));
         }
 
         scrollable(elements).height(150).into()
@@ -403,14 +404,14 @@ impl TimeKeeper {
                 false => row![].into(), // SHITCODE!
             },
             row![
-                button(text("Настройки").size(10))
+                button(text_small("Настройки"))
                     .style(button::text)
                     .on_press(Message::SettingsButtonPressed),
-                button(text("О программе").size(10))
+                button(text_small("О программе"))
                     .style(button::text)
                     .on_press(Message::AboutButtonPressed),
                 horizontal_space(),
-                button(text(stats_btn_txt).size(10))
+                button(text_small(stats_btn_txt))
                     .style(button::text)
                     .on_press(Message::ShowStatsButtonPressed),
             ],
@@ -424,18 +425,15 @@ impl TimeKeeper {
     }
 
     fn about_page(&self) -> Element<Message> {
-        let img = widget::tooltip(
+        let img = txt_tooltip(
             image(image::Handle::from_bytes(PROG_LOGO))
                 .width(64)
                 .height(64),
-            text(
-                "Это пока ещё тестовая версия. Вы можете помочь\n\
-                 нам, поделившись отзывом о работе программы:\n\
-                 https://github.com/mskrasnov/TimeKeeper/issues\n\n\
-                 Или отправив донат на карту основного\n\
-                 разработчика:       2202 2062 5233 5406 (Сбер)",
-            )
-            .size(12),
+            "Это пока ещё тестовая версия. Вы можете помочь\n\
+                  нам, поделившись отзывом о работе программы:\n\
+                  https://github.com/mskrasnov/TimeKeeper/issues\n\n\
+                  Или отправив донат на карту основного\n\
+                  разработчика:       2202 2062 5233 5406 (Сбер)",
             tooltip::Position::Bottom,
         );
 
@@ -461,7 +459,7 @@ impl TimeKeeper {
     }
 
     fn settings_page(&self) -> Element<Message> {
-        let header = widget::header("Настройки")/*.size(25)*/;
+        let header = widget::header("Настройки");
 
         let layout = column![
             header,

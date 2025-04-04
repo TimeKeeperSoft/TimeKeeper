@@ -34,13 +34,10 @@ impl TimeKeeper {
 
         column![
             row![
-                tooltip(
+                txt_tooltip(
                     text("Работа"),
-                    text(
-                        "Шаг изменения - 10 минут. Зажмите\n\
-                         Shift, чтобы изменять время поминутно"
-                    )
-                    .size(10),
+                    "Шаг изменения - 10 минут. Зажмите\n\
+                     Shift, чтобы изменять время поминутно",
                     Position::Bottom,
                 ),
                 horizontal_rule(0),
@@ -49,22 +46,19 @@ impl TimeKeeper {
             .align_y(Center),
             row![
                 wtime_slider,
-                tooltip(
+                txt_tooltip(
                     time_box(Time::from(self.wtime)),
-                    text("Время изменяется от 30 минут до 3 часов").size(10),
+                    "Время изменяется от 30 минут до 3 часов",
                     Position::Bottom
                 ),
             ]
             .spacing(5)
             .align_y(Center),
             row![
-                tooltip(
+                txt_tooltip(
                     text("Перерыв"),
-                    text(
-                        "Изменение времени поминутно. Зажмите\n\
-                         Shift, чтобы установить шаг в 10 минут"
-                    )
-                    .size(10),
+                    "Изменение времени поминутно. Зажмите\n\
+                     Shift, чтобы установить шаг в 10 минут",
                     Position::Bottom
                 ),
                 horizontal_rule(0),
@@ -73,9 +67,9 @@ impl TimeKeeper {
             .align_y(Center),
             row![
                 ftime_slider,
-                tooltip(
+                txt_tooltip(
                     time_box(Time::from(self.ftime)),
-                    text("Время изменяется от 1 до 30 минут").size(10),
+                    "Время изменяется от 1 до 30 минут",
                     Position::Bottom
                 ),
             ]
@@ -129,6 +123,12 @@ pub fn header<'a>(txt: &'a str) -> Text<'a> {
     text(txt).size(hdr_size)
 }
 
+/// Small text (10px)
+pub fn text_small<'a>(txt: &'a str) -> Text<'a> {
+    let txt_size = 10;
+    text(txt).size(txt_size)
+}
+
 /// Custom tooltip widget. Draw tooltip in the `container` widget with custom
 /// styles
 pub fn tooltip<'a, Message, C, T>(
@@ -154,4 +154,16 @@ where
             .padding(3),
         position,
     )
+}
+
+pub fn txt_tooltip<'a, Message, C>(
+    content: C,
+    txt: &'a str,
+    position: Position,
+) -> Tooltip<'a, Message>
+where
+    C: Into<Element<'a, Message>>,
+    Message: 'a + Clone,
+{
+    tooltip(content, text(txt).size(12), position)
 }
