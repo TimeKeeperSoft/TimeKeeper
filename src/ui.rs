@@ -193,7 +193,7 @@ impl TimeKeeper {
             false => self.conf.free_time,
         };
 
-        if self.elapsed_time > timer {
+        if self.elapsed_time >= timer {
             self.stats_push();
             notify::notify_send(self.is_work);
 
@@ -382,17 +382,22 @@ impl TimeKeeper {
             .into(),
         );*/
 
+        let sub_time = match self.is_work {
+            true => self.conf.work_time,
+            false => self.conf.free_time,
+        };
+
         let layout = column![
             center(
                 column![
                     text(format!(
-                        "{} {}",
+                        "{} | {}",
                         if self.is_work {
                             "Работа"
                         } else {
                             "Перерыв"
                         },
-                        Time::from_secs(self.elapsed_time),
+                        Time::from_secs(sub_time - self.elapsed_time),
                     )),
                     buttons,
                 ]
