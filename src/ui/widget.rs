@@ -122,11 +122,14 @@ impl TimeKeeper {
     }
 }
 
+/// Simple header...
 pub fn header<'a>(txt: &'a str) -> Text<'a> {
     let hdr_size = 25;
     text(txt).size(hdr_size)
 }
 
+/// Custom tooltip widget. Draw tooltip in the `container` widget with custom
+/// styles
 pub fn tooltip<'a, Message, C, T>(
     content: C,
     tooltip: T,
