@@ -141,13 +141,8 @@ enum Message {
     SaveSettingsButtonPressed,
     ShowStatsButtonPressed,
 
-    WTimeHChanged(String),
-    WTimeMChanged(String),
-    WTimeSChanged(String),
-
-    FTimeHChanged(String),
-    FTimeMChanged(String),
-    FTimeSChanged(String),
+    WTimeChanged(u16),
+    FTimeChanged(u16),
 }
 
 impl TimeKeeper {
@@ -265,28 +260,12 @@ impl TimeKeeper {
                 self.show_stats = !self.show_stats;
                 Task::none()
             }
-            Message::WTimeHChanged(ref wtime) => {
-                self.set_time(widget::TimeType::Work, &message, wtime);
+            Message::FTimeChanged(ftime) => {
+                self.ftime = Time::from_secs(ftime);
                 Task::none()
             }
-            Message::WTimeMChanged(ref wtime) => {
-                self.set_time(widget::TimeType::Work, &message, wtime);
-                Task::none()
-            }
-            Message::WTimeSChanged(ref wtime) => {
-                self.set_time(widget::TimeType::Work, &message, wtime);
-                Task::none()
-            }
-            Message::FTimeHChanged(ref ftime) => {
-                self.set_time(widget::TimeType::Free, &message, ftime);
-                Task::none()
-            }
-            Message::FTimeMChanged(ref ftime) => {
-                self.set_time(widget::TimeType::Free, &message, ftime);
-                Task::none()
-            }
-            Message::FTimeSChanged(ref ftime) => {
-                self.set_time(widget::TimeType::Free, &message, ftime);
+            Message::WTimeChanged(wtime) => {
+                self.wtime = Time::from_secs(wtime);
                 Task::none()
             }
             Message::Event(event) => self.handle_events(event),
@@ -486,7 +465,7 @@ impl TimeKeeper {
 
         let layout = column![
             header,
-            self.time_edit_box(),
+            self.time_edit_box2(),
             vertical_space().height(Length::Fill),
             row![
                 button("Сохранить")

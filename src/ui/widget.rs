@@ -1,15 +1,17 @@
 //! Custom widgets for TimeKeeper
 
-use iced::Color;
 use iced::border::Radius;
+use iced::widget::slider::Rail;
 use iced::widget::tooltip::Position;
 use iced::widget::{
-    Text, Tooltip, column, container, horizontal_rule, horizontal_space, row, text, text_input,
+    Container, Text, Tooltip, column, container, horizontal_rule, horizontal_space, row, slider,
+    text,
 };
 use iced::{Alignment::Center, Element};
+use iced::{Color, Theme, color};
 
 use super::{Message, TimeKeeper};
-use crate::time;
+use crate::time::Time;
 
 pub enum TimeType {
     Work,
@@ -17,108 +19,110 @@ pub enum TimeType {
 }
 
 impl TimeKeeper {
-    pub fn set_time(&mut self, time_type: TimeType, message: &Message, inp_time: &str) {
-        let mut time = match time_type {
-            TimeType::Free => self.ftime,
-            TimeType::Work => self.wtime,
-        };
-
-        match message {
-            Message::FTimeHChanged(_) | Message::WTimeHChanged(_) => {
-                if inp_time.is_empty() {
-                    time.hours = 0;
-                    return;
-                } else {
-                    let hours = inp_time.parse::<u8>();
-                    if let Ok(hours) = hours {
-                        time.change_value(hours, time::TimeType::Hours);
-                    } else {
-                        time.change_value(0, time::TimeType::Hours);
-                    }
-                }
-            }
-            Message::FTimeMChanged(_) | Message::WTimeMChanged(_) => {
-                if inp_time.is_empty() {
-                    time.mins = 0;
-                    return;
-                } else {
-                    let mins = inp_time.parse::<u8>();
-                    if let Ok(mins) = mins {
-                        time.change_value(mins, time::TimeType::Mins);
-                    }
-                }
-            }
-            Message::FTimeSChanged(_) | Message::WTimeSChanged(_) => {
-                if inp_time.is_empty() {
-                    time.secs = 0;
-                    return;
-                } else {
-                    let secs = inp_time.parse::<u8>();
-                    if let Ok(secs) = secs {
-                        time.change_value(secs, time::TimeType::Secs);
-                    }
-                }
-            }
-            _ => {}
-        }
-
-        match time_type {
-            TimeType::Free => self.ftime = time,
-            TimeType::Work => self.wtime = time,
-        }
-    }
-
-    pub fn time_edit_box(&self) -> Element<Message> {
-        let work_headers = row![
-            text("Час").size(10),
-            horizontal_space(),
-            text("Мин").size(10),
-            horizontal_space(),
-            text("Сек").size(10),
-        ]
-        .spacing(5);
-        let free_headers = row![
-            text("Час").size(10),
-            horizontal_space(),
-            text("Мин").size(10),
-            horizontal_space(),
-            text("Сек").size(10),
-        ]
-        .spacing(5);
-
-        let work_inputs = row![
-            text_input("Час", &self.wtime.hours.to_string()).on_input(Message::WTimeHChanged),
-            text_input("Мин", &self.wtime.mins.to_string()).on_input(Message::WTimeMChanged),
-            text_input("Сек", &self.wtime.secs.to_string()).on_input(Message::WTimeSChanged),
-        ]
-        .spacing(5);
-        let free_inputs = row![
-            text_input("Час", &self.ftime.hours.to_string()).on_input(Message::FTimeHChanged),
-            text_input("Мин", &self.ftime.mins.to_string()).on_input(Message::FTimeMChanged),
-            text_input("Сек", &self.ftime.secs.to_string()).on_input(Message::FTimeSChanged),
-        ]
-        .spacing(5);
+    pub fn time_edit_box2(&self) -> Element<Message> {
+        let wtime_slider = slider(1800..=10800, self.wtime.to_secs(), Message::WTimeChanged)
+            .step(600u16)
+            .shift_step(60u16)
+            .style(|theme: &Theme, status: slider::Status| {
+                slider_style(TimeType::Work, theme, status)
+            });
+        let ftime_slider = slider(60..=1800, self.ftime.to_secs(), Message::FTimeChanged)
+            .step(60u16)
+            .shift_step(600u16)
+            .style(|theme: &Theme, status: slider::Status| {
+                slider_style(TimeType::Free, theme, status)
+            });
 
         column![
-            column![
-                row![text("Работа"), horizontal_rule(0),]
-                    .spacing(5)
-                    .align_y(Center),
-                work_headers,
-                work_inputs,
+            row![
+                tooltip(
+                    text("Работа"),
+                    text(
+                        "Шаг изменения - 10 минут. Зажмите\n\
+                         Shift, чтобы изменять время поминутно"
+                    )
+                    .size(10),
+                    Position::Bottom,
+                ),
+                horizontal_rule(0),
             ]
-            .spacing(5),
-            column![
-                row![text("Перерыв"), horizontal_rule(0),]
-                    .spacing(5)
-                    .align_y(Center),
-                free_headers,
-                free_inputs,
+            .spacing(5)
+            .align_y(Center),
+            row![
+                wtime_slider.width(210),
+                horizontal_space(),
+                tooltip(
+                    time_box(Time::from(self.wtime)),
+                    text("Время изменяется от 30 минут до 3 часов").size(10),
+                    Position::Bottom
+                ),
             ]
-            .spacing(5),
+            .spacing(5)
+            .align_y(Center),
+            row![
+                tooltip(
+                    text("Перерыв"),
+                    text(
+                        "Изменение времени поминутно. Зажмите\n\
+                         Shift, чтобы установить шаг в 10 минут"
+                    )
+                    .size(10),
+                    Position::Bottom
+                ),
+                horizontal_rule(0),
+            ]
+            .spacing(5)
+            .align_y(Center),
+            row![
+                ftime_slider.width(210),
+                horizontal_space(),
+                tooltip(
+                    time_box(Time::from(self.ftime)),
+                    text("Время изменяется от 1 до 30 минут").size(10),
+                    Position::Bottom
+                ),
+            ]
+            .spacing(5)
+            .align_y(Center),
         ]
-        .spacing(10)
+        .spacing(5)
         .into()
+    }
+}
+
+fn time_box<'a>(time: Time) -> Container<'a, Message> {
+    container(text(format!("{time}")))
+        .style(|style: &Theme| {
+            let palette = style.extended_palette();
+            container::Style {
+                border: iced::Border {
+                    radius: 5.into(),
+                    ..Default::default()
+                },
+                background: Some(palette.secondary.base.color.into()),
+                ..Default::default()
+            }
+        })
+        .padding(3)
+}
+
+fn slider_style(time_type: TimeType, theme: &Theme, status: slider::Status) -> slider::Style {
+    let color = match time_type {
+        TimeType::Work => color!(0x8f3f71),
+        TimeType::Free => color!(0xd79921),
+    };
+    let palette = theme.extended_palette();
+    slider::Style {
+        rail: Rail {
+            backgrounds: (color.into(), palette.secondary.base.color.into()),
+            width: 4.,
+            border: iced::Border {
+                radius: 2.0.into(),
+                width: 0.,
+                color: Color::TRANSPARENT,
+            },
+        },
+        ..slider::default(theme, status)
     }
 }
 
