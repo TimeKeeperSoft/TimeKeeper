@@ -9,6 +9,7 @@
 
 mod utils;
 mod widget;
+mod notify;
 
 use std::time::Duration;
 
@@ -177,6 +178,23 @@ impl TimeKeeper {
         self.elapsed_time = 0;
     }
 
+    fn stats_push(&mut self) {
+        self.stats.push(StatisticEntry {
+            date: utils::get_current_date(),
+            is_wtime: self.is_work,
+            time: self.elapsed_time - 1,
+        });
+        self.stats.remove_unneeded();
+    }
+
+    fn notify_send(&self) {
+        let n_text = match self.is_work {
+            false => "Ура! Мне сново надо работать!",
+            true => "Пришла пора немного передохнУть. Или передОхнуть.",
+        };
+        let _ = notify::Notify::new(PROG_NAME, n_text).show();
+    }
+
     fn tick_time(&mut self) {
         self.elapsed_time += 1;
 
@@ -188,12 +206,8 @@ impl TimeKeeper {
         };
 
         if self.elapsed_time > timer {
-            self.stats.push(StatisticEntry {
-                date: utils::get_current_date(),
-                is_wtime: self.is_work,
-                time: self.elapsed_time - 1,
-            });
-            self.stats.remove_unneeded();
+            self.stats_push();
+            self.notify_send();
 
             self.is_work = !self.is_work;
             self.reset_etime();

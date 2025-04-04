@@ -22,3 +22,9 @@ iced = { version = "0.13.1", default-features = false, features = [
 serde = { version = "1.0.219", features = ["derive"] }
 tokio = { version = "1.44.1", features = ["full"] }
 toml = "0.8.20"
+
+[target.'cfg(windows)'.dependencies]
+winrt-notification = "0.5.1"
+
+[target.'cfg(unix)'.dependencies]
+notify-rust = "4.11.6"
