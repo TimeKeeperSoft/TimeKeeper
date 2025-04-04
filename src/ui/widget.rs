@@ -18,7 +18,7 @@ pub enum TimeType {
 }
 
 impl TimeKeeper {
-    pub fn time_edit_box2(&self) -> Element<Message> {
+    pub fn time_edit_box(&self) -> Element<Message> {
         let wtime_slider = slider(1800..=10800, self.wtime.to_secs(), Message::WTimeChanged)
             .step(600u16)
             .shift_step(60u16)
