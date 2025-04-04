@@ -22,13 +22,6 @@ pub struct Time {
     pub secs: u8,
 }
 
-#[derive(Debug, Clone, Copy)]
-pub enum TimeType {
-    Hours,
-    Mins,
-    Secs,
-}
-
 impl Default for Time {
     fn default() -> Self {
         Self {
@@ -71,42 +64,6 @@ impl Time {
             mins: m,
             secs: s,
         })
-    }
-
-    pub fn change_value(&mut self, val: u8, val_type: TimeType) {
-        match val_type {
-            TimeType::Hours => {
-                if val == 3 {
-                    self.hours = 3;
-                    self.mins = 0;
-                    self.secs = 0;
-                } else {
-                    self.hours = val;
-                }
-            }
-            TimeType::Mins => {
-                if val >= 60 && val < 120 {
-                    self.hours += 1;
-                    self.mins = val - 60;
-                } else if val >= 120 {
-                    self.hours += 2;
-                    self.mins = val - 120;
-                } else {
-                    self.mins = val;
-                }
-            }
-            TimeType::Secs => {
-                if val >= 60 && val < 120 {
-                    self.mins += 1;
-                    self.secs = val - 60;
-                } else if val >= 120 {
-                    self.mins += 2;
-                    self.secs = val - 120;
-                } else {
-                    self.secs = val;
-                }
-            }
-        }
     }
 
     /// Creates a new instance of `Time` from seconds
