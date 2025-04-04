@@ -4,8 +4,7 @@ use iced::border::Radius;
 use iced::widget::slider::Rail;
 use iced::widget::tooltip::Position;
 use iced::widget::{
-    Container, Text, Tooltip, column, container, horizontal_rule, horizontal_space, row, slider,
-    text,
+    Container, Text, Tooltip, column, container, horizontal_rule, row, slider, text,
 };
 use iced::{Alignment::Center, Element};
 use iced::{Color, Theme, color};
@@ -49,8 +48,7 @@ impl TimeKeeper {
             .spacing(5)
             .align_y(Center),
             row![
-                wtime_slider.width(210),
-                horizontal_space(),
+                wtime_slider,
                 tooltip(
                     time_box(Time::from(self.wtime)),
                     text("Время изменяется от 30 минут до 3 часов").size(10),
@@ -74,8 +72,7 @@ impl TimeKeeper {
             .spacing(5)
             .align_y(Center),
             row![
-                ftime_slider.width(210),
-                horizontal_space(),
+                ftime_slider,
                 tooltip(
                     time_box(Time::from(self.ftime)),
                     text("Время изменяется от 1 до 30 минут").size(10),
@@ -91,7 +88,7 @@ impl TimeKeeper {
 }
 
 fn time_box<'a>(time: Time) -> Container<'a, Message> {
-    container(text(format!("{time}")))
+    container(text(time.to_string_without_secs()))
         .style(|style: &Theme| {
             let palette = style.extended_palette();
             container::Style {

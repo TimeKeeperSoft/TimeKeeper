@@ -134,6 +134,15 @@ impl Time {
 
         s
     }
+
+    pub fn to_string_without_secs(&self) -> String {
+        format!(
+            "{}:{}{}",
+            self.hours,
+            if self.mins < 10 { "0" } else { "" },
+            self.mins
+        )
+    }
 }
 
 impl Display for Time {
