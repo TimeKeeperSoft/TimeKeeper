@@ -6,6 +6,11 @@ description = "Программа для учёта времени работы 
 build = "build.rs"
 authors = ["Michail Krasnov <https://github.com/mskrasnov>"]
 license = "MIT"
+homepage = "https://mskrasnov.github.io/TimeKeeper/"
+repository = "https://github.com/mskrasnov/TimeKeeper"
+readme = "README.md"
+keywords = ["time", "timer", "coutdown", "timekeeper", "time_keeper", "TimeKeeper"]
+categories = ["date-and-time"]
 
 [profile.release]
 lto = true
