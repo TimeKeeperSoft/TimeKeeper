@@ -318,9 +318,7 @@ impl TimeKeeper {
                     Task::none()
                 }
             }
-            Message::WindowOpened(id) => {
-                window::maximize(id, true)
-            }
+            Message::WindowOpened(id) => window::maximize(id, true),
             Message::WindowClosed(id) => {
                 self.win_id = None;
                 window::close(id)
@@ -342,9 +340,7 @@ impl TimeKeeper {
         let values = column![
             text(utils::fmt_date(entry.date)),
             text(if entry.is_wtime {
-                "Работа" // пробелы - костыль, но что поделаешь
-            // пробелы здесь нужны, чтобы скроллбар не закрывал
-            // часть этого текста.
+                "Работа"
             } else {
                 "Перерыв"
             }),
