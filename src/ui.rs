@@ -190,7 +190,7 @@ impl TimeKeeper {
         self.stats.push(StatisticEntry {
             date: utils::get_current_date(),
             is_wtime: self.is_work,
-            time: self.elapsed_time - 1,
+            time: self.elapsed_time,
         });
         self.stats.remove_unneeded();
     }
