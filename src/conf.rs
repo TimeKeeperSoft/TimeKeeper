@@ -14,6 +14,9 @@ pub struct Config {
     ///
     /// Допускается использование значений от 1 до 65535 (ок. 18 часов)
     pub free_time: u16,
+
+    /// Отсылать ли на рабочий стол уведомления?
+    pub desktop_notifications: bool,
 }
 
 impl Default for Config {
@@ -23,6 +26,7 @@ impl Default for Config {
             //free_time: 900,  // 15 минут отдыха
             work_time: 15,
             free_time: 10,
+            desktop_notifications: true,
         }
     }
 }

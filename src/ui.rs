@@ -20,7 +20,7 @@ use iced::{
     alignment::Horizontal,
     event, time,
     widget::{
-        button, center, column, container, horizontal_rule, horizontal_space, image, row,
+        button, center, checkbox, column, container, horizontal_rule, horizontal_space, image, row,
         scrollable, text, tooltip, vertical_space,
     },
     window::{self, Settings},
@@ -148,6 +148,7 @@ enum Message {
 
     WTimeChanged(u16),
     FTimeChanged(u16),
+    NotificationsToggled(bool),
 
     OpenWindow,
     WindowOpened(window::Id),
@@ -171,7 +172,9 @@ impl TimeKeeper {
         let mut subs = Vec::with_capacity(3);
 
         subs.push(event::listen().map(Message::Event));
-        subs.push(window::close_events().map(Message::WindowClosed));
+        if !self.conf.desktop_notifications {
+            subs.push(window::close_events().map(Message::WindowClosed));
+        }
         if !self.is_pause {
             subs.push(time::every(Duration::from_secs(1)).map(|_| Message::TickTime));
         }
@@ -204,8 +207,9 @@ impl TimeKeeper {
 
         if self.elapsed_time >= timer {
             self.stats_push();
-            notify::notify_send(self.is_work);
-
+            if self.conf.desktop_notifications {
+                notify::notify_send(self.is_work);
+            }
             self.is_work = !self.is_work;
             self.reset_etime();
         }
@@ -237,10 +241,20 @@ impl TimeKeeper {
         match message {
             Message::TickTime => {
                 self.tick_time();
-                if self.is_work && self.win_id.is_some() {
-                    self.update(Message::WindowClosed(self.win_id.unwrap()))
+                if self.conf.desktop_notifications {
+                    if self.win_id.is_some() {
+                        self.update(Message::WindowClosed(self.win_id.unwrap()))
+                    } else {
+                        Task::none()
+                    }
                 } else {
-                    self.update(Message::OpenWindow)
+                    if self.is_work && self.win_id.is_some() {
+                        // We can use .unwrap() method of self.win_id safety
+                        // because was 'is_some()' check above.
+                        self.update(Message::WindowClosed(self.win_id.unwrap()))
+                    } else {
+                        self.update(Message::OpenWindow)
+                    }
                 }
             }
             Message::StartButtonPressed => {
@@ -282,6 +296,10 @@ impl TimeKeeper {
                 self.wtime = Time::from_secs(wtime);
                 Task::none()
             }
+            Message::NotificationsToggled(state) => {
+                self.conf.desktop_notifications = state;
+                Task::none()
+            }
             Message::OpenWindow => {
                 if !self.is_work && self.win_id.is_none() {
                     let win_settings = Settings {
@@ -290,7 +308,7 @@ impl TimeKeeper {
                         resizable: false,
                         decorations: false,
                         level: window::Level::AlwaysOnTop,
-                        // exit_on_close_request: false,
+                        exit_on_close_request: false,
                         ..Default::default()
                     };
                     let win = window::open(win_settings);
@@ -300,7 +318,9 @@ impl TimeKeeper {
                     Task::none()
                 }
             }
-            Message::WindowOpened(_id) => Task::none(),
+            Message::WindowOpened(id) => {
+                window::maximize(id, true)
+            }
             Message::WindowClosed(id) => {
                 self.win_id = None;
                 window::close(id)
@@ -505,6 +525,19 @@ impl TimeKeeper {
         let layout = column![
             header,
             self.time_edit_box(),
+            row![text("Другое"), horizontal_rule(0),]
+                .spacing(5)
+                .align_y(Center),
+            txt_tooltip(
+                checkbox("Уведомления", self.conf.desktop_notifications)
+                    .on_toggle(Message::NotificationsToggled),
+                "Если установлен флажок, то TimeKeeper будет отсылать \
+                 уведомления на рабочий стол. Если флажок не стоит, \
+                 то вместо уведомлений поверх всех окон будет \
+                 открываться модальное окно с обратным отсчётом времени \
+                 до продолжения работы",
+                tooltip::Position::Top,
+            ),
             vertical_space().height(Length::Fill),
             row![
                 button("Сохранить")
