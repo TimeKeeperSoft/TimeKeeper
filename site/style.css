@@ -273,3 +273,31 @@ figcaption {
   margin: 0 auto;
   padding: 20px;
 }
+
+.intro-container {
+  float: left;
+  /* Абзацы слева */
+  /*width: calc(100% - 250px); /* Ширина абзацев, оставляя место для кнопки */
+  margin-right: 70px;
+  /* Отступ от кнопки */
+  box-sizing: border-box;
+  /* Важно! Чтобы padding/border не выходили за ширину */
+  justify-content: space-between;
+  /* Размещает кнопку справа */
+  align-items: flex-start;
+  /* Выравнивает текст сверху */
+  display: flex;
+}
+
+.intro-container>p {
+  /* Стиль только для параграфов внутри .intro-container */
+  max-width: 60%;
+  /* Или любое другое значение, которое вам подходит */
+  box-sizing: border-box;
+  /* Важно: чтобы padding/border входили в ширину */
+}
+
+.download-button-container {
+  float: right;
+  /*width: 200px; /* Ширина контейнера с кнопкой */
+}
