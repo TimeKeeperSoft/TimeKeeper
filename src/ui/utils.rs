@@ -1,6 +1,7 @@
 //! Some utils and helpers
 
 use crate::{conf::Config, stats::Stats, traits::Toml};
+use chrono::prelude::*;
 use iced::{Color, Theme, color, widget::container};
 use std::time::{Duration, SystemTime};
 
@@ -21,12 +22,12 @@ pub fn get_dimmed_text_color(style: &Theme) -> Color {
 }
 
 pub fn fmt_date(s: u64) -> String {
-    let days = s / 86400;
-    let hours = ((s - days * 86400) / 3600) % 24;
-    let mins = (((s - days * 86400) / 3600 * hours) / 60) % 60;
-    let secs = (((s - days * 86400) - 3600 * hours) - 60 * mins) % 60;
+    let dt = DateTime::from_timestamp(s as i64, 0);
 
-    format!("{days} {hours}:{mins}:{secs}")
+    match dt {
+        None => format!("Неизвестное время"),
+        Some(dt) => dt.format("%d.%m %H:%M").to_string(),
+    }
 }
 
 pub fn get_current_date() -> u64 {

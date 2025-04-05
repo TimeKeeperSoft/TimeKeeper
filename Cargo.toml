@@ -21,6 +21,7 @@ opt-level = "s"
 
 [dependencies]
 anyhow = "1.0.97"
+chrono = "0.4.40"
 iced = { version = "0.13.1", default-features = false, features = [
     "tiny-skia",
     "image",
