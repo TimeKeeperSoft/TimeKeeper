@@ -151,6 +151,7 @@ where
 
                 style
             })
+            .max_width(285)
             .padding(3),
         position,
     )
