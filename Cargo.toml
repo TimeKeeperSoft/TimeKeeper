@@ -5,6 +5,7 @@ edition = "2024"
 description = "Программа для учёта времени работы за ПК"
 build = "build.rs"
 authors = ["Michail Krasnov <https://github.com/mskrasnov>"]
+license = "MIT"
 
 [profile.release]
 lto = true
