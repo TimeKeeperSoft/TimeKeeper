@@ -6,6 +6,8 @@
         <a href="https://mskrasnov.github.io/TimeKeeper/screenshots.html">Скриншоты</a>
         <span> | </span>
         <a href="https://github.com/mskrasnov/TimeKeeper/releases">Релизы</a>
+        <span> | </span>
+        <a href="https://t.me/TimeKeeperSoft">Telegram</a>
     </h4>
 </div>
 
