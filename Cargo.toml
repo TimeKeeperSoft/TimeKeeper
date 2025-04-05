@@ -1,8 +1,10 @@
 [package]
 name = "time_keeper"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2024"
 description = "Программа для учёта времени работы за ПК"
+build = "build.rs"
+authors = ["Michail Krasnov <https://github.com/mskrasnov>"]
 
 [profile.release]
 lto = true
@@ -26,5 +28,13 @@ toml = "0.8.20"
 [target.'cfg(windows)'.dependencies]
 winrt-notification = "0.5.1"
 
+[target.'cfg(windows)'.build-dependencies]
+winresource = "0"
+
 [target.'cfg(unix)'.dependencies]
 notify-rust = "4.11.6"
+
+[package.metadata.winresource]
+ProductName = "TimeKeeper - a program to track the time a user works on a PC"
+ProductVersion = "v0.3.0"
+LegalCopyright = "Copyright © 2025 Michail Krasnov <https://github.com/mskrasnov>"
