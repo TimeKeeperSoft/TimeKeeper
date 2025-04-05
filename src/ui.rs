@@ -23,7 +23,7 @@ use iced::{
         button, center, column, container, horizontal_rule, horizontal_space, image, row,
         scrollable, text, tooltip, vertical_space,
     },
-    window::Settings,
+    window::{self, Settings},
 };
 use widget::{text_small, txt_tooltip};
 
@@ -82,6 +82,9 @@ struct TimeKeeper {
 
     /// Program configuration
     conf: Config,
+
+    /// ID of modal window
+    win_id: Option<window::Id>,
 }
 
 impl Default for TimeKeeper {
@@ -101,6 +104,7 @@ impl Default for TimeKeeper {
             } else {
                 Page::default()
             },
+            win_id: None,
             conf,
             stats,
         }
@@ -144,6 +148,10 @@ enum Message {
 
     WTimeChanged(u16),
     FTimeChanged(u16),
+
+    OpenWindow,
+    WindowOpened(window::Id),
+    WindowClosed(window::Id),
 }
 
 impl TimeKeeper {
@@ -160,9 +168,10 @@ impl TimeKeeper {
                 time::every(Duration::from_secs(1)).map(|_| Message::TickTime),
             ])
         }*/
-        let mut subs = Vec::with_capacity(2);
+        let mut subs = Vec::with_capacity(3);
 
         subs.push(event::listen().map(Message::Event));
+        subs.push(window::close_events().map(Message::WindowClosed));
         if !self.is_pause {
             subs.push(time::every(Duration::from_secs(1)).map(|_| Message::TickTime));
         }
@@ -228,7 +237,11 @@ impl TimeKeeper {
         match message {
             Message::TickTime => {
                 self.tick_time();
-                Task::none()
+                if self.is_work && self.win_id.is_some() {
+                    self.update(Message::WindowClosed(self.win_id.unwrap()))
+                } else {
+                    self.update(Message::OpenWindow)
+                }
             }
             Message::StartButtonPressed => {
                 self.is_pause = !self.is_pause;
@@ -268,6 +281,29 @@ impl TimeKeeper {
             Message::WTimeChanged(wtime) => {
                 self.wtime = Time::from_secs(wtime);
                 Task::none()
+            }
+            Message::OpenWindow => {
+                if !self.is_work && self.win_id.is_none() {
+                    let win_settings = Settings {
+                        size: iced::Size::from((500., 500.)),
+                        position: window::Position::Centered,
+                        resizable: false,
+                        decorations: false,
+                        level: window::Level::AlwaysOnTop,
+                        // exit_on_close_request: false,
+                        ..Default::default()
+                    };
+                    let win = window::open(win_settings);
+                    self.win_id = Some(win.0);
+                    win.1.map(Message::WindowOpened)
+                } else {
+                    Task::none()
+                }
+            }
+            Message::WindowOpened(_id) => Task::none(),
+            Message::WindowClosed(id) => {
+                self.win_id = None;
+                window::close(id)
             }
             Message::Event(event) => self.handle_events(event),
         }
