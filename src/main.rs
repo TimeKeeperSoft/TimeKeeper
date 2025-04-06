@@ -9,7 +9,7 @@
 //! Consequently, users need a simple program that, adjusting to their
 //! rhythm of work, could remind them of the need to take a break from work.
 
-// #![windows_subsystem = "windows"]
+#![windows_subsystem = "windows"]
 
 mod conf;
 pub mod consts;
