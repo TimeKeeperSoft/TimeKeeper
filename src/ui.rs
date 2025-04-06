@@ -25,11 +25,12 @@ use iced::{
     },
     window::{self, Settings},
 };
-use widget::{text_small, txt_tooltip};
+use widget::{text_small, txt_tooltip, url_button};
 
 use crate::{
     conf::Config,
-    consts::{PROG_LOGO, PROG_NAME, PROG_VER},
+    consts::{PROG_CRATES_URL, PROG_LOGO, PROG_NAME, PROG_REPO, PROG_SITE, PROG_VER},
+    external_cmd::open_url,
     stats::{StatisticEntry, Stats},
     time::Time,
     traits::Toml,
@@ -145,6 +146,9 @@ enum Message {
 
     /// Called when the user clicks on the “О программе” button
     AboutButtonPressed,
+    OpenSiteUrl,
+    OpenRepoUrl,
+    OpenCratesUrl,
     /// Called when the user clicks on the "Настройки" button
     SettingsButtonPressed,
     /// Clicking the “Сохранить” button on the settings page
@@ -280,6 +284,18 @@ impl TimeKeeper {
             }
             Message::AboutButtonPressed => {
                 self.select_page(Page::About);
+                Task::none()
+            }
+            Message::OpenSiteUrl => {
+                let _ = open_url(PROG_SITE);
+                Task::none()
+            }
+            Message::OpenRepoUrl => {
+                let _ = open_url(PROG_REPO);
+                Task::none()
+            }
+            Message::OpenCratesUrl => {
+                let _ = open_url(PROG_CRATES_URL);
                 Task::none()
             }
             Message::SettingsButtonPressed => {
@@ -522,15 +538,29 @@ impl TimeKeeper {
                 row![text("Идея и реализация"), horizontal_rule(0)]
                     .spacing(5)
                     .align_y(Center),
-                text("Михаил Краснов <github.com/mskrasnov>").size(12),
+                text("Михаил Краснов <https://github.com/mskrasnov>").size(12),
             ]
             .spacing(5),
             column![
-                row![text("Сайт"), horizontal_rule(0)]
+                row![text("Другие участники"), horizontal_rule(0)]
                     .spacing(5)
                     .align_y(Center),
-                text("https://mskrasnov.github.io/TimeKeeper").size(12),
-                text("https://github.com/mskrasnov/TimeKeeper").size(12),
+                text("Данила Макаров: дизайн, текст проекта").size(12),
+                text("Максим Марушин: тестирование, текст проекта").size(12),
+            ]
+            .spacing(5),
+            column![
+                row![text("TimeKeeper в интернете"), horizontal_rule(0)]
+                    .spacing(5)
+                    .align_y(Center),
+                row![
+                    url_button("Сайт", PROG_SITE).on_press(Message::OpenSiteUrl),
+                    text("|").size(12),
+                    url_button("Репозиторий", PROG_REPO).on_press(Message::OpenRepoUrl),
+                    text("|").size(12),
+                    url_button("crates.io", PROG_CRATES_URL).on_press(Message::OpenCratesUrl),
+                ]
+                .spacing(5),
             ]
             .spacing(5),
         ]
@@ -542,8 +572,10 @@ impl TimeKeeper {
             vertical_space().height(Length::Fill),
             row![
                 button("ОК").on_press(Message::AboutButtonPressed),
-                text("Над проектом работает один человек, но в будущем, надеюсь, присоединятся ещё, их я укажу выше").size(10),
-            ].spacing(5).align_y(Vertical::Bottom),
+                // text("Над проектом работает один человек, но в будущем, надеюсь, присоединятся ещё, их я укажу выше").size(10),
+            ]
+            .spacing(10)
+            .align_y(Vertical::Bottom),
         ]
         .spacing(5);
 

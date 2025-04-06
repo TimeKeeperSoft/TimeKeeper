@@ -17,6 +17,7 @@ mod stats;
 mod time;
 mod traits;
 mod ui;
+mod external_cmd;
 
 fn main() -> iced::Result {
     ui::ui()

@@ -4,7 +4,7 @@ use iced::border::Radius;
 use iced::widget::slider::Rail;
 use iced::widget::tooltip::Position;
 use iced::widget::{
-    Container, Text, Tooltip, column, container, horizontal_rule, row, slider, text,
+    Button, Container, Text, Tooltip, button, column, container, horizontal_rule, row, slider, text,
 };
 use iced::{Alignment::Center, Element};
 use iced::{Color, Theme, color};
@@ -167,4 +167,17 @@ where
     Message: 'a + Clone,
 {
     tooltip(content, text(txt).size(12), position)
+}
+
+pub fn url_button<'a, Message>(placeholder: &'a str, url: &'a str) -> Button<'a, Message>
+where
+    Message: 'a + Clone,
+{
+    button(txt_tooltip(
+        text(placeholder).size(12).color(color!(0xb8bb26)),
+        url,
+        Position::Top,
+    ))
+    .style(button::text)
+    .padding(0)
 }
