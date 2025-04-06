@@ -570,12 +570,7 @@ impl TimeKeeper {
             row![img, header].spacing(5).align_y(Center),
             about_devs,
             vertical_space().height(Length::Fill),
-            row![
-                button("ОК").on_press(Message::AboutButtonPressed),
-                // text("Над проектом работает один человек, но в будущем, надеюсь, присоединятся ещё, их я укажу выше").size(10),
-            ]
-            .spacing(10)
-            .align_y(Vertical::Bottom),
+            button("ОК").on_press(Message::AboutButtonPressed),
         ]
         .spacing(5);
 
