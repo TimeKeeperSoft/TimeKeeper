@@ -2,15 +2,6 @@
 
 pub const PROG_NAME: &str = "TimeKeeper";
 pub const PROG_VER: &str = env!("CARGO_PKG_VERSION");
-pub const PROG_DEVS: &str = "\
-Идея и реализация:\n\
-Михаил Краснов <https://github.com/mskrasnov>\n\
-\n\
-Дизайн:\n\
-Данила Макаров\n\
-\n\
-Тестирование, code review:\n\
-Максим Марушин";
 pub const PROG_LOGO: &[u8] = include_bytes!("../assets/logo1.png");
 
 // Only for Windows

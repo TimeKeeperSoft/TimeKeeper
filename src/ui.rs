@@ -17,7 +17,7 @@ use iced::{
     Alignment::Center,
     Element, Event, Length, Subscription, Task, Theme,
     advanced::graphics::image::image_rs::ImageFormat,
-    alignment::Horizontal,
+    alignment::{Horizontal, Vertical},
     event, time,
     widget::{
         button, center, checkbox, column, container, horizontal_rule, horizontal_space, image, row,
@@ -29,7 +29,7 @@ use widget::{text_small, txt_tooltip};
 
 use crate::{
     conf::Config,
-    consts::{PROG_DEVS, PROG_LOGO, PROG_NAME, PROG_VER},
+    consts::{PROG_LOGO, PROG_NAME, PROG_VER},
     stats::{StatisticEntry, Stats},
     time::Time,
     traits::Toml,
@@ -516,12 +516,34 @@ impl TimeKeeper {
             text(version_str).size(15),
         ]
         .spacing(5);
-        let about_devs = text(PROG_DEVS).size(15);
+
+        let about_devs = column![
+            column![
+                row![text("Идея и реализация"), horizontal_rule(0)]
+                    .spacing(5)
+                    .align_y(Center),
+                text("Михаил Краснов <github.com/mskrasnov>").size(12),
+            ]
+            .spacing(5),
+            column![
+                row![text("Сайт"), horizontal_rule(0)]
+                    .spacing(5)
+                    .align_y(Center),
+                text("https://mskrasnov.github.io/TimeKeeper").size(12),
+                text("https://github.com/mskrasnov/TimeKeeper").size(12),
+            ]
+            .spacing(5),
+        ]
+        .spacing(10);
 
         let layout = column![
             row![img, header].spacing(5).align_y(Center),
             about_devs,
-            button("ОК").on_press(Message::AboutButtonPressed),
+            vertical_space().height(Length::Fill),
+            row![
+                button("ОК").on_press(Message::AboutButtonPressed),
+                text("Над проектом работает один человек, но в будущем, надеюсь, присоединятся ещё, их я укажу выше").size(10),
+            ].spacing(5).align_y(Vertical::Bottom),
         ]
         .spacing(5);
 
