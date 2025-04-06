@@ -13,13 +13,13 @@
     </h4>
 </div>
 
+> **Warning:** now TimeKeeper only in Russian. I will add new translations (English for example) to version 1.0.0.
+
 ## What is TimeKeeper?
 
 TimeKeeper is the simplest cross-platform program for PC time tracking. It is used to periodically remind the user of the need to take breaks while working on a PC.
 
 ![](assets/main_win.png)
-
-> **Warning:** not TimeKeeper only in Russian. I will add new translations (English for example) to version 1.0.0.
 
 ## Idea
 
