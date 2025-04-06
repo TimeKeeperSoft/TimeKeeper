@@ -1,7 +1,7 @@
 //! Run external programs and open URL's
 
-use std::process::Command;
 use anyhow::Result;
+use std::process::Command;
 
 #[cfg(windows)]
 const OPEN_CMD: &str = r"C:\Windows\System32\cmd.exe";
@@ -22,8 +22,6 @@ pub fn open_url(url: &str) -> Result<()> {
 
 #[cfg(unix)]
 pub fn open_url(url: &str) -> Result<()> {
-    let _ = Command::new(OPEN_CMD)
-        .arg(url)
-        .status()?;
+    let _ = Command::new(OPEN_CMD).arg(url).status()?;
     Ok(())
 }
