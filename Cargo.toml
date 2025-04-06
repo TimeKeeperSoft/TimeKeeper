@@ -11,6 +11,7 @@ repository = "https://github.com/mskrasnov/TimeKeeper"
 readme = "README.md"
 keywords = ["time", "timer", "coutdown", "timekeeper", "time_keeper", "TimeKeeper"]
 categories = ["date-and-time"]
+exclude = [".github"]
 
 [profile.release]
 lto = true
