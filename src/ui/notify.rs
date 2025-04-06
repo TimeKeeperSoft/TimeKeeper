@@ -5,8 +5,9 @@
 //! - [ ] Linux
 
 use anyhow::Result;
-use std::path::Path;
 
+#[cfg(windows)]
+use std::path::Path;
 #[cfg(windows)]
 use winrt_notification::{Duration, Sound, Toast};
 
