@@ -1,65 +1,66 @@
 <div align="center">
     <img src="assets/logo.png" width="200">
     <h1>⏳ TimeKeeper</h1>
-    <p><b>Управляйте своим рабочим временем за ПК эффективно!</b></p>
+    <p><b>Manage your PC time efficiently!</b></p>
     <h4>
-        <a href="https://mskrasnov.github.io/TimeKeeper/screenshots.html">Скриншоты</a>
+        <a href="./README_ru.md">README (Russian)</a>
         <span> | </span>
-        <a href="https://github.com/mskrasnov/TimeKeeper/releases">Релизы</a>
+        <a href="https://mskrasnov.github.io/TimeKeeper/screenshots.html">Screenshots</a> (site)
+        <span> | </span>
+        <a href="https://github.com/mskrasnov/TimeKeeper/releases">Releases</a> (GitHub)
         <span> | </span>
         <a href="https://t.me/TimeKeeperSoft">Telegram</a>
     </h4>
 </div>
 
-## Что такое TimeKeeper?
+## What is TimeKeeper?
 
-TimeKeeper - простейшая кроссплатформенная программа для учёта рабочего времени за ПК. Она нужна для того, чтобы периодически напоминать пользователю о необходимости выполнения перерывов за работой на ПК.
+TimeKeeper is the simplest cross-platform program for PC time tracking. It is used to periodically remind the user of the need to take breaks while working on a PC.
 
 ![](assets/main_win.png)
 
-## Идея
+## Idea
 
-Многие люди не делают перерывы в работе за ПК. Как итог - снижение эффективности такой работы ввиду усталости, проблемы с опорно-двигательным аппаратом из-за сидячего образа жизни и всевозможные нарушения зрения. Следовательно, пользователям нужна какая-либо простейшая программа, которая, подстроившись под их ритм работы, смогла бы напоминать им о необходимости сделать перерыв в работе.
+Many people do not take breaks when working at a PC. As a result, the efficiency of such work decreases due to fatigue, musculoskeletal problems due to sedentary lifestyle and all kinds of eye disorders. Consequently, users need a simple program that, adjusting to their rhythm of work, could remind them of the need to take a break from work.
 
-Программа предназначена на использование людьми, подверженным высоким зрительным нагрузкам и/или ведущим сидячий образ жизни.
+The program is intended for use by people who are exposed to high visual loads and/or lead sedentary lifestyles.
 
-## Мотивация
+## Motivation
 
-1. Я нуждался в кроссплатформенной программе для учёта рабочего времени. Такая программа должна быть простой, легковесной и достаточно функциональной.
-2. Многие люди забывают делать перерывы в работе за компьютером, что пагубно сказывается на их продуктивности и здоровье. Сделай перерыв - разомнись, подыши свежим воздухом и продолжай работу. Это замедлит ухудшение твоего здоровья.
-3. Мне нужно было попрактиковаться в разработке десктопного ПО на языке Rust. TimeKeeper - это второй проект, первый - [ice](https://github.com/mskrasnov/ice).
-4. TimeKeeper является продуктом к проекту, реализованного в рамках дисциплины "Проектная деятельность" в моём универе.
+1. I needed a cross-platform timekeeping program. Such a program should be simple, lightweight and quite functional.
+2. Many people forget to take breaks while working on the computer, which is detrimental to their productivity and health. Take a break - stretch, get some fresh air and continue working. This will slow down the damage to your health.
+3. I needed to practice developing desktop software in Rust. TimeKeeper is the second project, the first one was [ice](https://github.com/mskrasnov/ice).
 
-## Преимущества
+## Benefits
 
-1. **Offline.** TimeKeeper не требует для своей работы браузера и доступа в Интернет.
-2. **Кроссплатформенность.** Наша программа корректно работает в операционных системах Windows и Linux и не зависит от большинства внешних библиотек вроде Qt и GTK.
-3. **Минималистичность.** TimeKeeper занимает не более 20 Мб на жёстком диске и способна работать даже на слабых ПК.
-4. [TODO] **Статистика.** TimeKeeper способен вести локальную статистику циклов работа/отдых, чтобы пользователь имел представление о том, сколько он работает и как часто нужно делать перерывы в работе.
-<!--5. [TODO] **Уведомления.** Вне зависимости от ОС, на которой запускается TimeKeeper, на ваш рабочий стол будут приходить уведомления о начале/конце цикла работа/отдых.-->
+1. **Offline.** TimeKeeper does not require a browser or Internet access to work.
+2. **Cross-platform.** Our program works correctly in Windows and Linux operating systems and does not depend on most external libraries like Qt and GTK (and even the god-awful Electron).
+3. **Minimalistic.** TimeKeeper occupies no more than 20 MB on the hard disk and is able to work even on weak PCs.
+4. [TODO] **Statistics.** TimeKeeper is able to keep local statistics of work/rest cycles so that the user has an idea of how much they are working and how often they need to take breaks.
+5. **Notifications.** Regardless of the OS on which TimeKeeper is running, you will receive notifications on your desktop when your work/rest cycle starts/ends.
 
-## Установка
+## Installation
 
-### Готовый билд программы
+### Already compiled program
 
-Перейдите на вкладку [Releases](https://github.com/mskrasnov/TimeKeeper) и скачайте последний *стабильный* релиз для вашей операционной системы. Сейчас поддерживаются только Windows (x86_64) и Linux (glibc x86_64, aarch64).
+Go to the [Releases](https://github.com/mskrasnov/TimeKeeper) tab and download the latest *stable* release for your operating system. Currently only Windows (x86_64) and Linux (glibc x86_64) are supported.
 
-### Сборка из исходного кода
+### Build from source code
 
-**Зависимости:**
+**Dependencies:**
 
-- Инструментарий языка программирования Rust (можно установить с помощью `rustup`);
+- Rust toolchain (can be installed with `rustup`);
 - **Windows:** MSVC;
 - **Linux:** `binutils`, `gcc`, Xorg/Wayland
 
-**Сборка под Windows:**
+**Building in Windows:**
 
 ```ps
 cargo build --release
 .\target\release\time_keeper
 ```
 
-**Сборка под Linux:**
+**Building in Linux:**
 
 ```bash
 sudo apt install build-essential -y
@@ -68,9 +69,13 @@ cargo build --release
 ./target/release/time_keeper
 ```
 
-## Стек технологий
+## Technology stack
 
-- **ОС:** Windows, Linux
-- **Мультиязычность:** на данный момент отсутствует
-- **ЯП:** [Rust](https://rust-lang.org)
+- **OS:** Windows, Linux;
+- **Multilanguage:** not available at the moment (there is a translation **only** in Russian, I will add English to version 1.0);
+- **Programming lang.:** [Rust](https://rust-lang.org)
 - **GUI:** [iced](https://iced.rs)
+
+## License
+
+TimeKeeper is distributed under the [MIT](LICENSE) license.
