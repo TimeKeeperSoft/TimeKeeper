@@ -67,14 +67,18 @@ struct TimeKeeper {
     /// Flag indicating whether to increase elapsed_time
     is_pause: bool,
 
+    /// If set as `true`, the statistics will be displayed on the main page
     show_stats: bool,
 
     /// Elapsed time (in seconds)
     elapsed_time: u16,
 
+    /// Information about run/rest times during program work
     stats: Stats,
 
+    /// Work time
     wtime: Time,
+    /// Free time
     ftime: Time,
 
     /// Current page
@@ -132,8 +136,6 @@ enum Message {
     /// When this message is called, the seconds counter (self.elapsed_time)
     /// is incremented
     TickTime,
-    // /// When this message is called, the seconds counter is reset to zero
-    // ResetTime,
     /// When you press the “Start” button, the program starts counting the
     /// elapsed time
     StartButtonPressed,
@@ -141,17 +143,28 @@ enum Message {
     /// counter and sets `self.is_work` to the default value (`true`)
     StopButtonPressed,
 
+    /// Called when the user clicks on the “О программе” button
     AboutButtonPressed,
+    /// Called when the user clicks on the "Настройки" button
     SettingsButtonPressed,
+    /// Clicking the “Сохранить” button on the settings page
     SaveSettingsButtonPressed,
+    /// Called when the user clicks on the "Показать статистику" button
     ShowStatsButtonPressed,
 
+    /// Called when the slider changes the run time
     WTimeChanged(u16),
+    /// Called when the slider changes the free time
     FTimeChanged(u16),
+    /// Called when the checkbox toggles notification settings
     NotificationsToggled(bool),
 
+    /// TimeKeeper calls this branch when free time (break) starts, then a new
+    /// window will be opened
     OpenWindow,
+    /// After opening a new window, you need to expand it to the full screen
     WindowOpened(window::Id),
+    /// Once the break (free time) is over, close this window
     WindowClosed(window::Id),
 }
 
