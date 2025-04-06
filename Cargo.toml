@@ -9,7 +9,7 @@ license = "MIT"
 homepage = "https://mskrasnov.github.io/TimeKeeper/"
 repository = "https://github.com/mskrasnov/TimeKeeper"
 readme = "README.md"
-keywords = ["time", "timer", "coutdown", "timekeeper", "time_keeper", "TimeKeeper"]
+keywords = ["time", "timer", "coutdown", "TimeKeeper"]
 categories = ["date-and-time"]
 exclude = [".github", "site"]
 
