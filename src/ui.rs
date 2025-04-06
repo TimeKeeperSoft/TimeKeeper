@@ -17,7 +17,7 @@ use iced::{
     Alignment::Center,
     Element, Event, Length, Subscription, Task, Theme,
     advanced::graphics::image::image_rs::ImageFormat,
-    alignment::{Horizontal, Vertical},
+    alignment::Horizontal,
     event, time,
     widget::{
         button, center, checkbox, column, container, horizontal_rule, horizontal_space, image, row,
