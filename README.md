@@ -14,6 +14,8 @@
 </div>
 
 > **Warning:** now TimeKeeper only in Russian. I will add new translations (English for example) to version 1.0.0.
+>
+> **Note:** the Windows build of program hasn't been signed yet and I don't think I will ever sign it. I don't have time for this now, so deal with the program signature yourself.
 
 ## What is TimeKeeper?
 
