@@ -102,6 +102,9 @@ class Package:
                 print(f"Failed to remove directory: {err}")
                 sys.exit(1)
 
+    def build(self):
+        subprocess.run("cargo build --release")
+
     def copy_files(self):
         for file in INCLUDED_FILES:
             dest = f"{self.pkg}/{file[1]}"
@@ -153,6 +156,7 @@ if __name__ == "__main__":
             publish = True
 
     pkg = Package(version, system)
+    pkg.build()
     pkg.create_dirs()
     pkg.copy_files()
     pkg.compress()
