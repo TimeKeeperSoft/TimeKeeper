@@ -107,7 +107,12 @@ impl TimeKeeper {
         let mut elements = column![].spacing(5).align_x(Center);
 
         if self.stats.is_empty() {
-            elements = elements.push(text("Статистика пуста..."));
+            let hcolor = utils::get_dimmed_text_color(&self.theme());
+            elements = elements.push(row![
+                horizontal_space(),
+                text("Статистика пуста...").color(hcolor),
+                horizontal_space()
+            ]);
         } else {
             let mut len = self.stats.len();
             let mut count = 10;

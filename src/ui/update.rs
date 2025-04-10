@@ -153,7 +153,6 @@ impl TimeKeeper {
             self.conf.work_time = self.wtime.to_secs();
             self.conf.free_time = self.ftime.to_secs();
 
-            // TODO: replace this .unwrap()!
             if let Err(err) = self.conf.write("./assets/TimeKeeper.toml") {
                 eprintln!("{err}");
             }
