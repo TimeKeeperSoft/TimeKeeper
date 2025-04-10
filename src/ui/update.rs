@@ -6,7 +6,7 @@ use iced::{
 };
 
 use crate::{
-    consts::{PROG_CRATES_URL, PROG_REPO, PROG_SITE},
+    consts::{PROG_CRATES_URL, PROG_REPO, PROG_SITE, PROG_TELEGRAM},
     external_cmd::open_url,
     stats::StatisticEntry,
     time::Time,
@@ -58,6 +58,10 @@ impl TimeKeeper {
             }
             Message::OpenCratesUrl => {
                 let _ = open_url(PROG_CRATES_URL);
+                Task::none()
+            }
+            Message::OpenTelegramUrl => {
+                let _ = open_url(PROG_TELEGRAM);
                 Task::none()
             }
         }

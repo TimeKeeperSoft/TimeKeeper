@@ -1,7 +1,9 @@
 //! About page
 
 use crate::{
-    consts::{PROG_CRATES_URL, PROG_LOGO, PROG_NAME, PROG_REPO, PROG_SITE, PROG_VER},
+    consts::{
+        PROG_CRATES_URL, PROG_LOGO, PROG_NAME, PROG_REPO, PROG_SITE, PROG_TELEGRAM, PROG_VER,
+    },
     ui::{
         Message, TimeKeeper,
         widget::{header, url_button},
@@ -44,6 +46,8 @@ impl TimeKeeper {
                     url_button("Репозиторий", PROG_REPO).on_press(Message::OpenRepoUrl),
                     text("|").size(12),
                     url_button("crates.io", PROG_CRATES_URL).on_press(Message::OpenCratesUrl),
+                    text("|").size(12),
+                    url_button("Telegram", PROG_TELEGRAM).on_press(Message::OpenTelegramUrl),
                 ]
                 .spacing(5),
             ]
