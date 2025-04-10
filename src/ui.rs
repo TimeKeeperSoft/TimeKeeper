@@ -15,7 +15,7 @@ mod utils;
 mod widget;
 
 /***********************************************
- *  Interface rendering or working with data   *
+ *  Interface rendering and working with data  *
  ***********************************************/
 mod update;
 mod view;
@@ -23,7 +23,7 @@ mod view;
 use std::time::Duration;
 
 use iced::{
-    Event, Subscription, Task, Theme,
+    Event, Subscription, Theme,
     advanced::graphics::image::image_rs::ImageFormat,
     event, time,
     window::{self, Settings},
@@ -31,11 +31,9 @@ use iced::{
 
 use crate::{
     conf::Config,
-    consts::{PROG_CRATES_URL, PROG_LOGO, PROG_NAME, PROG_REPO, PROG_SITE},
-    external_cmd::open_url,
-    stats::{StatisticEntry, Stats},
+    consts::{PROG_LOGO, PROG_NAME},
+    stats::Stats,
     time::Time,
-    traits::Toml,
 };
 
 /// The main function for displaying the graphical user interface
@@ -185,14 +183,6 @@ impl TimeKeeper {
     }
 
     fn subscription(&self) -> Subscription<Message> {
-        /*if self.is_pause {
-            Subscription::batch([event::listen().map(Message::Event)])
-        } else {
-            Subscription::batch([
-                event::listen().map(Message::Event),
-                time::every(Duration::from_secs(1)).map(|_| Message::TickTime),
-            ])
-        }*/
         let mut subs = Vec::with_capacity(3);
 
         subs.push(event::listen().map(Message::Event));
@@ -204,162 +194,5 @@ impl TimeKeeper {
         }
 
         Subscription::batch(subs)
-    }
-
-    fn reset_etime(&mut self) {
-        self.elapsed_time = 0;
-    }
-
-    fn stats_push(&mut self) {
-        self.stats.push(StatisticEntry {
-            date: utils::get_current_date(),
-            is_wtime: self.is_work,
-            time: self.elapsed_time,
-        });
-        self.stats.remove_unneeded();
-    }
-
-    fn tick_time(&mut self) {
-        self.elapsed_time += 1;
-
-        // В зависимости от того, что мы делаем - работаем или отдыхаем,
-        // выбираем разное время ожидания для сброса счётчика
-        let timer = match self.is_work {
-            true => self.conf.work_time,
-            false => self.conf.free_time,
-        };
-
-        if self.elapsed_time >= timer {
-            self.stats_push();
-            if self.conf.desktop_notifications {
-                notify::notify_send(self.is_work);
-            }
-            self.is_work = !self.is_work;
-            self.reset_etime();
-        }
-    }
-
-    fn set_stop(&mut self) {
-        /* После того, как пользователь нажмёт на "Стоп", нам нужно сбросить
-         * таймер, после чего установить рабочее время (а не время отдыха) и
-         * поставить счётчик (таймер) на паузу.
-         */
-        self.reset_etime();
-        self.is_work = true;
-        self.is_pause = true;
-    }
-
-    fn handle_events(&mut self, _event: Event) -> Task<Message> {
-        Task::none()
-    }
-
-    fn select_page(&mut self, page: Page) {
-        if self.page == page {
-            self.page = Page::default();
-        } else {
-            self.page = page;
-        }
-    }
-
-    fn update(&mut self, message: Message) -> Task<Message> {
-        match message {
-            Message::TickTime => {
-                self.tick_time();
-                if self.conf.desktop_notifications {
-                    if self.win_id.is_some() {
-                        self.update(Message::WindowClosed(self.win_id.unwrap()))
-                    } else {
-                        Task::none()
-                    }
-                } else {
-                    if self.is_work && self.win_id.is_some() {
-                        // We can use .unwrap() method of self.win_id safety
-                        // because was 'is_some()' check above.
-                        self.update(Message::WindowClosed(self.win_id.unwrap()))
-                    } else {
-                        self.update(Message::OpenWindow)
-                    }
-                }
-            }
-            Message::StartButtonPressed => {
-                self.is_pause = !self.is_pause;
-                Task::none()
-            }
-            Message::StopButtonPressed => {
-                self.set_stop();
-                Task::none()
-            }
-            Message::AboutButtonPressed => {
-                self.select_page(Page::About);
-                Task::none()
-            }
-            Message::OpenSiteUrl => {
-                let _ = open_url(PROG_SITE);
-                Task::none()
-            }
-            Message::OpenRepoUrl => {
-                let _ = open_url(PROG_REPO);
-                Task::none()
-            }
-            Message::OpenCratesUrl => {
-                let _ = open_url(PROG_CRATES_URL);
-                Task::none()
-            }
-            Message::SettingsButtonPressed => {
-                self.select_page(Page::Settings);
-                Task::none()
-            }
-            Message::SaveSettingsButtonPressed => {
-                if self.page == Page::Settings {
-                    self.conf.work_time = self.wtime.to_secs();
-                    self.conf.free_time = self.ftime.to_secs();
-
-                    // TODO: replace this .unwrap()!
-                    self.conf.write("./assets/TimeKeeper.toml").unwrap();
-                }
-
-                Task::none()
-            }
-            Message::ShowStatsButtonPressed => {
-                self.show_stats = !self.show_stats;
-                Task::none()
-            }
-            Message::FTimeChanged(ftime) => {
-                self.ftime = Time::from_secs(ftime);
-                Task::none()
-            }
-            Message::WTimeChanged(wtime) => {
-                self.wtime = Time::from_secs(wtime);
-                Task::none()
-            }
-            Message::NotificationsToggled(state) => {
-                self.conf.desktop_notifications = state;
-                Task::none()
-            }
-            Message::OpenWindow => {
-                if !self.is_work && self.win_id.is_none() {
-                    let win_settings = Settings {
-                        size: iced::Size::from((500., 500.)),
-                        position: window::Position::Centered,
-                        resizable: false,
-                        decorations: false,
-                        level: window::Level::AlwaysOnTop,
-                        exit_on_close_request: false,
-                        ..Default::default()
-                    };
-                    let win = window::open(win_settings);
-                    self.win_id = Some(win.0);
-                    win.1.map(Message::WindowOpened)
-                } else {
-                    Task::none()
-                }
-            }
-            Message::WindowOpened(id) => window::maximize(id, true),
-            Message::WindowClosed(id) => {
-                self.win_id = None;
-                window::close(id)
-            }
-            Message::Event(event) => self.handle_events(event),
-        }
     }
 }
