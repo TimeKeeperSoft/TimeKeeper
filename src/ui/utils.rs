@@ -3,7 +3,10 @@
 use crate::{conf::Config, stats::Stats, traits::Toml};
 use chrono::prelude::*;
 use iced::{Color, Theme, color, widget::container};
-use std::time::{Duration, SystemTime};
+use std::{
+    path::Path,
+    time::{Duration, SystemTime},
+};
 
 pub fn get_container_style(style: &Theme, is_work: bool) -> container::Style {
     let palette = style.palette();
@@ -37,7 +40,7 @@ pub fn get_current_date() -> u64 {
     sys_time.as_secs()
 }
 
-pub fn get_stats_from_file(file: &str) -> Stats {
+pub fn get_stats_from_file<P: AsRef<Path>>(file: P) -> Stats {
     let stats = Stats::parse(file);
     match stats {
         Ok(stats) => stats,
@@ -49,7 +52,7 @@ pub fn get_stats_from_file(file: &str) -> Stats {
     }
 }
 
-pub fn get_config_from_file(file: &str) -> (Config, bool) {
+pub fn get_config_from_file<P: AsRef<Path>>(file: P) -> (Config, bool) {
     let mut is_err_create_conf = false;
     let conf = Config::parse(file);
     let conf = match conf {

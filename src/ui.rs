@@ -32,6 +32,7 @@ use iced::{
 use crate::{
     conf::Config,
     consts::{PROG_LOGO, PROG_NAME},
+    pathes,
     stats::Stats,
     time::Time,
 };
@@ -99,8 +100,13 @@ struct TimeKeeper {
 
 impl Default for TimeKeeper {
     fn default() -> Self {
-        let (conf, is_err_create_conf) = utils::get_config_from_file("./assets/TimeKeeper.toml");
-        let stats = utils::get_stats_from_file("./assets/TimeStats.toml");
+        if let Err(err) = pathes::init() {
+            eprintln!("{err}");
+        }
+
+        let (conf, is_err_create_conf) =
+            utils::get_config_from_file(pathes::ProgPath::Preferences.get());
+        let stats = utils::get_stats_from_file(pathes::ProgPath::Statistics.get());
 
         Self {
             is_work: true,
@@ -154,6 +160,8 @@ enum Message {
     OpenSiteUrl,
     OpenRepoUrl,
     OpenCratesUrl,
+    OpenTelegramUrl,
+
     /// Called when the user clicks on the "Настройки" button
     SettingsButtonPressed,
     /// Clicking the “Сохранить” button on the settings page
