@@ -20,7 +20,7 @@ impl TimeKeeper {
         let layout = column![
             header,
             self.time_edit_box(),
-            row![text("Другое"), horizontal_rule(0),]
+            row![text("Оповещ. о перерыве"), horizontal_rule(0),]
                 .spacing(5)
                 .align_y(Center),
             txt_tooltip(
