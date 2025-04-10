@@ -6,6 +6,7 @@ pub const PROG_LOGO: &[u8] = include_bytes!("../assets/logo1.png");
 pub const PROG_SITE: &str = "https://mskrasnov.github.io/TimeKeeper";
 pub const PROG_REPO: &str = "https://github.com/mskrasnov/TimeKeeper";
 pub const PROG_CRATES_URL: &str = "https://crates.io/crates/time_keeper";
+pub const PROG_TELEGRAM: &str = "https://t.me/TimeKeeperSoft";
 
 // Only for Windows
 #[cfg(target_family = "windows")]

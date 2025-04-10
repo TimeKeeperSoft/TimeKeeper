@@ -12,8 +12,9 @@
 #![windows_subsystem = "windows"]
 
 mod conf;
-pub mod consts;
+mod consts;
 mod external_cmd;
+mod pathes;
 mod stats;
 mod time;
 mod traits;
