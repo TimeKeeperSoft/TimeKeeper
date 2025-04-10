@@ -63,7 +63,7 @@ class CargoToml:
 
 # Package name
 def get_package_name(ver: str, sys: OS) -> str:
-    return f"TimeKeeper-{ver}-{sys.value}-x86_64"
+    return f"TimeKeeper-v{ver}-{sys.value}-x86_64"
 
 class Package:
     def __init__(self, ver: str, sys: OS):
