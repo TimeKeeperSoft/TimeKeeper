@@ -8,6 +8,7 @@ use iced::{
 use crate::{
     consts::{PROG_CRATES_URL, PROG_REPO, PROG_SITE, PROG_TELEGRAM},
     external_cmd::open_url,
+    pathes::ProgPath,
     stats::StatisticEntry,
     time::Time,
     traits::Toml,
@@ -157,7 +158,7 @@ impl TimeKeeper {
             self.conf.work_time = self.wtime.to_secs();
             self.conf.free_time = self.ftime.to_secs();
 
-            if let Err(err) = self.conf.write("./assets/TimeKeeper.toml") {
+            if let Err(err) = self.conf.write(ProgPath::Preferences.get()) {
                 eprintln!("{err}");
             }
         }
