@@ -7,35 +7,42 @@
 //! ui().unwrap();
 //! ```
 
+/***********************************************
+ *                   Helpers                   *
+ ***********************************************/
 mod notify;
 mod utils;
 mod widget;
 
+/***********************************************
+ *  Interface rendering or working with data   *
+ ***********************************************/
+mod update;
+mod view;
+
 use std::time::Duration;
 
 use iced::{
-    Alignment::Center,
-    Element, Event, Length, Subscription, Task, Theme,
+    Event, Subscription, Task, Theme,
     advanced::graphics::image::image_rs::ImageFormat,
-    alignment::Horizontal,
     event, time,
-    widget::{
-        button, center, checkbox, column, container, horizontal_rule, horizontal_space, image, row,
-        scrollable, text, tooltip, vertical_space,
-    },
     window::{self, Settings},
 };
-use widget::{text_small, txt_tooltip, url_button};
 
 use crate::{
     conf::Config,
-    consts::{PROG_CRATES_URL, PROG_LOGO, PROG_NAME, PROG_REPO, PROG_SITE, PROG_VER},
+    consts::{PROG_CRATES_URL, PROG_LOGO, PROG_NAME, PROG_REPO, PROG_SITE},
     external_cmd::open_url,
     stats::{StatisticEntry, Stats},
     time::Time,
     traits::Toml,
 };
 
+/// The main function for displaying the graphical user interface
+///
+/// This function will independently create instances of the necessary
+/// structures and independently create a window with the necessary
+/// parameters.
 pub fn ui() -> iced::Result {
     let icon = iced::window::icon::from_file_data(
         // Да, иконка у нас захардкожена. Что поделаешь ради портативности...
@@ -353,268 +360,6 @@ impl TimeKeeper {
                 window::close(id)
             }
             Message::Event(event) => self.handle_events(event),
-        }
-    }
-
-    fn stats_info(&self, entry: StatisticEntry) -> Element<Message> {
-        let hcolor = utils::get_dimmed_text_color(&self.theme());
-        let headers = column![
-            text("Дата:").color(hcolor),
-            text("Тип:").color(hcolor),
-            text("Длит.:").color(hcolor),
-        ]
-        .spacing(5)
-        .align_x(Horizontal::Right);
-
-        let values = column![
-            text(utils::fmt_date(entry.date)),
-            text(if entry.is_wtime {
-                "Работа"
-            } else {
-                "Перерыв"
-            }),
-            text(Time::from_secs(entry.time).to_string()),
-        ]
-        .spacing(5);
-
-        row![headers, values].spacing(5).into()
-    }
-
-    fn stats_subpage(&self) -> Element<Message> {
-        let mut elements = column![].spacing(5).align_x(Center);
-
-        if self.stats.is_empty() {
-            elements = elements.push(text("Статистика пуста..."));
-        } else {
-            let mut len = self.stats.len();
-            let mut count = 10;
-
-            while len > 0 && count > 0 {
-                elements = elements.push(self.stats_info(self.stats.stats[len - 1]));
-                elements = elements.push(horizontal_rule(0));
-
-                len -= 1;
-                count -= 1;
-            }
-
-            elements = elements.push(text_small("Показываются последние 10 циклов"));
-        }
-
-        scrollable(elements).height(150).into()
-    }
-
-    fn main_page(&self) -> Element<Message> {
-        let buttons = row![
-            button(if self.is_pause {
-                "Старт"
-            } else {
-                "Пауза"
-            })
-            .on_press(Message::StartButtonPressed),
-            button("Стоп").on_press(Message::StopButtonPressed),
-        ]
-        .spacing(5);
-
-        let stats_btn_txt = if self.show_stats {
-            "Скрыть статистику"
-        } else {
-            "Показать статистику"
-        };
-
-        // NOTE: раскомментировать при необходимости
-        /*let mut lay_items: Vec<Element<Message>> = Vec::with_capacity(3);
-        lay_items.push(
-            center(
-                column![
-                    text(format!(
-                        "{} {}",
-                        if self.is_work {
-                            "Работа"
-                        } else {
-                            "Перерыв"
-                        },
-                        Time::from_secs(self.elapsed_time),
-                    )),
-                    buttons,
-                ]
-                .align_x(Center)
-                .spacing(10),
-            )
-            .into(),
-        );
-
-        if self.show_stats {
-            lay_items.push(self.stats_subpage().into());
-        }
-
-        lay_items.push(
-            row![
-                button(text("Настройки").size(10))
-                    .style(button::text)
-                    .on_press(Message::SettingsButtonPressed),
-                button(text("О программе").size(10))
-                    .style(button::text)
-                    .on_press(Message::AboutButtonPressed),
-                horizontal_space(),
-                button(text(stats_btn_txt).size(10))
-                    .style(button::text)
-                    .on_press(Message::ShowStatsButtonPressed),
-            ]
-            .into(),
-        );*/
-
-        let sub_time = match self.is_work {
-            true => self.conf.work_time,
-            false => self.conf.free_time,
-        };
-
-        let layout = column![
-            center(
-                column![
-                    text(format!(
-                        "{} | {}",
-                        if self.is_work {
-                            "Работа"
-                        } else {
-                            "Перерыв"
-                        },
-                        Time::from_secs(sub_time - self.elapsed_time),
-                    )),
-                    buttons,
-                ]
-                .align_x(Center)
-                .spacing(10),
-            ),
-            match self.show_stats {
-                true => self.stats_subpage(),
-                false => row![].into(), // SHITCODE!
-            },
-            row![
-                button(text_small("Настройки"))
-                    .style(button::text)
-                    .on_press(Message::SettingsButtonPressed),
-                button(text_small("О программе"))
-                    .style(button::text)
-                    .on_press(Message::AboutButtonPressed),
-                horizontal_space(),
-                button(text_small(stats_btn_txt))
-                    .style(button::text)
-                    .on_press(Message::ShowStatsButtonPressed),
-            ],
-        ]
-        .spacing(5);
-
-        container(layout)
-            //container(Column::with_children(lay_items))
-            .style(move |style: &Theme| utils::get_container_style(style, self.is_work))
-            .into()
-    }
-
-    fn about_page(&self) -> Element<Message> {
-        let img = txt_tooltip(
-            image(image::Handle::from_bytes(PROG_LOGO))
-                .width(64)
-                .height(64),
-            "Это пока ещё тестовая версия. Вы можете помочь \
-                  нам, поделившись отзывом о работе программы: \
-                  https://github.com/mskrasnov/TimeKeeper/issues\n\n\
-                  Или отправив донат на карту основного \
-                  разработчика:       2202 2062 5233 5406 (Сбер)",
-            tooltip::Position::Bottom,
-        );
-
-        let mut version_str = String::with_capacity(10);
-        version_str.push_str("Версия ");
-        version_str.push_str(PROG_VER);
-
-        let header = column![
-            widget::header(PROG_NAME).size(20),
-            text(version_str).size(15),
-        ]
-        .spacing(5);
-
-        let about_devs = column![
-            column![
-                row![text("Идея и реализация"), horizontal_rule(0)]
-                    .spacing(5)
-                    .align_y(Center),
-                text("Михаил Краснов <https://github.com/mskrasnov>").size(12),
-            ]
-            .spacing(5),
-            column![
-                row![text("Другие участники"), horizontal_rule(0)]
-                    .spacing(5)
-                    .align_y(Center),
-                text("Данила Макаров: дизайн, текст проекта").size(12),
-                text("Максим Марушин: тестирование, текст проекта").size(12),
-            ]
-            .spacing(5),
-            column![
-                row![text("TimeKeeper в интернете"), horizontal_rule(0)]
-                    .spacing(5)
-                    .align_y(Center),
-                row![
-                    url_button("Сайт", PROG_SITE).on_press(Message::OpenSiteUrl),
-                    text("|").size(12),
-                    url_button("Репозиторий", PROG_REPO).on_press(Message::OpenRepoUrl),
-                    text("|").size(12),
-                    url_button("crates.io", PROG_CRATES_URL).on_press(Message::OpenCratesUrl),
-                ]
-                .spacing(5),
-            ]
-            .spacing(5),
-        ]
-        .spacing(10);
-
-        let layout = column![
-            row![img, header].spacing(5).align_y(Center),
-            about_devs,
-            vertical_space().height(Length::Fill),
-            button("ОК").on_press(Message::AboutButtonPressed),
-        ]
-        .spacing(5);
-
-        container(layout).padding(10).into()
-    }
-
-    fn settings_page(&self) -> Element<Message> {
-        let header = widget::header("Настройки");
-
-        let layout = column![
-            header,
-            self.time_edit_box(),
-            row![text("Другое"), horizontal_rule(0),]
-                .spacing(5)
-                .align_y(Center),
-            txt_tooltip(
-                checkbox("Уведомления", self.conf.desktop_notifications)
-                    .on_toggle(Message::NotificationsToggled),
-                "Если установлен флажок, то TimeKeeper будет отсылать \
-                 уведомления на рабочий стол. Если флажок не стоит, \
-                 то вместо уведомлений поверх всех окон будет \
-                 открываться модальное окно с обратным отсчётом времени \
-                 до продолжения работы",
-                tooltip::Position::Top,
-            ),
-            vertical_space().height(Length::Fill),
-            row![
-                button("Сохранить")
-                    .on_press(Message::SaveSettingsButtonPressed)
-                    .style(button::success),
-                button("Закрыть").on_press(Message::SettingsButtonPressed),
-            ]
-            .spacing(5),
-        ]
-        .spacing(5);
-
-        container(layout).padding(10).into()
-    }
-
-    fn view(&self) -> Element<Message> {
-        match self.page {
-            Page::About => self.about_page(),
-            Page::Settings => self.settings_page(),
-            Page::Main => self.main_page(),
         }
     }
 }
