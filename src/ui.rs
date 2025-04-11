@@ -31,7 +31,7 @@ use iced::{
 
 use crate::{
     conf::Config,
-    consts::{PROG_LOGO, PROG_NAME},
+    consts::{DEFAULT_FONT, PROG_LOGO, PROG_NAME},
     pathes,
     stats::Stats,
     time::Time,
@@ -61,6 +61,7 @@ pub fn ui() -> iced::Result {
         .centered()
         .window_size((300., 300.))
         .resizable(false)
+        .font(DEFAULT_FONT)
         .theme(TimeKeeper::theme)
         .subscription(TimeKeeper::subscription)
         .run()

@@ -22,3 +22,6 @@ pub const PROG_PREFERENCES: &str = "TimeKeeper.toml";
 /// Статистика (сколько на каждый день циклов работа/отдых и сколько длился
 /// каждый такой цикл)
 pub const PROG_STATISTICS: &str = "stat.toml";
+
+/// Стандартный шрифт программы, как и логотип, жёстко указанный в исходниках программы и не поддающийся замене
+pub const DEFAULT_FONT: &[u8] = include_bytes!("../assets/FiraSans-Light.ttf");
