@@ -144,7 +144,8 @@ impl TimeKeeper {
     ///
     /// - F1 - about
     /// - F2 - settings
-    /// - F3 - show/hide statistics
+    /// - F3 - main page
+    /// - F4 - show/hide statistics
     /// - F5 - start/pause
     /// - F6 - stop
     fn handle_events(&mut self, event: Event) -> Task<Message> {
@@ -159,6 +160,10 @@ impl TimeKeeper {
             }) => self.select_page(Page::Settings),
             Event::Keyboard(keyboard::Event::KeyPressed {
                 key: keyboard::Key::Named(keyboard::key::Named::F3),
+                ..
+            }) => self.select_page(Page::Main),
+            Event::Keyboard(keyboard::Event::KeyPressed {
+                key: keyboard::Key::Named(keyboard::key::Named::F4),
                 ..
             }) => self.toggle_stats(),
             Event::Keyboard(keyboard::Event::KeyPressed {
