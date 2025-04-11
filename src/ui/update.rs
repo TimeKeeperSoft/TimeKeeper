@@ -1,7 +1,7 @@
 //! Work with data; message handling
 
 use iced::{
-    Event, Task,
+    Event, Task, keyboard,
     window::{self, Id, Settings},
 };
 
@@ -140,8 +140,37 @@ impl TimeKeeper {
         Task::none()
     }
 
-    fn handle_events(&mut self, _event: Event) -> Task<Message> {
-        Task::none()
+    /// Handle events (e.g. keyboard combinations)
+    ///
+    /// - F1 - about
+    /// - F2 - settings
+    /// - F3 - show/hide statistics
+    /// - F5 - start/pause
+    /// - F6 - stop
+    fn handle_events(&mut self, event: Event) -> Task<Message> {
+        match event {
+            Event::Keyboard(keyboard::Event::KeyPressed {
+                key: keyboard::Key::Named(keyboard::key::Named::F1),
+                ..
+            }) => self.select_page(Page::About),
+            Event::Keyboard(keyboard::Event::KeyPressed {
+                key: keyboard::Key::Named(keyboard::key::Named::F2),
+                ..
+            }) => self.select_page(Page::Settings),
+            Event::Keyboard(keyboard::Event::KeyPressed {
+                key: keyboard::Key::Named(keyboard::key::Named::F3),
+                ..
+            }) => self.toggle_stats(),
+            Event::Keyboard(keyboard::Event::KeyPressed {
+                key: keyboard::Key::Named(keyboard::key::Named::F5),
+                ..
+            }) => self.toggle_pause(),
+            Event::Keyboard(keyboard::Event::KeyPressed {
+                key: keyboard::Key::Named(keyboard::key::Named::F6),
+                ..
+            }) => self.set_stop(),
+            _ => Task::none(),
+        }
     }
 
     fn select_page(&mut self, page: Page) -> Task<Message> {
