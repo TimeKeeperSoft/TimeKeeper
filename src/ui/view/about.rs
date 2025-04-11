@@ -27,7 +27,7 @@ impl TimeKeeper {
                     .align_y(Center),
                 text("Михаил Краснов <https://github.com/mskrasnov>").size(12),
             ]
-            .spacing(5),
+            .spacing(3),
             column![
                 row![text("Другие участники"), horizontal_rule(0)]
                     .spacing(5)
@@ -35,7 +35,7 @@ impl TimeKeeper {
                 text("Данила Макаров: дизайн, текст проекта").size(12),
                 text("Максим Марушин: тестирование, текст проекта").size(12),
             ]
-            .spacing(5),
+            .spacing(3),
             column![
                 row![text("TimeKeeper в интернете"), horizontal_rule(0)]
                     .spacing(5)
@@ -51,9 +51,9 @@ impl TimeKeeper {
                 ]
                 .spacing(5),
             ]
-            .spacing(5),
+            .spacing(3),
         ]
-        .spacing(10);
+        .spacing(8);
 
         let layout = column![
             row![self.get_logo(), self.get_header()]
