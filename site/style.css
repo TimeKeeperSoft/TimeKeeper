@@ -1,5 +1,27 @@
+@font-face {
+  font-family: 'FiraSans';
+  src: url('assets/FiraSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FiraSans';
+  src: url('assets/FiraSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FiraSans';
+  src: url('assets/FiraSans-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
 body {
-  font-family: sans-serif;
+  font-family: 'FiraSans', sans-serif;
+  font-weight: normal;
   background-color: #282828;
   /* Gruvbox Dark background */
   color: #ebdbb2;
@@ -24,11 +46,15 @@ body {
 }
 
 h1 {
+  font-family: 'FiraCode', sans-serif;
+  font-weight: 600;
   color: #fb4934;
   /* Gruvbox Dark red */
 }
 
 h2 {
+  font-family: 'FiraCode', sans-serif;
+  font-weight: 600;
   color: #d65d0e;
 }
 
@@ -201,9 +227,11 @@ figcaption {
   color: #ebdbb2;
   margin: 50px auto;
   flex: 0 0 auto;
+  font-family: 'FiraSans', sans-serif;
 }
 
 .download-button {
+  font-family: 'FiraSans', sans-serif;
   display: inline-block;
   padding: 15px 30px;
   margin: 20px 0;
