@@ -19,7 +19,7 @@
 
 ## What is TimeKeeper?
 
-TimeKeeper is the simplest cross-platform program for PC time tracking. It is used to periodically remind the user of the need to take breaks while working on a PC.
+TimeKeeper is the simplest cross-platform PC time-tracking program. It periodically reminds users to take breaks while working on their computers. It's free of unnecessary web and AI features.
 
 ![](assets/main_win.png)
 
