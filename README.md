@@ -76,7 +76,7 @@ cargo build --release
 ## Technology stack
 
 - **OS:** Windows, Linux;
-- **Multilanguage:** not available at the moment (there is a translation **only** in Russian, I will add English to version 1.0);
+- **Multilanguage:** YES (English, Russian);
 - **Programming lang.:** [Rust](https://rust-lang.org)
 - **GUI:** [iced](https://iced.rs)
 
