@@ -1,6 +1,9 @@
 # A simple script to build TimeKeeper and generate
 # packages for different operating systems
 #
+# USAGE:
+#     python ./build.py [win/lin]
+#
 # (C) 2025 Michail Krasnov <michail383krasnov@mail.ru>
 
 #########################################################
@@ -103,7 +106,7 @@ class Package:
                 sys.exit(1)
 
     def build(self):
-        subprocess.run("cargo build --release")
+        subprocess.run(["cargo", "build", "--release"])
 
     def copy_files(self):
         for file in INCLUDED_FILES:
