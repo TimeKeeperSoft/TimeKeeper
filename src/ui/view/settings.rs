@@ -9,7 +9,7 @@ use iced::{
     Alignment::Center,
     Element, Length,
     widget::{
-        button, checkbox, column, container, horizontal_rule, row, text, tooltip, vertical_space,
+        button, column, container, horizontal_rule, row, text, toggler, tooltip, vertical_space,
     },
 };
 
@@ -24,7 +24,8 @@ impl TimeKeeper {
                 .spacing(5)
                 .align_y(Center),
             txt_tooltip(
-                checkbox("Уведомления", self.conf.desktop_notifications)
+                toggler(self.conf.desktop_notifications)
+                    .label("Уведомления")
                     .on_toggle(Message::NotificationsToggled),
                 "Если установлен флажок, то TimeKeeper будет отсылать \
                  уведомления на рабочий стол. Если флажок не стоит, \
