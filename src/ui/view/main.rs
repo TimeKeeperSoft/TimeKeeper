@@ -133,10 +133,10 @@ impl TimeKeeper {
         scrollable(elements).height(150).into()
     }
 
-    fn footer_buttons<'a, S: text::IntoFragment<'a> + Clone>(
-        &'a self,
-        stats_btn_txt: S,
-    ) -> Row<'a, Message> {
+    fn footer_buttons<'a, S>(&'a self, stats_btn_txt: S) -> Row<'a, Message>
+    where
+        S: text::IntoFragment<'a> + Clone,
+    {
         /* В зависимости от того, работаем мы или отдыхаем, и того,
          * включены ли у нас уведомления или отображение модального
          * окна, нам нужно скрывать нижнюю область кнопок, показывая
