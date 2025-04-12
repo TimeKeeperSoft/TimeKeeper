@@ -14,6 +14,7 @@
 mod conf;
 mod consts;
 mod external_cmd;
+mod i18n;
 mod pathes;
 mod stats;
 mod time;

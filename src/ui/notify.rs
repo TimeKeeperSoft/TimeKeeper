@@ -14,7 +14,7 @@ use winrt_notification::{Duration, Sound, Toast};
 #[cfg(unix)]
 use notify_rust::Notification;
 
-use crate::consts::PROG_NAME;
+use crate::{consts::PROG_NAME, fl};
 
 struct Notify {
     title: String,
@@ -66,8 +66,8 @@ impl Notify {
 
 pub fn notify_send(is_work: bool) {
     let n_text = match is_work {
-        false => "Ура! Мне сново надо работать!",
-        true => "Пришла пора немного передохнУть. Или передОхнуть.",
+        false => fl!("work_notification"),
+        true => fl!("break_notification"),
     };
     let _ = Notify::new(PROG_NAME, n_text).show();
 }

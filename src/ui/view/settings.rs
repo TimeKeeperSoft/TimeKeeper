@@ -1,5 +1,6 @@
 //! Settings page
 
+use crate::fl;
 use crate::ui::{
     Message, TimeKeeper,
     widget::{header, txt_tooltip},
@@ -15,31 +16,27 @@ use iced::{
 
 impl TimeKeeper {
     pub fn settings_page(&self) -> Element<Message> {
-        let header = header("Настройки");
+        let header = header(fl!("pref_header"));
 
         let layout = column![
             header,
             self.time_edit_box(),
-            row![text("Оповещ. о перерыве"), horizontal_rule(0),]
+            row![text(fl!("pref_break_alerts")), horizontal_rule(0),]
                 .spacing(5)
                 .align_y(Center),
             txt_tooltip(
                 toggler(self.conf.desktop_notifications)
-                    .label("Уведомления")
+                    .label(fl!("pref_notifications"))
                     .on_toggle(Message::NotificationsToggled),
-                "Если установлен флажок, то TimeKeeper будет отсылать \
-                 уведомления на рабочий стол. Если флажок не стоит, \
-                 то вместо уведомлений поверх всех окон будет \
-                 открываться модальное окно с обратным отсчётом времени \
-                 до продолжения работы",
+                fl!("pref_notifications_tooltip"),
                 tooltip::Position::Top,
             ),
             vertical_space().height(Length::Fill),
             row![
-                button("Сохранить")
+                button(text(fl!("pref_save")))
                     .on_press(Message::SaveSettingsButtonPressed)
                     .style(button::success),
-                button("Закрыть").on_press(Message::SettingsButtonPressed),
+                button(text(fl!("pref_close"))).on_press(Message::SettingsButtonPressed),
             ]
             .spacing(5),
         ]

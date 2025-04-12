@@ -11,6 +11,7 @@ use iced::{
 };
 
 use crate::{
+    fl,
     stats::StatisticEntry,
     time::Time,
     ui::{utils, widget::text_small},
@@ -39,8 +40,8 @@ impl TimeKeeper {
         }
 
         let stats_btn_txt = match self.show_stats {
-            true => "Скрыть статистику",
-            false => "Показать статистику",
+            true => fl!("hide-stats"),
+            false => fl!("show-stats"),
         };
         layout_items.push(self.footer_buttons(stats_btn_txt).into());
 
@@ -60,21 +61,22 @@ impl TimeKeeper {
         text(format!(
             "{} | {}",
             match self.is_work {
-                true => "Работа",
-                false => "Перерыв",
+                true => fl!("work"),
+                false => fl!("break"),
             },
             Time::from_secs(self.get_sub_time() - self.elapsed_time),
         ))
     }
 
     fn time_buttons(&self) -> Row<Message> {
+        let label = match self.is_pause {
+            true => fl!("start"),
+            false => fl!("pause"),
+        };
+
         row![
-            button(match self.is_pause {
-                true => "Старт",
-                false => "Пауза",
-            })
-            .on_press(Message::StartButtonPressed),
-            button("Стоп").on_press(Message::StopButtonPressed),
+            button(text(label)).on_press(Message::StartButtonPressed),
+            button(text(fl!("stop"))).on_press(Message::StopButtonPressed),
         ]
         .spacing(5)
     }
@@ -82,9 +84,9 @@ impl TimeKeeper {
     fn stats_info(&self, entry: StatisticEntry) -> Element<Message> {
         let hcolor = utils::get_dimmed_text_color(&self.theme());
         let headers = column![
-            text("Дата:").color(hcolor),
-            text("Тип:").color(hcolor),
-            text("Длит.:").color(hcolor),
+            text(fl!("stats_date")).color(hcolor),
+            text(fl!("stats_type")).color(hcolor),
+            text(fl!("stats_duration")).color(hcolor),
         ]
         .spacing(5)
         .align_x(Horizontal::Right);
@@ -92,9 +94,9 @@ impl TimeKeeper {
         let values = column![
             text(utils::fmt_date(entry.date)),
             text(if entry.is_wtime {
-                "Работа"
+                fl!("work")
             } else {
-                "Перерыв"
+                fl!("break")
             }),
             text(Time::from_secs(entry.time).to_string()),
         ]
@@ -110,7 +112,7 @@ impl TimeKeeper {
             let hcolor = utils::get_dimmed_text_color(&self.theme());
             elements = elements.push(row![
                 horizontal_space(),
-                text("Статистика пуста...").color(hcolor),
+                text(fl!("empty_stats")).color(hcolor),
                 horizontal_space()
             ]);
         } else {
@@ -125,13 +127,16 @@ impl TimeKeeper {
                 count -= 1;
             }
 
-            elements = elements.push(text_small("Показываются последние 10 циклов"));
+            elements = elements.push(text_small(fl!("ten_cycles")));
         }
 
         scrollable(elements).height(150).into()
     }
 
-    fn footer_buttons<'a>(&'a self, stats_btn_txt: &'a str) -> Row<'a, Message> {
+    fn footer_buttons<'a, S: text::IntoFragment<'a> + Clone>(
+        &'a self,
+        stats_btn_txt: S,
+    ) -> Row<'a, Message> {
         /* В зависимости от того, работаем мы или отдыхаем, и того,
          * включены ли у нас уведомления или отображение модального
          * окна, нам нужно скрывать нижнюю область кнопок, показывая
@@ -143,14 +148,14 @@ impl TimeKeeper {
          * полный блок нижних кнопок.
          */
         let default_footer_buttons = row![
-            button(text_small("Настройки"))
+            button(text_small(fl!("preferences")))
                 .style(button::text)
                 .on_press(Message::SettingsButtonPressed),
-            button(text_small("О программе"))
+            button(text_small(fl!("about")))
                 .style(button::text)
                 .on_press(Message::AboutButtonPressed),
             horizontal_space(),
-            button(text_small(stats_btn_txt))
+            button(text_small(stats_btn_txt.clone()))
                 .style(button::text)
                 .on_press(Message::ShowStatsButtonPressed),
         ];

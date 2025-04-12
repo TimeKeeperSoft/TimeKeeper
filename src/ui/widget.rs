@@ -2,6 +2,7 @@
 
 use iced::border::Radius;
 use iced::widget::slider::Rail;
+use iced::widget::text::IntoFragment;
 use iced::widget::tooltip::Position;
 use iced::widget::{
     Button, Container, Text, Tooltip, button, column, container, horizontal_rule, row, slider, text,
@@ -10,7 +11,7 @@ use iced::{Alignment::Center, Element};
 use iced::{Color, Theme, color};
 
 use super::{Message, TimeKeeper};
-use crate::time::Time;
+use crate::{fl, time::Time};
 
 pub enum TimeType {
     Work,
@@ -35,9 +36,8 @@ impl TimeKeeper {
         column![
             row![
                 txt_tooltip(
-                    text("Работа"),
-                    "Шаг изменения - 10 минут. Зажмите\n\
-                     Shift, чтобы изменять время поминутно",
+                    text(fl!("work")),
+                    fl!("pref_work_slider_tooltip"),
                     Position::Bottom,
                 ),
                 horizontal_rule(0),
@@ -48,7 +48,7 @@ impl TimeKeeper {
                 wtime_slider,
                 txt_tooltip(
                     time_box(Time::from(self.wtime)),
-                    "Время изменяется от 30 минут до 3 часов",
+                    fl!("pref_work_change"),
                     Position::Bottom
                 ),
             ]
@@ -56,9 +56,8 @@ impl TimeKeeper {
             .align_y(Center),
             row![
                 txt_tooltip(
-                    text("Перерыв"),
-                    "Изменение времени поминутно. Зажмите\n\
-                     Shift, чтобы установить шаг в 10 минут",
+                    text(fl!("break")),
+                    fl!("pref_break_slider_tooltip"),
                     Position::Bottom
                 ),
                 horizontal_rule(0),
@@ -69,7 +68,7 @@ impl TimeKeeper {
                 ftime_slider,
                 txt_tooltip(
                     time_box(Time::from(self.ftime)),
-                    "Время изменяется от 1 до 30 минут",
+                    fl!("pref_break_change"),
                     Position::Bottom
                 ),
             ]
@@ -118,13 +117,13 @@ fn slider_style(time_type: TimeType, theme: &Theme, status: slider::Status) -> s
 }
 
 /// Simple header...
-pub fn header<'a>(txt: &'a str) -> Text<'a> {
+pub fn header<'a, T: IntoFragment<'a>>(txt: T) -> Text<'a> {
     let hdr_size = 25;
     text(txt).size(hdr_size)
 }
 
 /// Small text (10px)
-pub fn text_small<'a>(txt: &'a str) -> Text<'a> {
+pub fn text_small<'a, T: IntoFragment<'a>>(txt: T) -> Text<'a> {
     let txt_size = 10;
     text(txt).size(txt_size)
 }
@@ -157,20 +156,22 @@ where
     )
 }
 
-pub fn txt_tooltip<'a, Message, C>(
+pub fn txt_tooltip<'a, Message, C, T>(
     content: C,
-    txt: &'a str,
+    txt: T,
     position: Position,
 ) -> Tooltip<'a, Message>
 where
     C: Into<Element<'a, Message>>,
+    T: IntoFragment<'a>,
     Message: 'a + Clone,
 {
     tooltip(content, text(txt).size(12), position)
 }
 
-pub fn url_button<'a, Message>(placeholder: &'a str, url: &'a str) -> Button<'a, Message>
+pub fn url_button<'a, P, Message>(placeholder: P, url: &'a str) -> Button<'a, Message>
 where
+    P: IntoFragment<'a>,
     Message: 'a + Clone,
 {
     button(txt_tooltip(
