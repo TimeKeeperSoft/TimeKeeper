@@ -66,6 +66,11 @@ h2.download {
   /* Gruvbox Dark text */
 }
 
+h2.prog_header {
+  font-size: 2em; /*  Увеличение размера относительно базового */
+  font-weight: bold; /*  Жирный шрифт */
+}
+
 a {
   color: #b8bb26;
   /* Gruvbox Dark green */
