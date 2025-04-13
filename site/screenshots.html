@@ -11,19 +11,24 @@
 
 <body>
   <nav>
-    <div class="logo">
-      <img src="./assets/logo.png" alt="TimeKeeper Logo" width="50" id="logo-img">
-      <!-- Adjust width as needed -->
-      <h1>TimeKeeper</h1>
+    <div class="nav-inner">
+      <div class="logo">
+        <img id="logo-img" src="./assets/logo.png" alt="TimeKeeper Logo" width="50">
+        <h1>TimeKeeper</h1>
+      </div>
+      <button class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
-    <ul>
+    <ul id="mainMenu">
       <li><a href="screenshots.html">Скриншоты</a></li>
       <li><a href="download.html">Скачать</a></li>
-      <!-- <li><a href="authors.html">Авторы</a></li> -->
       <li><a href="https://t.me/TimeKeeperSoft">Telegram</a></li>
     </ul>
   </nav>
-  
+
   <div class="container">
     <h2>TimeKeeper v0.3.0</h2>
     <p>Первая стабильная версия программы.</p>
@@ -44,11 +49,13 @@
     </figure>
     <figure>
       <img src="./assets/v0.3.0/time_keeper_linux.png" alt="TimeKeeper на Linux" class="screenshot">
-      <figcaption>Работа программы в elementaryOS (<a href="./assets/v0.3.0/time_keeper_linux.png">увеличить</a>)</figcaption>
+      <figcaption>Работа программы в elementaryOS (<a href="./assets/v0.3.0/time_keeper_linux.png">увеличить</a>)
+      </figcaption>
     </figure>
     <figure>
       <img src="./assets/v0.3.0/time_keeper_win.png" alt="TimeKeeper в Windows" class="screenshot">
-      <figcaption>Работа программы в Windows 10 (<a href="./assets/v0.3.0/time_keeper_win.png">увеличить</a>)</figcaption>
+      <figcaption>Работа программы в Windows 10 (<a href="./assets/v0.3.0/time_keeper_win.png">увеличить</a>)
+      </figcaption>
     </figure>
   </div>
 
@@ -84,21 +91,7 @@
     <p>Эта версия мало чем отличается от v0.2.0.</p>
   </div>
 
-  <script>
-    const logoImg = document.getElementById('logo-img');
-    logoImg.addEventListener('click', () => {
-      window.location.href = 'index.html';
-    });
-
-    const screenshots = document.querySelectorAll('.screenshot');
-    screenshots.forEach(screenshot => {
-      let isEnlarged = false; // Флаг для отслеживания состояния
-      screenshot.addEventListener('click', () => {
-        isEnlarged = !isEnlarged; // Меняем состояние флага
-        screenshot.classList.toggle('enlarged');
-      });
-    });
-  </script>
+  <script src="hdr.js"></script>
 
   <footer>
     <p>Copyright (C) 2025 Michail Krasnov</p>

@@ -67,8 +67,10 @@ h2.download {
 }
 
 h2.prog_header {
-  font-size: 2em; /*  Увеличение размера относительно базового */
-  font-weight: bold; /*  Жирный шрифт */
+  font-size: 2em;
+  /*  Увеличение размера относительно базового */
+  font-weight: bold;
+  /*  Жирный шрифт */
 }
 
 a {
@@ -97,9 +99,7 @@ td {
 
 th {
   background-color: #504945;
-  /* Gruvbox Dark darker gray */
   color: #ebdbb2;
-  /* Gruvbox Dark text */
 }
 
 img {
@@ -108,7 +108,6 @@ img {
   margin: 10px 0;
   border: 1px solid #3c3836;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  /* rgba для мягче тени */
 }
 
 .img_container {
@@ -116,7 +115,6 @@ img {
   margin: 20px auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  /* auto-fit для адаптивности */
   grid-gap: 10px;
   box-sizing: border-box;
 }
@@ -156,7 +154,6 @@ nav {
   width: 100%;
   z-index: 10;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  /* Тень для выделения */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -192,14 +189,95 @@ nav a:hover {
   margin-right: 10px;
 }
 
+.logo h1 {
+  display: inline-block;
+}
+
+.menu-toggle {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-80%);
+  display: none;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px;
+  background-color: #ebdbb2;
+}
+
+/* Медиа-запрос для мобильных устройств */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .nav-inner {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    display: none;
+  }
+
+  nav li {
+    margin: 5px 0;
+  }
+
+  nav ul {
+    display: none;
+  }
+
+  nav ul.show {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul.show {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #3c3836;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  nav ul.show li {
+    margin: 5px 0;
+  }
+
+  .logo img {
+    margin-bottom: 10px;
+  }
+
+  .menu-toggle {
+    display: block;
+    margin: 10px 0 10px 10px;
+  }
+}
+
 footer {
   margin-top: 30px;
   text-align: center;
   padding: 10px;
   background-color: #3c3836;
-  /* Gruvbox Dark dark gray */
   color: #ebdbb2;
-  /* Gruvbox Dark text */
 }
 
 footer a {
@@ -251,9 +329,7 @@ figcaption {
   margin-right: 10px;
   text-decoration: none;
   width: 250px;
-  /*  Устанавливаем фиксированную ширину */
   text-align: center;
-  /* Центрируем текст внутри кнопки */
 }
 
 .download-button:hover {
@@ -308,9 +384,6 @@ figcaption {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  /* background-image: url('assets/background.png'); */
-  /* background-size: cover; */
-  /* background-repeat: no-repeat; */
 }
 
 .main-downl-container {
@@ -327,25 +400,16 @@ figcaption {
 
 .intro-container {
   float: left;
-  /* Абзацы слева */
-  /*width: calc(100% - 250px); /* Ширина абзацев, оставляя место для кнопки */
   margin-right: 70px;
-  /* Отступ от кнопки */
   box-sizing: border-box;
-  /* Важно! Чтобы padding/border не выходили за ширину */
   justify-content: space-between;
-  /* Размещает кнопку справа */
   align-items: flex-start;
-  /* Выравнивает текст сверху */
   display: flex;
 }
 
 .intro-container>p {
-  /* Стиль только для параграфов внутри .intro-container */
   max-width: 60%;
-  /* Или любое другое значение, которое вам подходит */
   box-sizing: border-box;
-  /* Важно: чтобы padding/border входили в ширину */
 }
 
 .download-button-container {
@@ -354,13 +418,13 @@ figcaption {
 }
 
 blockquote {
-  background-color: #3c3836; /* Darker gray background */
-  border-left: 8px solid #b8bb26; /* Yellow-green accent */
-  color: #ebdbb2; /* Light text */
+  background-color: #3c3836;
+  border-left: 8px solid #b8bb26;
+  color: #ebdbb2;
   padding: 1.5em 2em;
   margin: 2em 0;
-  border-radius: 5px; /* Скругленные углы */
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.2); /* Тень */
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .advantages-grid {
@@ -370,7 +434,7 @@ blockquote {
 }
 
 .advantage-tile {
-  background-color: #3c3836; /* Gruvbox Dark background */
+  background-color: #3c3836;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
@@ -378,12 +442,12 @@ blockquote {
 
 .advantage-tile h3 {
   margin-top: 0;
-  color: #ebdbb2; /* Gruvbox Dark light gray */
-  font-weight: bold; /* Добавим немного веса заголовку */
+  color: #ebdbb2;
+  font-weight: bold;
 }
 
 .advantage-tile p {
-  color: #a89984; /* Gruvbox Dark darker gray */
+  color: #a89984;
   line-height: 1.5;
 }
 

@@ -6,21 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TimeKeeper - Скачать</title>
   <meta name="description" content="Скачать программу TimeKeeper бесплатно">
-  <meta name="keywords" content="time, timer, TimeKeeper, timekeeper, скачать, бесплатно, время, учёт времени, pomodoro, windows, linux, обратный отсчёт, таймер">
+  <meta name="keywords"
+    content="time, timer, TimeKeeper, timekeeper, скачать, бесплатно, время, учёт времени, pomodoro, windows, linux, обратный отсчёт, таймер">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="./assets/logo.png">
 </head>
 
 <body>
   <nav>
-    <div class="logo">
-      <img src="./assets/logo.png" alt="TimeKeeper Logo" width="50" id="logo-img">
-      <h1>TimeKeeper</h1>
+    <div class="nav-inner">
+      <div class="logo">
+        <img id="logo-img" src="./assets/logo.png" alt="TimeKeeper Logo" width="50">
+        <h1>TimeKeeper</h1>
+      </div>
+      <button class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
-    <ul>
+    <ul id="mainMenu">
       <li><a href="screenshots.html">Скриншоты</a></li>
       <li><a href="download.html">Скачать</a></li>
-      <!-- <li><a href="authors.html">Авторы</a></li> -->
       <li><a href="https://t.me/TimeKeeperSoft">Telegram</a></li>
     </ul>
   </nav>
@@ -56,35 +63,49 @@
       </ul>
       <!-- <h2>Дополнительные ресурсы</h2> -->
       <!-- <ul> -->
-        <!-- <li><a href="#">Документация</a></li> -->
-        <!-- <li><a href="#">Форум</a></li> -->
+      <!-- <li><a href="#">Документация</a></li> -->
+      <!-- <li><a href="#">Форум</a></li> -->
       <!-- </ul> -->
-  <div align="center">
-    <a href="https://iced.rs">
-        <img alt="iced" title="iced" src="https://gist.githubusercontent.com/hecrj/ad7ecd38f6e47ff3688a38c79fd108f0/raw/74384875ecbad02ae2a926425e9bcafd0695bade/color.svg" width="350px">
-    </a>
-  </div>
+      <div align="center">
+        <a href="https://iced.rs">
+          <img alt="iced" title="iced"
+            src="https://gist.githubusercontent.com/hecrj/ad7ecd38f6e47ff3688a38c79fd108f0/raw/74384875ecbad02ae2a926425e9bcafd0695bade/color.svg"
+            width="350px">
+        </a>
+      </div>
     </div>
     <div class="column">
       <h2>Предыдущие версии</h2>
 
       <h3>TimeKeeper v0.2.0</h2>
-      <p>Вторая версия TimeKeeper. Добавил отображение статистики, переделал страницу настроек.</p>
-      <ul>
-        <li><a href="https://github.com/mskrasnov/TimeKeeper/releases/download/v0.2.0/TimeKeeper-v0.2.0-WINDOWS-x86_64.zip">Windows (x64)</a></li>
-        <li><a href="https://github.com/mskrasnov/TimeKeeper/releases/download/v0.2.0/TimeKeeper-v0.2.0-LINUX-x86_64.zip">Linux (x86_64)</a></li>
-        <li><a href="https://github.com/mskrasnov/TimeKeeper/archive/refs/tags/v0.2.0.tar.gz">Исходный код (.tar.gz)</a></li>
-        <li><a href="https://github.com/mskrasnov/TimeKeeper/archive/refs/tags/v0.2.0.zip">Исходный код (.zip)</a></li>
-      </ul>
-      
-      <h3>TimeKeeper v0.1.0</h3>
-      <p>Предварительная версия TimeKeeper. Самая первая. До неё была пустота и смятение.</p>
-      <ul>
-        <li><a href="https://github.com/mskrasnov/TimeKeeper/releases/download/v0.1.0/TimeKeeper-v0.1.0-WINDOWS-x86_64.zip">Windows (x64)</a></li>
-        <li><a href="https://github.com/mskrasnov/TimeKeeper/releases/download/v0.1.0/TimeKeeper-v0.1.0-LINUX-x86_64.zip">Linux (x86_64)</a></li>
-        <li><a href="https://github.com/mskrasnov/TimeKeeper/archive/refs/tags/v0.1.0.tar.gz">Исходный код (.tar.gz)</a></li>
-        <li><a href="https://github.com/mskrasnov/TimeKeeper/archive/refs/tags/v0.1.0.zip">Исходный код (.zip)</a></li>
-      </ul>
+        <p>Вторая версия TimeKeeper. Добавил отображение статистики, переделал страницу настроек.</p>
+        <ul>
+          <li><a
+              href="https://github.com/mskrasnov/TimeKeeper/releases/download/v0.2.0/TimeKeeper-v0.2.0-WINDOWS-x86_64.zip">Windows
+              (x64)</a></li>
+          <li><a
+              href="https://github.com/mskrasnov/TimeKeeper/releases/download/v0.2.0/TimeKeeper-v0.2.0-LINUX-x86_64.zip">Linux
+              (x86_64)</a></li>
+          <li><a href="https://github.com/mskrasnov/TimeKeeper/archive/refs/tags/v0.2.0.tar.gz">Исходный код
+              (.tar.gz)</a></li>
+          <li><a href="https://github.com/mskrasnov/TimeKeeper/archive/refs/tags/v0.2.0.zip">Исходный код (.zip)</a>
+          </li>
+        </ul>
+
+        <h3>TimeKeeper v0.1.0</h3>
+        <p>Предварительная версия TimeKeeper. Самая первая. До неё была пустота и смятение.</p>
+        <ul>
+          <li><a
+              href="https://github.com/mskrasnov/TimeKeeper/releases/download/v0.1.0/TimeKeeper-v0.1.0-WINDOWS-x86_64.zip">Windows
+              (x64)</a></li>
+          <li><a
+              href="https://github.com/mskrasnov/TimeKeeper/releases/download/v0.1.0/TimeKeeper-v0.1.0-LINUX-x86_64.zip">Linux
+              (x86_64)</a></li>
+          <li><a href="https://github.com/mskrasnov/TimeKeeper/archive/refs/tags/v0.1.0.tar.gz">Исходный код
+              (.tar.gz)</a></li>
+          <li><a href="https://github.com/mskrasnov/TimeKeeper/archive/refs/tags/v0.1.0.zip">Исходный код (.zip)</a>
+          </li>
+        </ul>
     </div>
   </div>
 
@@ -97,12 +118,8 @@
       <a href="https://flathub.org/">flathub.org</a>
     </p>
   </footer>
-  <script>
-    const logoImg = document.getElementById('logo-img');
-    logoImg.addEventListener('click', () => {
-      window.location.href = 'index.html';
-    });
-  </script>
+
+  <script src="hdr.js"></script>
 </body>
 
 </html>

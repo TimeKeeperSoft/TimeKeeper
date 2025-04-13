@@ -13,14 +13,20 @@
 
 <body>
   <nav>
-    <div class="logo">
-      <img src="./assets/logo.png" alt="TimeKeeper Logo" width="50"> <!-- Adjust width as needed -->
-      <h1>TimeKeeper</h1>
+    <div class="nav-inner">
+      <div class="logo">
+        <img id="logo-img" src="./assets/logo.png" alt="TimeKeeper Logo" width="50">
+        <h1>TimeKeeper</h1>
+      </div>
+      <button class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
-    <ul>
+    <ul id="mainMenu">
       <li><a href="screenshots.html">Скриншоты</a></li>
       <li><a href="download.html">Скачать</a></li>
-      <!-- <li><a href="authors.html">Авторы</a></li> -->
       <li><a href="https://t.me/TimeKeeperSoft">Telegram</a></li>
     </ul>
   </nav>
@@ -29,11 +35,13 @@
     <div align="center">
       <h2 class="prog_header">Рабочий трекер без лишних функций.</h2>
       <a href="./download.html" class="download-button">Скачать (Windows, Linux)</a>
-        <img src="./assets/a.webp" class="rounded-img">
+      <img src="./assets/a.webp" class="rounded-img">
     </div>
 
     <div align="center">
-      <blockquote><p>Управляйте своим рабочим временем эффективно. Вдохновлено Pomodoro, но еще проще!</p></blockquote>
+      <blockquote>
+        <p>Управляйте своим рабочим временем эффективно. Вдохновлено Pomodoro, но еще проще!</p>
+      </blockquote>
     </div>
 
     <p>TimeKeeper — простой и эффективный инструмент для учёта рабочего времени за компьютером, вдохновлённый
@@ -41,7 +49,8 @@
       TimeKeeper фокусируется на главном: помочь вам организовать свой рабочий график путём чередования циклов
       <i>работа/отдых</i>. Установите комфортное для вас время работы и время отдыха, а TimeKeeper позаботится
       о том, чтобы вы чередовали их на протяжении всего дня - по принципу, напоминающему Pomodoro, но без
-      лишней сложности.</p>
+      лишней сложности.
+    </p>
 
     <h2>Преимущества</h2>
     <div class="advantages-grid">
@@ -51,15 +60,18 @@
       </div>
       <div class="advantage-tile">
         <h3>Кроссплатформенность</h3>
-        <p>Наша программа корректно работает в операционных системах Windows и Linux и не зависит от крупных внешних библиотек вроде GTK, Qt, KDE Frameworks и способна работать даже на слабых ПК.</p>
+        <p>Наша программа корректно работает в операционных системах Windows и Linux и не зависит от крупных внешних
+          библиотек вроде GTK, Qt, KDE Frameworks и способна работать даже на слабых ПК.</p>
       </div>
       <div class="advantage-tile">
         <h3>Минималистичность</h3>
-        <p>TimeKeeper занимает не более 20 Мб на диске и способна работать даже на слабых ПК.</p>
+        <p>TimeKeeper занимает не более 10 Мб на диске и потребляет около 20 Мб оперативной памяти, что делает нашу
+          программу хорошим выбором на высоконагруженных системах, где каждый Мб на счету.</p>
       </div>
       <div class="advantage-tile">
         <h3>Ведение статистики</h3>
-        <p>TimeKeeper способен вести локальную статистику циклов работа/отдых, чтобы пользователь имел представление о том, сколько он работает и как часто нужно делать перерывы в работе.</p>
+        <p>TimeKeeper способен вести локальную статистику циклов работа/отдых, чтобы пользователь имел представление о
+          том, сколько он работает и как часто нужно делать перерывы в работе.</p>
       </div>
     </div>
   </div>
@@ -74,16 +86,7 @@
     </p>
   </footer>
 
-  <script>
-    const screenshots = document.querySelectorAll('.screenshot');
-    screenshots.forEach(screenshot => {
-      let isEnlarged = false; // Флаг для отслеживания состояния
-      screenshot.addEventListener('click', () => {
-        isEnlarged = !isEnlarged; // Меняем состояние флага
-        screenshot.classList.toggle('enlarged');
-      });
-    });
-  </script>
+  <script src="hdr.js"></script>
 </body>
 
 </html>
