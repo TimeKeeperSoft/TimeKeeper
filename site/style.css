@@ -46,15 +46,14 @@ body {
 }
 
 h1 {
-  font-family: 'FiraCode', sans-serif;
+  font-family: 'FiraSans', sans-serif;
   font-weight: 600;
   color: #fb4934;
   /* Gruvbox Dark red */
 }
 
 h2 {
-  font-family: 'FiraCode', sans-serif;
-  font-weight: 600;
+  font-family: 'FiraSans', sans-serif;
   color: #d65d0e;
 }
 
@@ -138,6 +137,10 @@ img.screenshot.enlarged {
   cursor: pointer;
   transition: transform 0.3s ease;
   object-fit: contain;
+}
+
+img.rounded-img {
+  border-radius: 10px;
 }
 
 nav {
@@ -300,6 +303,21 @@ figcaption {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  /* background-image: url('assets/background.png'); */
+  /* background-size: cover; */
+  /* background-repeat: no-repeat; */
+}
+
+.main-downl-container {
+  display: flex;
+  flex-direction: column;
+  /* max-width: 800px; */
+  /* margin: 0 auto; */
+  height: 450px;
+  padding: 30px;
+  background-image: url('./assets/Morskie Oko.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .intro-container {
@@ -328,4 +346,45 @@ figcaption {
 .download-button-container {
   float: right;
   /*width: 200px; /* Ширина контейнера с кнопкой */
+}
+
+blockquote {
+  background-color: #3c3836; /* Darker gray background */
+  border-left: 8px solid #b8bb26; /* Yellow-green accent */
+  color: #ebdbb2; /* Light text */
+  padding: 1.5em 2em;
+  margin: 2em 0;
+  border-radius: 5px; /* Скругленные углы */
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2); /* Тень */
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+.advantage-tile {
+  background-color: #3c3836; /* Gruvbox Dark background */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.advantage-tile h3 {
+  margin-top: 0;
+  color: #ebdbb2; /* Gruvbox Dark light gray */
+  font-weight: bold; /* Добавим немного веса заголовку */
+}
+
+.advantage-tile p {
+  color: #a89984; /* Gruvbox Dark darker gray */
+  line-height: 1.5;
+}
+
+/* Дополнительный стиль для адаптации под меньшие экраны (опционально) */
+@media (max-width: 768px) {
+  .advantages-grid {
+    grid-template-columns: 1fr;
+  }
 }
