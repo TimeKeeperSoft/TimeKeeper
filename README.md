@@ -5,7 +5,7 @@
     <h4>
         <a href="./README_ru.md">README (Russian)</a>
         <span> | </span>
-        <a href="https://mskrasnov.github.io/TimeKeeper/screenshots.html">Screenshots</a> (site)
+        <a href="https://timekeepersoft.github.io/screenshots.html">Screenshots</a> (site)
         <span> | </span>
         <a href="https://github.com/mskrasnov/TimeKeeper/releases">Releases</a> (GitHub)
         <span> | </span>
