@@ -1,7 +1,7 @@
 <div align="center">
-    <img src="assets/logo.svg" width="200">
+    <img src="https://timekeepersoft.github.io/assets/logo.png" width="200">
     <h1>⏳ TimeKeeper</h1>
-    <p><b>Manage your PC time efficiently!</b></p>
+    <p><b>For coders who lose track of time (and keyboard imprints on their face)</b></p>
     <h4>
         <a href="./README_ru.md">README (Russian)</a>
         <span> | </span>
@@ -40,8 +40,16 @@ The program is intended for use by people who are exposed to high visual loads a
 1. **Offline.** TimeKeeper does not require a browser or Internet access to work.
 2. **Cross-platform.** Our program works correctly in Windows and Linux operating systems and does not depend on most external libraries like Qt and GTK (and even the god-awful Electron).
 3. **Minimalistic.** TimeKeeper occupies no more than 20 MB on the hard disk and is able to work even on weak PCs.
-4. [TODO] **Statistics.** TimeKeeper is able to keep local statistics of work/rest cycles so that the user has an idea of how much they are working and how often they need to take breaks.
+4. **Statistics.** TimeKeeper is able to keep local statistics of work/rest cycles so that the user has an idea of how much they are working and how often they need to take breaks.
 5. **Notifications.** Regardless of the OS on which TimeKeeper is running, you will receive notifications on your desktop when your work/rest cycle starts/ends.
+
+## Differences from analogs
+
+| Feature | **TimeKeeper** | Pomodorolm | Flowkeeper |
+|---------|----------------|------------|------------|
+| **Written in** | Rust | Elm, Rust, other | Python |
+| **Package size** | 3 MB ([Windows portable](https://github.com/TimeKeeperSoft/TimeKeeper/releases/download/v0.3.1/TimeKeeper-v0.3.1-WINDOWS-x86_64.zip)) | 81 MB ([AppImage version](https://github.com/vjousse/pomodorolm/releases/download/app-v0.3.5/pomodorolm_0.3.5_amd64.AppImage)) | 62 MB ([Windows installer](https://github.com/flowkeeper-org/fk-desktop/releases/download/v0.9.1/setup.exe)) |
+| **RAM Usage, avg** | 8-15 MB | 80 MB | 97.1 MB |
 
 ## Installation
 
