@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="assets/logo.png" width="200">
+    <img src="assets/logo.svg" width="200">
     <h1>⏳ TimeKeeper</h1>
     <p><b>Manage your PC time efficiently!</b></p>
     <h4>
