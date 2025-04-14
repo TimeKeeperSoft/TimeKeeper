@@ -27,8 +27,8 @@ ten_cycles = The last 10 cycles are shown
 # Footer buttons
 preferences = Preferences
 about = About
-show-stats = Show stats
-hide-stats = Hide stats
+show-stats = Show statistics
+hide-stats = Hide statistics
 
 
 ##############
