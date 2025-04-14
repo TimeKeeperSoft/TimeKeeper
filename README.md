@@ -29,11 +29,23 @@ Many people do not take breaks when working at a PC. As a result, the efficiency
 
 The program is intended for use by people who are exposed to high visual loads and/or lead sedentary lifestyles.
 
+**Star this repo if you've ever:**
+
+- Missed lunch because of `cargo build --release`
+- Had wrist pain from too much coding
+- Needed a non-annoying reminder
+
 ## Motivation
 
 1. I needed a cross-platform timekeeping program. Such a program should be simple, lightweight and quite functional.
 2. Many people forget to take breaks while working on the computer, which is detrimental to their productivity and health. Take a break - stretch, get some fresh air and continue working. This will slow down the damage to your health.
 3. I needed to practice developing desktop software in Rust. TimeKeeper is the second project, the first one was [ice](https://github.com/mskrasnov/ice).
+
+### Why Rust + Iced?
+
+1. 0.1% CPU usage
+2. Fast and reliable software work
+3. It's fun ;)
 
 ## Benefits
 
@@ -50,6 +62,7 @@ The program is intended for use by people who are exposed to high visual loads a
 | **Written in** | Rust | Elm, Rust, other | Python |
 | **Package size** | 3 MB ([Windows portable](https://github.com/TimeKeeperSoft/TimeKeeper/releases/download/v0.3.1/TimeKeeper-v0.3.1-WINDOWS-x86_64.zip)) | 81 MB ([AppImage version](https://github.com/vjousse/pomodorolm/releases/download/app-v0.3.5/pomodorolm_0.3.5_amd64.AppImage)) | 62 MB ([Windows installer](https://github.com/flowkeeper-org/fk-desktop/releases/download/v0.9.1/setup.exe)) |
 | **RAM Usage, avg** | 8-15 MB | 80 MB | 97.1 MB |
+| **License** | MIT | AGPL-3.0 | GPL-3.0 |
 
 ## Installation
 
