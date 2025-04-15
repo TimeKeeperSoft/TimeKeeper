@@ -84,13 +84,13 @@ cargo build --release
 .\target\release\time_keeper
 ```
 
-> **Note:** if you want to build `*.msi` installer for Windows, you should install WiX and `cargo-wix` programs and execute this:
+> **Note:** if you want to build `*.msi` installer for Windows, you should install WiX and [`cargo-wix`](https://crates.io/crates/cargo-wix) programs and execute this:
 
 ```ps
 cargo wix --nocapture --output target/time_keeper.msi
 ```
 
-The built installer will be located in the `target/time_keeper.msi` directory.
+The built installer will be located in the `target/time_keeper.msi` file.
 
 **Building in Linux:**
 
