@@ -2,7 +2,7 @@
 # packages for different operating systems
 #
 # USAGE:
-#     python ./build.py [win/lin]
+#     python ./build.py [win/lin] {nobuild}
 #
 # (C) 2025 Michail Krasnov <michail383krasnov@mail.ru>
 
@@ -148,7 +148,10 @@ if __name__ == "__main__":
 
     args: list[str] = sys.argv
     system = OS.Windows
+
     publish = False
+    nobuild = False
+
     for arg in args:
         if arg == "win":
             system = OS.Windows
@@ -158,8 +161,14 @@ if __name__ == "__main__":
         if arg == "pub":
             publish = True
 
+        if arg == "nobuild":
+            nobuild = True
+
     pkg = Package(version, system)
-    pkg.build()
+
+    if not nobuild:
+        pkg.build()
+
     pkg.create_dirs()
     pkg.copy_files()
     pkg.compress()
