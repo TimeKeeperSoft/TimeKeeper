@@ -4,6 +4,9 @@ use anyhow::Result;
 use std::process::Command;
 
 #[cfg(windows)]
+use std::os::windows::process::CommandExt;
+
+#[cfg(windows)]
 const OPEN_CMD: &str = r"C:\Windows\System32\cmd.exe";
 
 #[cfg(unix)]
@@ -16,6 +19,7 @@ pub fn open_url(url: &str) -> Result<()> {
         .arg("/c")
         .arg("start")
         .arg(url)
+        .creation_flags(0x08000000)
         .status()?;
     Ok(())
 }
