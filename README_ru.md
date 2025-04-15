@@ -82,6 +82,14 @@ cargo build --release
 .\target\release\time_keeper
 ```
 
+> **Примечание:** если вы хотите собрать `*.msi`-установщик для Windows, вы должны установить инструментарий WiX и программу [`cargo-wix`](https://crates.io/crates/cargo-wix), после чего выполнить следующее:
+
+```ps
+cargo wix --nocapture --output target/time_keeper.msi
+```
+
+Собранный установщик будет находиться в файле `target/time_keeper.msi`.
+
 **Сборка под Linux:**
 
 ```bash
