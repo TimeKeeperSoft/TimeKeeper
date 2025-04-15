@@ -57,7 +57,7 @@ pref_notifications = Notifications
 pref_save = Save
 pref_close = Close
 
-pref_notifications_tooltip = If the checkbox is selected, TimeKeeper will send notifications to the desktop. If the checkbox is unchecked, a modal window with a countdown to continue work will open on top of all windows instead of notifications
+pref_notifications_tooltip = If the checkbox is selected, TimeKeeper will send notifications to the desktop. If the checkbox is unchecked, a modal window with a countdown to continue work will open on top of all windows instead of notifications. Modal window works incorrect on Linux
 pref_work_slider_tooltip =
     The change step is 10 minutes. Press Shift
     to change the time in minute increments
