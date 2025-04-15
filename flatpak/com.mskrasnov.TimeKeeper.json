@@ -1,0 +1,46 @@
+{
+    "app-id": "com.mskrasnov.TimeKeeper",
+    "runtime": "org.freedesktop.Platform",
+    "runtime-version": "24.08",
+    "sdk": "org.freedesktop.Sdk",
+    "command": "time_keeper",
+    "finish-args": [
+        "--share=ipc",
+        "--socket=wayland",
+        "--socket=x11",
+        "--filesystem=host"
+    ],
+    "modules": [
+        {
+            "name": "time_keeper",
+            "buildsystem": "simple",
+            "build-commands": [
+                "install -Dm755 time_keeper /app/bin/time_keeper"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "path": "time_keeper"
+                }
+            ]
+        },
+        {
+            "name": "appdata",
+            "buildsystem": "simple",
+            "build-commands": [
+                "install -Dm644 com.mskrasnov.TimeKeeper.desktop /app/share/applications/com.mskrasnov.TimeKeeper.desktop",
+                "install -Dm644 com.mskrasnov.TimeKeeper.svg /app/share/icons/hicolor/scalable/apps/com.mskrasnov.TimeKeeper.svg"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "path": "com.mskrasnov.TimeKeeper.desktop"
+                },
+                {
+                    "type": "file",
+                    "path": "com.mskrasnov.TimeKeeper.svg"
+                }
+            ]
+        }
+    ]
+}
