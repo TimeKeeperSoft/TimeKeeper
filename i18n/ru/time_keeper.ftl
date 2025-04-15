@@ -2,7 +2,7 @@
 # (C) 2025 Michail Krasnov <michail383krasnov@mail.ru>
 
 work_notification = Ура! Мне сново надо работать!
-break_notification = Пришла пора немного передохнУть. Или передОхнуть.
+break_notification = Пришла пора немного передохнуть.
 
 #############
 # MAIN PAGE #
