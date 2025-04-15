@@ -10,7 +10,7 @@ homepage = "https://timekeepersoft.github.io/"
 repository = "https://github.com/TimeKeeperSoft/TimeKeeper"
 readme = "README.md"
 keywords = ["time", "timer", "coutdown", "TimeKeeper"]
-categories = ["date-and-time"]
+categories = ["date-and-time", "gui"]
 exclude = [".github", "site"]
 
 [profile.release]
