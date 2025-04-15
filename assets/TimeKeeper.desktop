@@ -6,5 +6,5 @@ Comment[ru]=TimeKeeper - простейшая кроссплатформенна
 Exec=time_keeper
 Icon=time_keeper
 Terminal=false
-Categories=Utility; Productivity;
+Categories=Utility;
 StartupNotify=true
