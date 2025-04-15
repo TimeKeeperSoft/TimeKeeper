@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!--
+  Copyright (C) 2017 Christopher R. Field.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+
+<?if $(sys.BUILDARCH) = x64 or $(sys.BUILDARCH) = arm64 ?>
+    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+<?else ?>
+    <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+<?endif ?>
+
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+
+    <Product
+        Id='*'
+        Name='TimeKeeper'
+        UpgradeCode='89EF25CC-4DFB-4265-BB8B-4C7995CB414D'
+        Manufacturer='Michail Krasnov'
+        Language='1033'
+        Codepage='1252'
+        Version='$(var.Version)'>
+
+        <Package Id='*'
+            Keywords='Installer'
+            Description='TimeKeeper is the simplest cross-platform program for PC time tracking. It is used to periodically remind the user of the need to take breaks while working on a PC.'
+            Manufacturer='Michail Krasnov'
+            InstallerVersion='450'
+            Languages='1033'
+            Compressed='yes'
+            InstallScope='perMachine'
+            SummaryCodepage='1252'
+            />
+
+        <MajorUpgrade
+            Schedule='afterInstallInitialize'
+            DowngradeErrorMessage='A newer version of [ProductName] is already installed. Setup will now exit.'/>
+
+        <Media Id='1' Cabinet='media1.cab' EmbedCab='yes' DiskPrompt='CD-ROM #1'/>
+        <Property Id='DiskPrompt' Value='time_keeper Installation'/>
+        <Directory Id='TARGETDIR' Name='SourceDir'>
+        <Directory Id='$(var.PlatformProgramFilesFolder)' Name='PFiles'>
+            <Directory Id='APPLICATIONFOLDER' Name='TimeKeeper'>
+                <Component Id='MainExecutable' Guid='*'>
+                    <File Id='TimeKeeperEXE' 
+                          Source='$(var.CargoTargetBinDir)\time_keeper.exe' 
+                          KeyPath='yes'/>
+                </Component>
+            </Directory>
+            
+            <!-- Ярлык в меню Пуск -->
+            <Directory Id='ProgramMenuFolder'>
+                <Directory Id='ProgramMenuDir' Name='TimeKeeper'>
+                    <Component Id='StartMenuShortcut' Guid='*'>
+                        <Shortcut Id='StartMenuShortcut' 
+                                  Name='TimeKeeper'
+                                  Description="Simple time tracking app"
+                                  Target='[APPLICATIONFOLDER]time_keeper.exe'
+                                  WorkingDirectory='APPLICATIONFOLDER'
+                                  Icon='ProductICO'/>
+                        <RemoveFolder Id='ProgramMenuDir' On='uninstall'/>
+                        <RegistryValue Root='HKCU' 
+                                     Key='Software\TimeKeeper' 
+                                     Name='installed' 
+                                     Type='integer' 
+                                     Value='1' 
+                                     KeyPath='yes'/>
+                    </Component>
+                </Directory>
+            </Directory>
+        </Directory>
+        
+        <!-- Ярлык на рабочем столе -->
+        <Directory Id='DesktopFolder' Name='Desktop'>
+            <Component Id='DesktopShortcut' Guid='*'>
+                <Shortcut Id='DesktopShortcut' 
+                          Name='TimeKeeper'
+                          Target='[APPLICATIONFOLDER]time_keeper.exe'
+                          WorkingDirectory='APPLICATIONFOLDER'
+                          Icon='ProductICO'/>
+                <RegistryValue Root='HKCU' 
+                             Key='Software\TimeKeeper' 
+                             Name='installed_desktop' 
+                             Type='integer' 
+                             Value='1' 
+                             KeyPath='yes'/>
+            </Component>
+        </Directory>
+    </Directory>
+
+    <Feature Id='MainFeature' Title='TimeKeeper' Level='1'>
+        <ComponentRef Id='MainExecutable'/>
+        <ComponentRef Id='StartMenuShortcut'/>
+        <ComponentRef Id='DesktopShortcut'/>
+    </Feature>
+
+
+        <SetProperty Id='ARPINSTALLLOCATION' Value='[APPLICATIONFOLDER]' After='CostFinalize'/>
+
+        <Icon Id='ProductICO' SourceFile='wix\logo.ico'/>
+        <Property Id='ARPPRODUCTICON' Value='ProductICO' />
+
+        <Property Id='ARPHELPLINK' Value='https://timekeepersoft.github.io/'/>
+        
+        <UI>
+            <UIRef Id='WixUI_FeatureTree'/>            
+        </UI>
+
+        <WixVariable Id='WixUILicenseRtf' Value='wix\License.rtf'/>
+        
+        <!--
+          Uncomment the next `WixVariable` tag to customize the installer's
+          Graphical User Interface (GUI) and add a custom banner image across
+          the top of each screen. See the WiX Toolset documentation for details
+          about customization.
+
+          The banner BMP dimensions are 493 x 58 pixels.
+        -->
+        <!--<WixVariable Id='WixUIBannerBmp' Value='wix\Banner.bmp'/>-->
+
+        
+        <!--
+          Uncomment the next `WixVariable` tag to customize the installer's
+          Graphical User Interface (GUI) and add a custom image to the first
+          dialog, or screen. See the WiX Toolset documentation for details about
+          customization.
+
+          The dialog BMP dimensions are 493 x 312 pixels.
+        -->
+        <!--<WixVariable Id='WixUIDialogBmp' Value='wix\Dialog.bmp'/>-->
+
+        <!-- Действия после установки -->
+
+    </Product>
+
+</Wix>
