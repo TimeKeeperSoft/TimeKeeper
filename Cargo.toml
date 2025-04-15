@@ -1,6 +1,6 @@
 [package]
 name = "time_keeper"
-version = "0.3.2"
+version = "1.0.0"
 edition = "2024"
 description = "TimeKeeper is the simplest cross-platform program for PC time tracking. It is used to periodically remind the user of the need to take breaks while working on a PC."
 build = "build.rs"
