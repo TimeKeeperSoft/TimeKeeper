@@ -37,7 +37,7 @@ pub enum ProgPath {
 impl ProgPath {
     pub fn get(&self) -> PathBuf {
         match self {
-            Self::HomeDir => home_dir().unwrap_or(Path::new("./assets").to_path_buf()),
+            Self::HomeDir => home_dir().unwrap_or(Path::new(".").to_path_buf()),
             Self::ConfigPrefixDir => Self::HomeDir.get().join(PROG_CONF_PREFIX),
             Self::Preferences => Self::ConfigPrefixDir.get().join(PROG_PREFERENCES),
             Self::Statistics => Self::ConfigPrefixDir.get().join(PROG_STATISTICS),
