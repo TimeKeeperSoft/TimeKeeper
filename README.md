@@ -13,9 +13,7 @@
     </h4>
 </div>
 
-> **Note 0:** now TimeKeeper have English and Russian translations.
->
-> **Note 1:** the Windows build of program hasn't been signed yet and I don't think I will ever sign it. I don't have time for this now, so deal with the program signature yourself.
+> **Note:** the Windows build of program hasn't been signed yet and I don't think I will ever sign it. I don't have time for this now, so deal with the program signature yourself.
 
 ## What is TimeKeeper?
 
@@ -60,8 +58,9 @@ The program is intended for use by people who are exposed to high visual loads a
 | Feature | **TimeKeeper** | Pomodorolm | Flowkeeper |
 |---------|----------------|------------|------------|
 | **Written in** | Rust | Elm, Rust, other | Python |
-| **Package size** | 3 MB ([Windows portable](https://github.com/TimeKeeperSoft/TimeKeeper/releases/download/v0.3.1/TimeKeeper-v0.3.1-WINDOWS-x86_64.zip)) | 81 MB ([AppImage version](https://github.com/vjousse/pomodorolm/releases/download/app-v0.3.5/pomodorolm_0.3.5_amd64.AppImage)) | 62 MB ([Windows installer](https://github.com/flowkeeper-org/fk-desktop/releases/download/v0.9.1/setup.exe)) |
-| **RAM Usage, avg** | 8-15 MB | 80 MB | 97.1 MB |
+| **Package size** | **3 MB** ([Windows portable](https://github.com/TimeKeeperSoft/TimeKeeper/releases/download/v0.3.1/TimeKeeper-v0.3.1-WINDOWS-x86_64.zip)) | 81 MB ([AppImage version](https://github.com/vjousse/pomodorolm/releases/download/app-v0.3.5/pomodorolm_0.3.5_amd64.AppImage)) | 62 MB ([Windows installer](https://github.com/flowkeeper-org/fk-desktop/releases/download/v0.9.1/setup.exe)) |
+| **RAM Usage, avg** | **8-15 MB** | 80 MB | 97.1 MB |
+| **Localizations** | **Yes** | ? | ? |
 | **License** | MIT | AGPL-3.0 | GPL-3.0 |
 
 ## Installation
