@@ -28,7 +28,7 @@
         Id='*'
         Name='TimeKeeper'
         UpgradeCode='89EF25CC-4DFB-4265-BB8B-4C7995CB414D'
-        Manufacturer='Michail Krasnov'
+        Manufacturer='Michail Krasnov &lt;https://github.com/mskrasnov&gt;'
         Language='1033'
         Codepage='1252'
         Version='$(var.Version)'>
@@ -36,7 +36,7 @@
         <Package Id='*'
             Keywords='Installer'
             Description='TimeKeeper is the simplest cross-platform program for PC time tracking. It is used to periodically remind the user of the need to take breaks while working on a PC.'
-            Manufacturer='Michail Krasnov'
+            Manufacturer='Michail Krasnov &lt;https://github.com/mskrasnov&gt;'
             InstallerVersion='450'
             Languages='1033'
             Compressed='yes'
