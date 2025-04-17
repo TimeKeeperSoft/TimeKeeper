@@ -17,7 +17,7 @@ mkdir -pv $APP_DIR
 cp ./assets/AppRun $APP_DIR/
 chmod +x $APP_DIR/AppRun
 
-cp ../assets/TimeKeeper.desktop $APP_DIR
+cp ./assets/TimeKeeper.desktop $APP_DIR
 
 pushd /tmp
 wget $LOGO_URL
