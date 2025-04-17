@@ -147,6 +147,10 @@ class Package:
         print("==> Generating Windows Installer...")
         subprocess.run(f"cargo wix --nocapture --output target/{get_package_name(self.ver, self.sys)}.msi --no-build")
 
+    def gen_appimage(self):
+        print("==> Generating AppImage...")
+        subprocess.run(["/bin/bash", "./assets/gen_appimage.sh"])
+
 if __name__ == "__main__":
     version = CargoToml().get_version()
 
@@ -183,3 +187,5 @@ if __name__ == "__main__":
 
     if system == OS.Windows:
         pkg.gen_msi()
+    elif system == OS.Linux:
+        pkg.gen_appimage()

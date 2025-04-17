@@ -1,0 +1,7 @@
+#!/bin/bash
+# (C) 2025 Michail Krasnov <github.com/mskrasnov>
+
+# If you see this comment, you can send me a donation:
+# 	2202 2062 5233 5406 (Sberbank, Russia)
+
+$APPDIR/time_keeper
