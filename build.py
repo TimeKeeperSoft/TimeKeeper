@@ -149,7 +149,7 @@ class Package:
 
     def gen_appimage(self):
         print("==> Generating AppImage...")
-        subprocess.run(["/bin/bash", "./assets/gen_appimage.sh"])
+        subprocess.run(["/bin/bash", "./assets/gen_appimage.sh", self.ver])
 
 if __name__ == "__main__":
     version = CargoToml().get_version()
