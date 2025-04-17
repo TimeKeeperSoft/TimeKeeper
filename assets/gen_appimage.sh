@@ -29,4 +29,4 @@ cp /tmp/logo.png $APP_DIR/TimeKeeper.png
 cd ./target
 wget https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage
 chmod +x ./appimagetool-x86_64.AppImage
-./appimagetool-x86_64.AppImage "${NAME}.AppDir" "$NAME-$1-x86_64.AppImage"
+ARCH=x86_64 ./appimagetool-x86_64.AppImage "${NAME}.AppDir" "$NAME-$1-x86_64.AppImage"
