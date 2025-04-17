@@ -143,6 +143,10 @@ class Package:
         print("==> Publich new version to crates.io")
         subprocess.run("cargo publish")
 
+    def gen_msi(self):
+        print("==> Generating Windows Installer...")
+        subprocess.run(f"cargo wix --nocapture --output target/{get_package_name(self.ver, self.sys)}.msi --no-build")
+
 if __name__ == "__main__":
     version = CargoToml().get_version()
 
@@ -176,3 +180,6 @@ if __name__ == "__main__":
 
     if publish:
         pkg.publish()
+
+    if system == OS.Windows:
+        pkg.gen_msi()
