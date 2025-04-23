@@ -101,6 +101,18 @@ cargo build --release
 ./target/release/time_keeper
 ```
 
+> **Note:** if you want to build `*.deb` package for Debian/Ubuntu, you should install [`cargo-deb`](https://crates.io/crates/cargo-deb) subcommand and execute this:
+
+```bash
+cargo deb
+```
+
+For install generated package run this:
+
+```bash
+sudo dpkg -i ./target/debian/time-keeper-${VERSION}_amd64.deb
+```
+
 ## Technology stack
 
 - **OS:** Windows, Linux;
