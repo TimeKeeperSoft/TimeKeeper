@@ -11,6 +11,7 @@
 
 #![windows_subsystem = "windows"]
 
+mod autostart;
 mod conf;
 mod consts;
 mod external_cmd;

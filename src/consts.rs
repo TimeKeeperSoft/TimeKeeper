@@ -23,5 +23,8 @@ pub const PROG_PREFERENCES: &str = "TimeKeeper.toml";
 /// каждый такой цикл)
 pub const PROG_STATISTICS: &str = "stat.toml";
 
+/// Autostart `*.desktop`-file
+pub const PROG_AUTOSTART_DESKTOP: &str = ".config/autostart/TimeKeeper.toml";
+
 /// Стандартный шрифт программы, как и логотип, жёстко указанный в исходниках программы и не поддающийся замене
 pub const DEFAULT_FONT: &[u8] = include_bytes!("../assets/FiraSans-Light.ttf");
