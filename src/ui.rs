@@ -146,6 +146,7 @@ enum Page {
     About,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 enum Message {
     /// Iced event handler
