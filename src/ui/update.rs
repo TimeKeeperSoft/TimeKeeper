@@ -65,6 +65,7 @@ impl TimeKeeper {
                 let _ = open_url(PROG_TELEGRAM);
                 Task::none()
             }
+            Message::AddAutostart => self.add_autostart(),
         }
     }
 
@@ -242,5 +243,15 @@ impl TimeKeeper {
     fn close_window(&mut self, id: Id) -> Task<Message> {
         self.win_id = None;
         window::close(id)
+    }
+
+    fn add_autostart(&mut self) -> Task<Message> {
+        let _ = if self.autostart.is_autostart() {
+            self.autostart.remove_autostart()
+        } else {
+            self.autostart.add_autostart()
+        };
+
+        Task::none()
     }
 }

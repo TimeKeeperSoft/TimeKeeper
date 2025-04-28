@@ -65,3 +65,9 @@ pref_break_slider_tooltip =
     Изменение времени поминутно. Зажмите
     Shift, чтобы установить шаг в 10 минут
 pref_break_change = Время изменяется от 1 до 30 минут
+
+pref_autostart_lbl = Автозагрузка:
+pref_autostart_btn_add = Добавить
+pref_autostart_btn_rem = Удалить
+
+pref_autostart_not_impl = Эта функция ещё не сделана (для Windows)

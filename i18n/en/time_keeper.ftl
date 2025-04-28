@@ -66,3 +66,9 @@ pref_break_slider_tooltip =
     Time change by the minute. Press Shift to
     set the time in 10-minute increments
 pref_break_change = Time changes from 1 to 30 minutes
+
+pref_autostart_lbl = Autostart:
+pref_autostart_btn_add = Add
+pref_autostart_btn_rem = Remove
+
+pref_autostart_not_impl = This function not implemented yet (for Windows)

@@ -30,6 +30,7 @@ use iced::{
 };
 
 use crate::{
+    autostart::Autostart,
     conf::Config,
     consts::{DEFAULT_FONT, PROG_LOGO, PROG_NAME},
     pathes,
@@ -97,6 +98,9 @@ struct TimeKeeper {
 
     /// ID of modal window
     win_id: Option<window::Id>,
+
+    /// Is application autostart? (for Settings page)
+    autostart: Autostart,
 }
 
 impl Default for TimeKeeper {
@@ -122,6 +126,7 @@ impl Default for TimeKeeper {
                 Page::default()
             },
             win_id: None,
+            autostart: Autostart::new(),
             conf,
             stats,
         }
@@ -176,6 +181,8 @@ enum Message {
     FTimeChanged(u16),
     /// Called when the checkbox toggles notification settings
     NotificationsToggled(bool),
+
+    AddAutostart,
 
     /// TimeKeeper calls this branch when free time (break) starts, then a new
     /// window will be opened

@@ -4,10 +4,7 @@
 //! Linux! Windows support coming soon...
 
 use anyhow::Result;
-use std::{
-    fs,
-    path::{Path, PathBuf},
-};
+use std::{fs, path::PathBuf};
 
 use crate::{consts::PROG_AUTOSTART_DESKTOP, pathes::ProgPath};
 
@@ -20,8 +17,9 @@ Terminal=false\n
 Hidden=true\n
 StartupNotify=true";
 
+#[derive(Debug)]
 pub struct Autostart {
-    autostart_dir: PathBuf,
+    autostart_pth: PathBuf,
     is_autostart: bool,
 }
 
@@ -30,8 +28,8 @@ impl Autostart {
         let autostart_dir = ProgPath::HomeDir.get().join(PROG_AUTOSTART_DESKTOP);
 
         Self {
-            is_autostart: autostart_dir.is_file(),
-            autostart_dir,
+            is_autostart: autostart_dir.exists(),
+            autostart_pth: autostart_dir,
         }
     }
 
@@ -39,8 +37,21 @@ impl Autostart {
         self.is_autostart
     }
 
-    pub fn add_autostart(&self) -> Result<()> {
-        fs::write(&self.autostart_dir, AUTOSTART_DESKTOP)?;
+    pub fn add_autostart(&mut self) -> Result<()> {
+        fs::write(&self.autostart_pth, AUTOSTART_DESKTOP)?;
+        self.is_autostart = self.autostart_pth.is_file();
+
+        Ok(())
+    }
+
+    pub fn remove_autostart(&mut self) -> Result<()> {
+        if !self.is_autostart || !self.autostart_pth.is_file() {
+            self.is_autostart = false;
+            return Ok(());
+        }
+
+        fs::remove_file(&self.autostart_pth)?;
+        self.is_autostart = self.autostart_pth.is_file();
 
         Ok(())
     }
