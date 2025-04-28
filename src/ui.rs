@@ -63,6 +63,7 @@ pub fn ui() -> iced::Result {
         .window_size((300., 300.))
         .resizable(false)
         .font(DEFAULT_FONT)
+        .default_font(iced::Font::with_name("Fira Sans"))
         .theme(TimeKeeper::theme)
         .subscription(TimeKeeper::subscription)
         .run()
