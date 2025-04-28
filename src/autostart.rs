@@ -1,7 +1,7 @@
 //! Add TimeKeeper to autostart
 //!
 //! > **NOTE:** this functional is implemented only for
-//! Linux! Windows support coming soon...
+//! > Linux! Windows support coming soon...
 
 use anyhow::Result;
 use std::{fs, path::PathBuf};
