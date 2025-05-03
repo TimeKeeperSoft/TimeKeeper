@@ -60,7 +60,7 @@ pub fn ui() -> iced::Result {
         })
         .antialiasing(true)
         .centered()
-        .window_size((300., 300.))
+        .window_size((300., 310.))
         .resizable(false)
         .font(DEFAULT_FONT)
         .default_font(iced::Font::with_name("Fira Sans"))
