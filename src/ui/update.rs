@@ -65,7 +65,7 @@ impl TimeKeeper {
                 let _ = open_url(PROG_TELEGRAM);
                 Task::none()
             }
-            Message::AddAutostart => self.add_autostart(),
+            Message::ToggleAutostart => self.add_autostart(),
         }
     }
 

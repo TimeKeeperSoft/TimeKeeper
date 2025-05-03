@@ -35,7 +35,7 @@ impl TimeKeeper {
                 .size(12)
             )
             .padding(3)
-            .on_press(Message::AddAutostart)
+            .on_press(Message::ToggleAutostart)
             .style(if is_autostart {
                 button::danger
             } else {

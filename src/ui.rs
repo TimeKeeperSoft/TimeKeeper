@@ -23,7 +23,7 @@ mod view;
 use std::time::Duration;
 
 use iced::{
-    Event, Subscription, Theme,
+    Event, Font, Subscription, Theme,
     advanced::graphics::image::image_rs::ImageFormat,
     event, time,
     window::{self, Settings},
@@ -62,10 +62,10 @@ pub fn ui() -> iced::Result {
         .centered()
         .window_size((300., 310.))
         .resizable(false)
-        .font(DEFAULT_FONT)
-        .default_font(iced::Font::with_name("Fira Sans"))
         .theme(TimeKeeper::theme)
         .subscription(TimeKeeper::subscription)
+        .font(DEFAULT_FONT)
+        .default_font(Font::with_name("Fira Sans"))
         .run()
 }
 
@@ -184,7 +184,7 @@ enum Message {
     /// Called when the checkbox toggles notification settings
     NotificationsToggled(bool),
 
-    AddAutostart,
+    ToggleAutostart,
 
     /// TimeKeeper calls this branch when free time (break) starts, then a new
     /// window will be opened
