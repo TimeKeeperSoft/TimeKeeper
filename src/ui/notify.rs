@@ -57,7 +57,7 @@ impl Notify {
         let _ = Notification::new()
             .summary(&self.title)
             .body(&self.text)
-            .icon("./assets/logo.png")
+            .icon("/usr/share/icons/hicolor/scalable/apps/TimeKeeper.svg")
             .appname("TimeKeeper")
             .show()?;
         Ok(())
