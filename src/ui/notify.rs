@@ -40,7 +40,7 @@ impl Notify {
         Toast::new(Toast::POWERSHELL_APP_ID) // TODO: replace this in the future
             .title(&self.title)
             .text1(&self.text)
-            .sound(Some(Sound::SMS))
+            .sound(Some(Sound::Default))
             .icon(
                 &Path::new(r"C:\Users\Миша\projects\time_keeper\assets\logo.png"),
                 IconCrop::Circular,
