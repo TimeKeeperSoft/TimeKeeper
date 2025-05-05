@@ -30,6 +30,7 @@ impl TimeKeeper {
             Message::FTimeChanged(ftime) => self.change_ftime(ftime),
             Message::WTimeChanged(wtime) => self.change_wtime(wtime),
             Message::NotificationsToggled(state) => self.set_notifications(state),
+            Message::ToggleAutostart => self.add_autostart(),
             Message::Event(event) => self.handle_events(event),
 
             /********************************************************
@@ -65,7 +66,6 @@ impl TimeKeeper {
                 let _ = open_url(PROG_TELEGRAM);
                 Task::none()
             }
-            Message::ToggleAutostart => self.add_autostart(),
         }
     }
 
