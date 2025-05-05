@@ -6,13 +6,15 @@ use crate::ui::{
     widget::{header, txt_tooltip},
 };
 
-use iced::widget::horizontal_space;
+#[cfg(windows)]
 use iced::widget::tooltip::Position;
+
 use iced::{
     Alignment::Center,
     Element, Length,
     widget::{
-        button, column, container, horizontal_rule, row, text, toggler, tooltip, vertical_space,
+        button, column, container, horizontal_rule, horizontal_space, row, text, toggler, tooltip,
+        vertical_space,
     },
 };
 
