@@ -42,8 +42,8 @@ about_internet = TimeKeeper online
 about_site = Site
 about_repo = Repository
 
-about_id1 = {$name}: design; project text
-about_id2 = {$name}: testing; project text
+about_id1 = Danila Makarov: design; project text
+about_id2 = Maxim Marushin: testing; project text
 
 
 ####################

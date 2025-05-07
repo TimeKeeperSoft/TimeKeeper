@@ -42,8 +42,8 @@ impl TimeKeeper {
                 row![text(fl!("about_other")), horizontal_rule(0)]
                     .spacing(5)
                     .align_y(Center),
-                text(fl!("about_id1", name = "Данила Макаров")).size(SMALL_TEXT_SIZE),
-                text(fl!("about_id2", name = "Максим Марушин")).size(SMALL_TEXT_SIZE),
+                text(fl!("about_id1")).size(SMALL_TEXT_SIZE),
+                text(fl!("about_id2")).size(SMALL_TEXT_SIZE),
             ]
             .spacing(3),
             column![
