@@ -6,7 +6,10 @@
 use anyhow::Result;
 use std::{fs, path::PathBuf};
 
-use crate::{consts::PROG_AUTOSTART_DESKTOP, pathes::ProgPath};
+use crate::{
+    consts::{PROG_AUTOSTART_DESKTOP, PROG_AUTOSTART_DIR},
+    pathes::ProgPath,
+};
 
 const AUTOSTART_DESKTOP: &str = "[Desktop Entry]\n
 Type=Application\n
@@ -25,11 +28,14 @@ pub struct Autostart {
 
 impl Autostart {
     pub fn new() -> Self {
-        let autostart_dir = ProgPath::HomeDir.get().join(PROG_AUTOSTART_DESKTOP);
+        let autostart_pth = ProgPath::HomeDir
+            .get()
+            .join(PROG_AUTOSTART_DIR)
+            .join(PROG_AUTOSTART_DESKTOP);
 
         Self {
-            is_autostart: autostart_dir.exists(),
-            autostart_pth: autostart_dir,
+            is_autostart: autostart_pth.exists(),
+            autostart_pth,
         }
     }
 
