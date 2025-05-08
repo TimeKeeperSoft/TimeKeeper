@@ -9,11 +9,11 @@ pub const PROG_CRATES_URL: &str = "https://crates.io/crates/time_keeper";
 pub const PROG_TELEGRAM: &str = "https://t.me/TimeKeeperSoft";
 
 // Only for Windows
-#[cfg(target_family = "windows")]
+#[cfg(windows)]
 pub const PROG_CONF_PREFIX: &str = r"AppData\Roaming\TimeKeeper\";
 
 // Only for UNIX (Linux, macOS, BSD, etc.)
-#[cfg(target_family = "unix")]
+#[cfg(unix)]
 pub const PROG_CONF_PREFIX: &str = ".local/share/TimeKeeper/";
 
 /// Параметры программы (например, длина интервалов работы и отдыха)
