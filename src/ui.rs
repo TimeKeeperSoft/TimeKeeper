@@ -13,6 +13,7 @@
 mod notify;
 mod utils;
 mod widget;
+mod colors;
 
 /***********************************************
  *  Interface rendering and working with data  *
@@ -174,6 +175,8 @@ enum Message {
     SettingsButtonPressed,
     /// Called when the user clicks on the "Показать статистику" button
     ShowStatsButtonPressed,
+    ClearStatsButtonPressed,
+    ExportCSVButtonPressed,
 
     /// Called when the slider changes the run time
     WTimeChanged(u16),

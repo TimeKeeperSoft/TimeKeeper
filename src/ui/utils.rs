@@ -2,11 +2,13 @@
 
 use crate::{conf::Config, stats::Stats, traits::Toml};
 use chrono::prelude::*;
-use iced::{Color, Theme, color, widget::container};
+use iced::{Color, Theme, widget::container};
 use std::{
     path::Path,
     time::{Duration, SystemTime},
 };
+
+use super::colors::BACKGROUND_COLOR_IN_FREETIME;
 
 pub fn get_container_style(style: &Theme, is_work: bool) -> container::Style {
     let palette = style.palette();
@@ -14,7 +16,7 @@ pub fn get_container_style(style: &Theme, is_work: bool) -> container::Style {
     container::Style {
         background: Some(iced::Background::Color(match is_work {
             true => backgound,
-            false => color!(0xd79921),
+            false => BACKGROUND_COLOR_IN_FREETIME,
         })),
         ..Default::default()
     }

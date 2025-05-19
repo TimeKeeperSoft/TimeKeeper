@@ -8,8 +8,9 @@ use iced::widget::{
     Button, Container, Text, Tooltip, button, column, container, horizontal_rule, row, slider, text,
 };
 use iced::{Alignment::Center, Element};
-use iced::{Color, Theme, color};
+use iced::{Color, Theme};
 
+use super::colors::{FREE_TIME_SLIDER_COLOR, URL_BUTTON_COLOR, WORK_TIME_SLIDER_COLOR};
 use super::{Message, TimeKeeper};
 use crate::{fl, time::Time};
 
@@ -102,8 +103,8 @@ fn time_box<'a>(time: Time) -> Container<'a, Message> {
 
 fn slider_style(time_type: TimeType, theme: &Theme, status: slider::Status) -> slider::Style {
     let color = match time_type {
-        TimeType::Work => color!(0x8f3f71),
-        TimeType::Free => color!(0xd79921),
+        TimeType::Work => WORK_TIME_SLIDER_COLOR,
+        TimeType::Free => FREE_TIME_SLIDER_COLOR,
     };
     let palette = theme.extended_palette();
     slider::Style {
@@ -179,7 +180,7 @@ where
     Message: 'a + Clone,
 {
     button(txt_tooltip(
-        text(placeholder).size(12).color(color!(0xb8bb26)),
+        text(placeholder).size(12).color(URL_BUTTON_COLOR),
         url,
         Position::Top,
     ))
