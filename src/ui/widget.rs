@@ -10,8 +10,10 @@ use iced::widget::{
 use iced::{Alignment::Center, Element};
 use iced::{Color, Theme};
 
-use super::colors::{FREE_TIME_SLIDER_COLOR, URL_BUTTON_COLOR, WORK_TIME_SLIDER_COLOR};
-use super::{Message, TimeKeeper};
+use super::{
+    Message, TimeKeeper,
+    colors::{FREE_TIME_SLIDER_COLOR, URL_BUTTON_COLOR, WORK_TIME_SLIDER_COLOR},
+};
 use crate::{fl, time::Time};
 
 pub enum TimeType {
