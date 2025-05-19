@@ -1,12 +1,8 @@
 //! Some utils and helpers
 
 use crate::{conf::Config, stats::Stats, traits::Toml};
-use chrono::prelude::*;
 use iced::{Color, Theme, widget::container};
-use std::{
-    path::Path,
-    time::{Duration, SystemTime},
-};
+use std::path::Path;
 
 use super::colors::BACKGROUND_COLOR_IN_FREETIME;
 
@@ -24,22 +20,6 @@ pub fn get_container_style(style: &Theme, is_work: bool) -> container::Style {
 
 pub fn get_dimmed_text_color(style: &Theme) -> Color {
     style.palette().text.scale_alpha(0.5)
-}
-
-pub fn fmt_date(s: u64) -> String {
-    let dt = DateTime::from_timestamp(s as i64, 0);
-
-    match dt {
-        None => format!("Неизвестное время"),
-        Some(dt) => dt.format("%d.%m %H:%M").to_string(),
-    }
-}
-
-pub fn get_current_date() -> u64 {
-    let sys_time = SystemTime::now()
-        .duration_since(SystemTime::UNIX_EPOCH)
-        .unwrap_or(Duration::from_secs(0));
-    sys_time.as_secs()
 }
 
 pub fn get_stats_from_file<P: AsRef<Path>>(file: P) -> Stats {

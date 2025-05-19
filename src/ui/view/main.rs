@@ -6,15 +6,18 @@ use iced::{
     alignment::Horizontal,
     widget::{
         Column, Row, Text, button, center, column, container, horizontal_rule, horizontal_space,
-        row, scrollable, text,
+        row, scrollable, text, tooltip::Position,
     },
 };
 
 use crate::{
     fl,
     stats::StatisticEntry,
-    time::Time,
-    ui::{utils, widget::text_small},
+    time::{Time, fmt_date},
+    ui::{
+        utils,
+        widget::{text_small, txt_tooltip},
+    },
 };
 
 use super::{Message, TimeKeeper};
@@ -92,7 +95,7 @@ impl TimeKeeper {
         .align_x(Horizontal::Right);
 
         let values = column![
-            text(utils::fmt_date(entry.date)),
+            text(fmt_date(entry.date)),
             text(if entry.is_wtime {
                 fl!("work")
             } else {
@@ -130,7 +133,20 @@ impl TimeKeeper {
             elements = elements.push(text_small(fl!("ten_cycles")));
         }
 
-        scrollable(elements).height(150).into()
+        let elements = scrollable(elements).height(150);
+        let buttons_row = row![
+            button(text(fl!("stats_clear")).size(12)).on_press(Message::ClearStatsButtonPressed),
+            txt_tooltip(
+                button(text(fl!("stats_export")).size(12))
+                    .on_press(Message::ExportCSVButtonPressed),
+                fl!("stats_file_locate"),
+                Position::Top
+            ),
+        ]
+        .spacing(5);
+
+        let elements = column![elements, buttons_row].spacing(5).align_x(Center);
+        elements.into()
     }
 
     fn footer_buttons<'a, S>(&'a self, stats_btn_txt: S) -> Row<'a, Message>

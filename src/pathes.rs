@@ -32,6 +32,7 @@ pub enum ProgPath {
     ConfigPrefixDir,
     Preferences,
     Statistics,
+    CSVFile,
 }
 
 impl ProgPath {
@@ -41,6 +42,9 @@ impl ProgPath {
             Self::ConfigPrefixDir => Self::HomeDir.get().join(PROG_CONF_PREFIX),
             Self::Preferences => Self::ConfigPrefixDir.get().join(PROG_PREFERENCES),
             Self::Statistics => Self::ConfigPrefixDir.get().join(PROG_STATISTICS),
+            Self::CSVFile => home_dir()
+                .unwrap_or(Path::new(".").to_path_buf())
+                .join("TimeKeeper-statistics.csv"),
         }
     }
 

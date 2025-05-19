@@ -22,6 +22,9 @@ stats_date = Дата:
 stats_type = Тип:
 stats_duration = Длит.:
 empty_stats = Статистика пуста...
+stats_export = Экспорт в CSV
+stats_file_locate = Файл будет сохранён в ~/TimeKeeper-statistics.csv
+stats_clear = Очистить
 ten_cycles = Показываются последние 10 циклов
 
 # Footer buttons

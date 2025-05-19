@@ -10,11 +10,11 @@ use crate::{
     external_cmd::open_url,
     pathes::ProgPath,
     stats::StatisticEntry,
-    time::Time,
+    time::{Time, get_current_date},
     traits::Toml,
 };
 
-use super::{Message, Page, TimeKeeper, notify, utils};
+use super::{Message, Page, TimeKeeper, notify};
 
 impl TimeKeeper {
     pub fn update(&mut self, message: Message) -> Task<Message> {
@@ -26,6 +26,8 @@ impl TimeKeeper {
             Message::StartButtonPressed => self.toggle_pause(),
             Message::StopButtonPressed => self.set_stop(),
             Message::ShowStatsButtonPressed => self.toggle_stats(),
+            Message::ClearStatsButtonPressed => self.clear_stats(),
+            Message::ExportCSVButtonPressed => self.gen_csv_file(),
             Message::FTimeChanged(ftime) => self.change_ftime(ftime),
             Message::WTimeChanged(wtime) => self.change_wtime(wtime),
             Message::NotificationsToggled(state) => self.set_notifications(state),
@@ -74,7 +76,7 @@ impl TimeKeeper {
 
     fn stats_push(&mut self) {
         self.stats.push(StatisticEntry {
-            date: utils::get_current_date(),
+            date: get_current_date(),
             is_wtime: self.is_work,
             time: self.elapsed_time,
         });
@@ -202,6 +204,18 @@ impl TimeKeeper {
 
     fn toggle_stats(&mut self) -> Task<Message> {
         self.show_stats = !self.show_stats;
+        Task::none()
+    }
+
+    fn clear_stats(&mut self) -> Task<Message> {
+        self.stats.stats.clear();
+        Task::none()
+    }
+
+    fn gen_csv_file(&self) -> Task<Message> {
+        let csv = self.stats.gen_csv();
+        let _ = std::fs::write(ProgPath::CSVFile.get(), csv);
+
         Task::none()
     }
 

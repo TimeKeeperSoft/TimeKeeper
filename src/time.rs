@@ -1,8 +1,28 @@
 //! Converting seconds to [`Time`] and [`Time`] to seconds
 
-use std::fmt::Display;
+use std::{
+    fmt::Display,
+    time::{Duration, SystemTime},
+};
 
 use anyhow::{Result, anyhow};
+use chrono::DateTime;
+
+pub fn fmt_date(s: u64) -> String {
+    let dt = DateTime::from_timestamp(s as i64, 0);
+
+    match dt {
+        None => format!("Неизвестное время"),
+        Some(dt) => dt.format("%d.%m %H:%M").to_string(),
+    }
+}
+
+pub fn get_current_date() -> u64 {
+    let sys_time = SystemTime::now()
+        .duration_since(SystemTime::UNIX_EPOCH)
+        .unwrap_or(Duration::from_secs(0));
+    sys_time.as_secs()
+}
 
 /// Time representation in `TimeKeeper`
 ///

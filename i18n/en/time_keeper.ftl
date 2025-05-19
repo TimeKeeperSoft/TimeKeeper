@@ -22,6 +22,9 @@ stats_date = Date:
 stats_type = Type:
 stats_duration = Duration:
 empty_stats = Statistics are empty
+stats_export = Export CSV
+stats_file_locate = File will be saved to ~/TimeKeeper-statistics.csv
+stats_clear = Clear
 ten_cycles = The last 10 cycles are shown
 
 # Footer buttons

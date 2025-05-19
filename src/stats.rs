@@ -1,6 +1,10 @@
 //! Statistics collection
 
-use crate::traits::Toml;
+use crate::{
+    fl,
+    time::{Time, fmt_date},
+    traits::Toml,
+};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -51,6 +55,21 @@ impl Stats {
                 len -= 1;
             }
         }
+    }
+
+    pub fn gen_csv(&self) -> String {
+        let mut csv = format!("duration;date;type");
+        for entry in &self.stats {
+            let e_str = format!(
+                "{};{};{}",
+                Time::from_secs(entry.time),
+                fmt_date(entry.date),
+                if entry.is_wtime { "work" } else { "break" },
+            );
+            csv = format!("{csv}\n{e_str}");
+        }
+
+        csv
     }
 }
 
