@@ -25,7 +25,6 @@ impl TimeKeeper {
             Message::TickTime => self.tick_time(),
             Message::StartButtonPressed => self.toggle_pause(),
             Message::StopButtonPressed => self.set_stop(),
-            Message::SaveSettingsButtonPressed => self.save_settings(),
             Message::ShowStatsButtonPressed => self.toggle_stats(),
             Message::FTimeChanged(ftime) => self.change_ftime(ftime),
             Message::WTimeChanged(wtime) => self.change_wtime(wtime),
@@ -208,17 +207,17 @@ impl TimeKeeper {
 
     fn change_ftime(&mut self, ftime: u16) -> Task<Message> {
         self.ftime = Time::from_secs(ftime);
-        Task::none()
+        self.save_settings()
     }
 
     fn change_wtime(&mut self, wtime: u16) -> Task<Message> {
         self.wtime = Time::from_secs(wtime);
-        Task::none()
+        self.save_settings()
     }
 
     fn set_notifications(&mut self, state: bool) -> Task<Message> {
         self.conf.desktop_notifications = state;
-        Task::none()
+        self.save_settings()
     }
 
     fn open_window(&mut self) -> Task<Message> {

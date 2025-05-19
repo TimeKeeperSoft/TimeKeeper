@@ -172,8 +172,6 @@ enum Message {
 
     /// Called when the user clicks on the "Настройки" button
     SettingsButtonPressed,
-    /// Clicking the “Сохранить” button on the settings page
-    SaveSettingsButtonPressed,
     /// Called when the user clicks on the "Показать статистику" button
     ShowStatsButtonPressed,
 

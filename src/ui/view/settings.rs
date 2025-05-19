@@ -77,13 +77,7 @@ impl TimeKeeper {
             ),
             autostart_row,
             vertical_space().height(Length::Fill),
-            row![
-                button(text(fl!("pref_save")))
-                    .on_press(Message::SaveSettingsButtonPressed)
-                    .style(button::success),
-                button(text(fl!("pref_close"))).on_press(Message::SettingsButtonPressed),
-            ]
-            .spacing(5),
+            button(text(fl!("pref_close"))).on_press(Message::SettingsButtonPressed),
         ]
         .spacing(5);
 
