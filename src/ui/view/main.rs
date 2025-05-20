@@ -20,7 +20,7 @@ use crate::{
     },
 };
 
-use super::{Message, TimeKeeper};
+use super::{Message, SMALL_TEXT_SIZE, TimeKeeper};
 
 impl TimeKeeper {
     pub fn main_page(&self) -> Element<Message> {
@@ -111,7 +111,8 @@ impl TimeKeeper {
     fn stats_subpage(&self) -> Element<Message> {
         let mut elements = column![].spacing(5).align_x(Center);
 
-        if self.stats.is_empty() {
+        let is_empty_stats = self.stats.is_empty();
+        if is_empty_stats {
             let hcolor = utils::get_dimmed_text_color(&self.theme());
             elements = elements.push(row![
                 horizontal_space(),
@@ -133,20 +134,25 @@ impl TimeKeeper {
             elements = elements.push(text_small(fl!("ten_cycles")));
         }
 
-        let elements = scrollable(elements).height(150);
-        let buttons_row = row![
-            button(text(fl!("stats_clear")).size(12)).on_press(Message::ClearStatsButtonPressed),
-            txt_tooltip(
-                button(text(fl!("stats_export")).size(12))
-                    .on_press(Message::ExportCSVButtonPressed),
-                fl!("stats_file_locate"),
-                Position::Top
-            ),
-        ]
-        .spacing(5);
+        if is_empty_stats {
+            column![elements].height(150).into()
+        } else {
+            let elements = scrollable(elements).height(150);
+            let buttons_row = row![
+                button(text(fl!("stats_clear")).size(SMALL_TEXT_SIZE))
+                    .on_press(Message::ClearStatsButtonPressed),
+                txt_tooltip(
+                    button(text(fl!("stats_export")).size(SMALL_TEXT_SIZE))
+                        .on_press(Message::ExportCSVButtonPressed),
+                    fl!("stats_file_locate"),
+                    Position::Top
+                ),
+            ]
+            .spacing(5);
 
-        let elements = column![elements, buttons_row].spacing(5).align_x(Center);
-        elements.into()
+            let elements = column![elements, buttons_row].spacing(5).align_x(Center);
+            elements.into()
+        }
     }
 
     fn footer_buttons<'a, S>(&'a self, stats_btn_txt: S) -> Row<'a, Message>
