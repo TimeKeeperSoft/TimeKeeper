@@ -7,6 +7,15 @@ mod settings;
 use super::{Message, Page, TimeKeeper};
 use iced::Element;
 
+/* Since in Linux the 12th font was too large, and therefore the window did
+ * not fit the “OK” button, we change this value to 10. In Windows, the 12th
+ * font is also quite comfortable.
+ */
+#[cfg(windows)]
+const SMALL_TEXT_SIZE: u16 = 12;
+#[cfg(unix)]
+const SMALL_TEXT_SIZE: u16 = 10;
+
 impl TimeKeeper {
     pub fn view(&self) -> Element<Message> {
         match self.page {
