@@ -1,7 +1,6 @@
 //! Statistics collection
 
 use crate::{
-    fl,
     time::{Time, fmt_date},
     traits::Toml,
 };
