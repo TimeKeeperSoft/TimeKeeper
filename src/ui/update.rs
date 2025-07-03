@@ -51,22 +51,10 @@ impl TimeKeeper {
              * Opening links to external TimeKeeper resources in an *
              * associated program (e.g. in the default browser)     *
              ********************************************************/
-            Message::OpenSiteUrl => {
-                let _ = open_url(PROG_SITE);
-                Task::none()
-            }
-            Message::OpenRepoUrl => {
-                let _ = open_url(PROG_REPO);
-                Task::none()
-            }
-            Message::OpenCratesUrl => {
-                let _ = open_url(PROG_CRATES_URL);
-                Task::none()
-            }
-            Message::OpenTelegramUrl => {
-                let _ = open_url(PROG_TELEGRAM);
-                Task::none()
-            }
+            Message::OpenSiteUrl => self.open_url(PROG_SITE),
+            Message::OpenRepoUrl => self.open_url(PROG_REPO),
+            Message::OpenCratesUrl => self.open_url(PROG_CRATES_URL),
+            Message::OpenTelegramUrl => self.open_url(PROG_TELEGRAM),
         }
     }
 
@@ -265,6 +253,11 @@ impl TimeKeeper {
             self.autostart.add_autostart()
         };
 
+        Task::none()
+    }
+
+    fn open_url(&mut self, url: &str) -> Task<Message> {
+        let _ = open_url(url);
         Task::none()
     }
 }
