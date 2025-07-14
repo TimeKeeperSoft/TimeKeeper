@@ -28,8 +28,7 @@ impl TimeKeeper {
                 row![text(fl!("about_idea")), horizontal_rule(0)]
                     .spacing(5)
                     .align_y(Center),
-                text("Михаил Краснов <https://github.com/mskrasnov>").size(SMALL_TEXT_SIZE),
-                text("2202 2062 5233 5406 (Сбербанк)").size(SMALL_TEXT_SIZE),
+                text("Михаил Краснов <mskrasnov07@ya.ru>").size(SMALL_TEXT_SIZE),
             ]
             .spacing(3),
             column![

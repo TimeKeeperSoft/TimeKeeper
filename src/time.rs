@@ -12,7 +12,7 @@ pub fn fmt_date(s: u64) -> String {
     let dt = DateTime::from_timestamp(s as i64, 0);
 
     match dt {
-        None => format!("Неизвестное время"),
+        None => format!("Неизвестное время"), // TODO: replace this
         Some(dt) => dt.format("%d.%m %H:%M").to_string(),
     }
 }

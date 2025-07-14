@@ -61,7 +61,7 @@ pub fn ui() -> iced::Result {
         })
         .antialiasing(true)
         .centered()
-        .window_size((300., 310.))
+        .window_size((300., 315.))
         .resizable(false)
         .theme(TimeKeeper::theme)
         .subscription(TimeKeeper::subscription)
