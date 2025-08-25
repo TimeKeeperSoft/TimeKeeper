@@ -49,7 +49,7 @@ notify-rust = "4.11.6"
 
 [package.metadata.winresource]
 ProductName = "TimeKeeper is the simplest cross-platform PC time-tracking program. It periodically reminds users to take breaks while working on their computers."
-ProductVersion = "v1.0"
+ProductVersion = "v1.1"
 LegalCopyright = "Copyright © 2025 Michail Krasnov <https://github.com/mskrasnov>"
 
 [package.metadata.deb]
