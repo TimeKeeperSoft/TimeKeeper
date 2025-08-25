@@ -28,6 +28,7 @@ cp /tmp/logo.png $APP_DIR/TimeKeeper.png
 
 # Generate AppImage
 cd ./target
-wget https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage
+# wget https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage
+wget https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage
 chmod +x ./appimagetool-x86_64.AppImage
 ARCH=x86_64 ./appimagetool-x86_64.AppImage "${NAME}.AppDir" "$NAME-v$1-LINUX-x86_64.AppImage"
