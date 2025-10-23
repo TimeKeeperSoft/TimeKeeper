@@ -1,7 +1,7 @@
 <div align="center">
     <img src="https://timekeepersoft.github.io/assets/logo.png" width="200">
     <h1>⏳ TimeKeeper</h1>
-    <p><b>For coders who lose track of time (and keyboard imprints on their face)</b></p>
+    <p><b>For people who lose track of time</b></p>
     <h4>
         <a href="./README_ru.md">README (Russian)</a>
         <span> | </span>
@@ -38,12 +38,6 @@ The program is intended for use by people who are exposed to high visual loads a
 1. I needed a cross-platform timekeeping program. Such a program should be simple, lightweight and quite functional.
 2. Many people forget to take breaks while working on the computer, which is detrimental to their productivity and health. Take a break - stretch, get some fresh air and continue working. This will slow down the damage to your health.
 3. I needed to practice developing desktop software in Rust. TimeKeeper is the second project, the first one was [ice](https://github.com/mskrasnov/ice).
-
-### Why Rust + Iced?
-
-1. 0.1% CPU usage
-2. Fast and reliable software work
-3. It's fun ;)
 
 ## Benefits
 
