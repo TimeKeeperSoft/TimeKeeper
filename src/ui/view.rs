@@ -11,10 +11,10 @@ use iced::Element;
  * not fit the “OK” button, we change this value to 11. In Windows, the 12th
  * font is also quite comfortable.
  */
-#[cfg(windows)]
+// #[cfg(windows)]
 const SMALL_TEXT_SIZE: u16 = 12;
-#[cfg(unix)]
-const SMALL_TEXT_SIZE: u16 = 11;
+// #[cfg(unix)]
+// const SMALL_TEXT_SIZE: u16 = 11;
 
 impl TimeKeeper {
     pub fn view(&self) -> Element<Message> {
