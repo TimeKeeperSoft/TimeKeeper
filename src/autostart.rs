@@ -4,21 +4,22 @@
 //! > Linux! Windows support coming soon...
 
 use anyhow::Result;
-use std::{fs, path::PathBuf};
+use std::{env, fs, path::PathBuf};
 
 use crate::{
     consts::{PROG_AUTOSTART_DESKTOP, PROG_AUTOSTART_DIR},
     pathes::ProgPath,
 };
 
-const AUTOSTART_DESKTOP: &str = "[Desktop Entry]\n
-Type=Application\n
-Name=TimeKeeper\n
-Exec=time_keeper\n
-Icon=TimeKeeper\n
-Terminal=false\n
-Hidden=true\n
-StartupNotify=true";
+const AUTOSTART_DESKTOP_TEMPLATE: &str = "[Desktop Entry]
+Type=Application
+Name=TimeKeeper
+Exec={exec_path}
+Icon=TimeKeeper
+Terminal=false
+Hidden=false
+StartupNotify=true
+X-GNOME-Autostart-enabled=true";
 
 #[derive(Debug)]
 pub struct Autostart {
@@ -44,7 +45,20 @@ impl Autostart {
     }
 
     pub fn add_autostart(&mut self) -> Result<()> {
-        fs::write(&self.autostart_pth, AUTOSTART_DESKTOP)?;
+        // Ensure the autostart directory exists
+        if let Some(parent) = self.autostart_pth.parent() {
+            fs::create_dir_all(parent)?;
+        }
+
+        // Get the current executable path
+        let exec_path = env::current_exe()?
+            .to_string_lossy()
+            .to_string();
+
+        // Generate the desktop file content with the correct executable path
+        let desktop_content = AUTOSTART_DESKTOP_TEMPLATE.replace("{exec_path}", &exec_path);
+
+        fs::write(&self.autostart_pth, desktop_content)?;
         self.is_autostart = self.autostart_pth.is_file();
 
         Ok(())
