@@ -3,8 +3,6 @@
     <h1>⏳ TimeKeeper</h1>
     <p><b>For people who lose track of time</b></p>
     <h4>
-        <a href="./README_ru.md">README (Russian)</a>
-        <span> | </span>
         <a href="https://timekeepersoft.github.io/screenshots.html">Screenshots</a> (site)
         <span> | </span>
         <a href="https://github.com/mskrasnov/TimeKeeper/releases">Releases</a> (GitHub)
@@ -19,25 +17,13 @@
 
 TimeKeeper is the simplest cross-platform PC time-tracking program. It periodically reminds users to take breaks while working on their computers. It's free of unnecessary web and AI features.
 
-![](assets/main_win.png)
+![Main Window](assets/main_win.png)
 
 ## Idea
 
 Many people do not take breaks when working at a PC. As a result, the efficiency of such work decreases due to fatigue, musculoskeletal problems due to sedentary lifestyle and all kinds of eye disorders. Consequently, users need a simple program that, adjusting to their rhythm of work, could remind them of the need to take a break from work.
 
 The program is intended for use by people who are exposed to high visual loads and/or lead sedentary lifestyles.
-
-**Star this repo if you've ever:**
-
-- Missed lunch because of `cargo build --release`
-- Had wrist pain from too much coding
-- Needed a non-annoying reminder
-
-## Motivation
-
-1. I needed a cross-platform timekeeping program. Such a program should be simple, lightweight and quite functional.
-2. Many people forget to take breaks while working on the computer, which is detrimental to their productivity and health. Take a break - stretch, get some fresh air and continue working. This will slow down the damage to your health.
-3. I needed to practice developing desktop software in Rust. TimeKeeper is the second project, the first one was [ice](https://github.com/mskrasnov/ice).
 
 ## Benefits
 
@@ -113,10 +99,6 @@ sudo dpkg -i ./target/debian/time-keeper-${VERSION}_amd64.deb
 - **Multilanguage:** YES (English, Russian);
 - **Programming lang.:** [Rust](https://rust-lang.org)
 - **GUI:** [iced](https://iced.rs)
-
-<a href="https://iced.rs">
-    <img alt="iced" title="iced" src="https://gist.githubusercontent.com/hecrj/ad7ecd38f6e47ff3688a38c79fd108f0/raw/74384875ecbad02ae2a926425e9bcafd0695bade/color.svg" width="350px">
-</a>
 
 ## License
 
