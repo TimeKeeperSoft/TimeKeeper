@@ -11,17 +11,17 @@
 
 #![windows_subsystem = "windows"]
 
-mod autostart;
-mod conf;
-mod consts;
-mod external_cmd;
-mod i18n;
-mod pathes;
-mod stats;
-mod time;
-mod traits;
+// mod autostart;
+// mod conf;
+// mod consts;
+// mod external_cmd;
+// mod i18n;
+// mod pathes;
+// mod stats;
+// mod time;
+// mod traits;
 mod ui;
 
-fn main() -> iced::Result {
+fn main() -> Result<(), slint::PlatformError> {
     ui::ui()
 }
