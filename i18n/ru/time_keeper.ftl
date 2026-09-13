@@ -11,6 +11,7 @@ break_notification = Пришла пора немного передохнуть
 # Labels
 work = Работа
 break = Перерыв
+lbreak = Долгий перерыв
 
 # Control buttons
 start = Старт

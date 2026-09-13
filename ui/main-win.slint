@@ -1,0 +1,97 @@
+import { Button } from "std-widgets.slint";
+import { TimerRing, Background } from "timer_ring.slint";
+import { LinkButton } from "link-button.slint";
+
+export component MainWindow inherits Window {
+    width: 300px;
+    height: 315px;
+    title: "TimeKeeper";
+
+    in-out property <int> remaining_secs: 1500;
+    in-out property <string> timer_disp: "--:--";
+    in-out property <string> period_name: "Work";
+    in-out property <bool> is_timer_work: true;
+
+    property <color> accent: period_name == "Work" ? #43c7ff : period_name == "Break" ? #42e6a4 : #ff9b61;
+    property <color> background-color: period_name == "Work" ? #10183a : period_name == "Break" ? #0b302a : #321b2f;
+
+    background: background-color;
+    animate background {
+        duration: 800ms;
+        easing: ease-in-out;
+    }
+
+    callback start_pause_clicked();
+    callback stop_clicked();
+
+    Background {
+        width: parent.width;
+        height: parent.height;
+        color1: root.accent;
+        color2: root.background-color;
+    }
+
+    VerticalLayout {
+        alignment: stretch;
+        cross-axis-alignment: center;
+        spacing: 5px;
+
+        Rectangle {
+            vertical-stretch: 1;
+        }
+
+        Text {
+            text: period_name;
+            font-size: 24px;
+            horizontal-alignment: center;
+        }
+
+        Text {
+            text: timer_disp;
+            font-size: 24px;
+            horizontal-alignment: center;
+        }
+
+        HorizontalLayout {
+            alignment: center;
+            spacing: 5px;
+
+            Button {
+                text: is_timer_work ? "Pause" : "Start";
+                clicked => start_pause_clicked();
+            }
+
+            Button {
+                text: "Stop";
+                clicked => stop_clicked();
+            }
+        }
+
+        Rectangle {
+            vertical-stretch: 1;
+        }
+
+        HorizontalLayout {
+            spacing: 5px;
+            alignment: start;
+            cross-axis-alignment: start;
+            width: parent.width;
+
+            LinkButton {
+                text: "Settings";
+            }
+
+            LinkButton {
+                text: "About";
+            }
+
+            Rectangle {
+                horizontal-stretch: 1;
+            }
+
+            LinkButton {
+                text: "Statistics";
+            }
+        }
+    }
+}

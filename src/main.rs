@@ -9,19 +9,10 @@
 //! Consequently, users need a simple program that, adjusting to their
 //! rhythm of work, could remind them of the need to take a break from work.
 
-#![windows_subsystem = "windows"]
+// #![windows_subsystem = "windows"]
 
-mod autostart;
-mod conf;
-mod consts;
-mod external_cmd;
-mod i18n;
-mod pathes;
-mod stats;
-mod time;
-mod traits;
-mod ui;
+pub mod ui;
 
-fn main() -> iced::Result {
+fn main() -> Result<(), slint::PlatformError> {
     ui::ui()
 }

@@ -98,7 +98,7 @@ sudo dpkg -i ./target/debian/time-keeper-${VERSION}_amd64.deb
 - **OS:** Windows, Linux;
 - **Multilanguage:** YES (English, Russian);
 - **Programming lang.:** [Rust](https://rust-lang.org)
-- **GUI:** [iced](https://iced.rs)
+- **GUI:** [iced](https://iced.rs) (new `slint` UI is planned)
 
 ## License
 
