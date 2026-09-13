@@ -25,13 +25,18 @@ pub fn ui() -> Result<(), slint::PlatformError> {
                 state.period = state
                     .period
                     .get_next_period(state.cycles_curr, state.cycles_max);
+                state.cycles_curr += 1;
+                state.remaining_secs = state.period.get_default_secs();
+            }
+
+            if state.period == TimerPeriod::LongBreak {
+                state.cycles_curr = 0;
             }
 
             if let Some(ui) = ui_weak.upgrade() {
                 ui.set_remaining_secs(state.remaining_secs);
                 ui.set_timer_disp(format_time(state.remaining_secs));
                 ui.set_period_name(state.period.to_shared_string());
-                state.cycles_curr += 1;
             }
         }
     });
@@ -65,7 +70,7 @@ impl Default for AppState {
             work_secs: TimerPeriod::Work.get_default_secs(),
             break_secs: TimerPeriod::Break.get_default_secs(),
             lbreak_secs: TimerPeriod::LongBreak.get_default_secs(),
-            cycles_curr: 1,
+            cycles_curr: 0,
             cycles_max: 4,
         }
     }
@@ -102,6 +107,7 @@ impl TimerPeriod {
     pub fn get_next_period(&self, cycles_curr: u8, cycles_max: u8) -> Self {
         match self {
             Self::Break | Self::LongBreak => Self::Work,
+            Self::Work if cycles_curr < cycles_max => Self::Break,
             Self::Work if cycles_curr >= cycles_max => Self::LongBreak,
             _ => Self::Break,
         }

@@ -1,0 +1,77 @@
+export component TimerRing inherits Rectangle {
+    in property <float> progress: 0.6;
+    in property <color> accent: #42c8ff;
+
+    width: 240px;
+    height: 240px;
+
+    background: transparent;
+
+    Rectangle {
+        width: 220px;
+        height: 220px;
+        x: 10px;
+        y: 10px;
+
+        border-radius: 110px;
+        border-width: 12px;
+        border-color: #304568;
+        background: transparent;
+    }
+
+    Path {
+        stroke: root.accent;
+        stroke-width: 12px;
+        fill: transparent;
+    }
+
+    Rectangle {
+        width: 500px;
+        height: 500px;
+
+        x: -150px;
+        y: -200px;
+
+        border-radius: 250px;
+
+        background: @radial-gradient(circle, #4338ca 0%, #4338ca00 70%);
+
+        opacity: 0.35;
+
+        animate x, y {
+            duration: 8s;
+            easing: ease-in-out;
+        }
+    }
+}
+
+export component Background inherits Rectangle {
+    in property <color> color1;
+    in property <color> color2;
+
+    property <float> t: animation-tick() / 8s;
+
+    // background: #080d1c;
+    // animate background {
+    //      duration: 800ms;
+    //      easing: ease-in-out;
+    // }
+
+    Rectangle {
+        width: 500px;
+        height: 500px;
+
+        x: -150px + sin(root.t * 360deg) * 50px;
+        y: -200px + cos(root.t * 360deg) * 40px;
+
+        border-radius: 250px;
+
+        background: @radial-gradient(
+            circle,
+            root.color1 0%,
+            #00000000 70%
+        );
+
+        opacity: 0.35;
+    }
+}
