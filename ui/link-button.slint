@@ -1,0 +1,10 @@
+export component LinkButton inherits TouchArea {
+    callback on-click();
+    in property <string> text;
+
+    Text {
+        text: parent.text;
+    }
+
+    clicked => on-click();
+}

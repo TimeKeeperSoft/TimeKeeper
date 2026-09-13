@@ -1,5 +1,6 @@
 import { Button } from "std-widgets.slint";
 import { TimerRing, Background } from "timer_ring.slint";
+import { LinkButton } from "link-button.slint";
 
 export component MainWindow inherits Window {
     width: 300px;
@@ -76,11 +77,11 @@ export component MainWindow inherits Window {
             cross-axis-alignment: start;
             width: parent.width;
 
-            Button {
+            LinkButton {
                 text: "Settings";
             }
 
-            Button {
+            LinkButton {
                 text: "About";
             }
 
@@ -88,7 +89,7 @@ export component MainWindow inherits Window {
                 horizontal-stretch: 1;
             }
 
-            Button {
+            LinkButton {
                 text: "Statistics";
             }
         }
