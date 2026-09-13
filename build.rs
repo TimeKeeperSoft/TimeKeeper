@@ -11,4 +11,6 @@ fn main() {
 }
 
 #[cfg(unix)]
-fn main() {}
+fn main() {
+    slint_build::compile("ui/main-win.slint").expect("Slint build failed");
+}
